@@ -5,6 +5,7 @@
 {% endblock %}
 {% block main_container %}
 <!-- Main Container -->
+{% url 'hydraviewer:mapviewer' as map_url %}
 <div class="row" >
     <h1 style="text-align: center;">Welcome to the <b>HYDRAFloods Viewer</h1>
         <h3 style="text-align: center;"><b>HYD</b>rologic <b>R</b>emote Sensing <b>A</b>nalysis</h3>
@@ -14,7 +15,7 @@
                 <div class="col-md-6">
                     <div class="card" id="precip">
                         <div class="card-image">
-                            <a href="{{ map_url }}">
+                            <a href="mapviewer">
                                 <img class="zoom img-responsive grow"  src="/static/images/HYDRAFloodsViewer.png">
                                 <h4><span class="card-title">[[ 'Explore the HYDRAFloods Viewer' | translate ]]</span></h4>
                             </a>
