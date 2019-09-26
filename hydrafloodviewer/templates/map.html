@@ -1,0 +1,216 @@
+{% extends "layout.html" %}
+{% load cms_tags staticfiles %}
+{% block main_container %}
+
+<!-- Main Container -->
+<div class="row" ng-controller="hydrafloodviewer">
+    <!-- Loader Container -->
+    <div id="loader" class="loader" ng-show="showLoader">
+        <i class="loading-img fas fa-spinner fa-pulse fa-4x"></i>
+    </div>
+    <!-- Alert Container -->
+    <div class="alert alert-dismissible text-center display-none custom-alert" role="alert">
+        <button type="button" class="close" ng-click="closeAlert()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>[[alertContent]]</strong>
+    </div>
+
+    <!-- Map Container -->
+    <div class="sidenav" id="side-panel">
+        <div id='date-select-controls'>
+            <a data-toggle="collapse" href="#dateSelect-collapse">
+                <div class='layer-header'>
+                    <p><b>1.&emsp;</b></p><img src="{% static 'images/calendar-icon.jpg' %}"><p>[[ 'DATE SELECTION' | translate]]</p>
+                </div>
+            </a>
+            <div id="dateSelect-collapse" class="panel-collapse collapse">
+                <p> [[ 'Select Date (YYYY-MM-DD)' | translate]]: </p>
+                <div class="form-group ">
+                    <input class = "form-control" id="date_selection"
+                    name="date_selection"
+                    type="text"
+                    data-provide="datepicker"
+                    value="2015-08-11"
+                    data-date-autoclose="true"
+                    data-date-format="yyyy-mm-dd"
+                    data-date-min-view-mode="days"
+                    data-date-multidate="1"
+                    data-date-start-view="decade"
+                    data-date-today-btn="true">
+                </div>
+            </div>
+        </div>
+        <hr style="margin-top:10px; margin-bottom:10px; border: 1px solid #fff; border-style: solid;">
+        <div id='precip-controls'>
+            <a data-toggle="collapse" href="#precip-collapse">
+                <div class='layer-header'>
+                    <p><b>2.&emsp;</b></p><img src="{% static 'images/precip-icon.png' %}"><p>[[ 'PRECIPITATION DATA' | translate]]</p>
+                </div>
+            </a>
+            <div id="precip-collapse" class="panel-collapse collapse">
+                <label class="container">
+                    <input id="precip-check" type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+
+                <p><b>&emsp;&emsp;&emsp;[[ 'PRECIPITATION MAP' | translate]]&emsp;&emsp;&emsp;</b></p>
+                <div class="slider-width">
+                    <p> [[ 'Opacity' | translate]]:&emsp;&emsp; </p>
+                    <input id="precip-opacity" data-slider-id='precip-opacity' type="text" data-slider-min="0" data-slider-max="1" data-slider-step="0.1" data-slider-value="1" data-slider-enabled="true" class= "custom-slider"
+                    style="width: 160px;left: 30px;"/>
+                </div>
+
+                <p> [[ 'Select Accumulation Map' | translate]]: <i class="fas fa-info-circle" title="Exchange"></i></p>
+                <select class="form-control" id="product_selection">
+                    <option value="1|0">1 Day Accumulation</option>
+                    <option value="2|0">2 Day Accumulation</option>
+                    <option value="3|0">3 Day Accumulation</option>
+                </select>
+                <p> [[ 'Select Colormap' | translate]]: </p>
+                <select class="form-control" id="cmap_selection">
+                    <option value="nipy_spectral">nipy_spectral</option>
+                    <option value="gist_ncar">gist_ncar</option>
+                    <option value="cubehelix">cubehelix</option>
+                </select>
+            </div>
+        </div>
+
+        <hr style="margin-top:10px; margin-bottom:10px; border: 1px solid #fff; border-style: solid;">
+        <div id='flood-controls'>
+            <a data-toggle="collapse" href="#flood-collapse">
+                <div class='layer-header'>
+                    <p><b>3.&emsp;</b></p><img src="{% static 'images/floodwater-icon.png' %}"><p>[[ 'DAILY SURFACE WATER' | translate]]</p>
+                </div>
+            </a>
+            <div id="flood-collapse" class="panel-collapse collapse" style="margin-bottom:10px;">
+                <label class="container">
+                    <input id="flood-check" type="checkbox" checked="checked">
+                    <span class="checkmark"></span>
+                </label>
+                <p><b>&emsp;&emsp;&emsp; [[ 'SURFACE WATER MAP' | translate]]</b></p>
+                <div class="slider-width">
+                    <p> [[ 'Opacity' | translate]]:&emsp;&emsp; </p>
+                    <input id="flood1-opacity" data-slider-id='flood1-opacity' type="text" data-slider-min="0" data-slider-max="1" data-slider-step="0.1" data-slider-value="1" data-slider-enabled="true"
+                    style="width: 160px;left: 30px;"/>
+                </div>
+
+                <p> [[ 'Select Sensor' | translate]]: </p>
+                <select class="form-control" id="sensor_selection">
+                    <option value="sentinel1">Sentinel 1</option>
+                    <option value="viirs">VIIRS Downscaled</option>
+                    <option value="atms">ATMS (Comming soon)</option>
+                </select>
+
+                <div class="center_obj" >
+                    <button type="submit" id="btn_download" name="btn_download" class="btn_custom"><i class="glyphicon glyphicon-cloud-download"></i>[[ 'Download Data' | translate ]]</button>
+                </div>
+            </div>
+        </div>
+        <div id='historical-controls'>
+            <a data-toggle="collapse" href="#historical-collapse">
+                <div class='layer-header'>
+                    <p><b>4.&emsp;</b></p><img src="{% static 'images/surfacewater-icon.png' %}"><p>[[ 'PERMANENT WATER' | translate]]</p>
+                </div>
+            </a>
+            <div id="historical-collapse" class="panel-collapse collapse" style="margin-bottom:10px;">
+                <label class="container">
+                    <input id="historical-check" type="checkbox" checked="checked">
+                    <span class="checkmark"></span>
+                </label>
+                <p><b>&emsp;&emsp;&emsp;[[ 'PERMANENT WATER LAYER' | translate]]&emsp;&emsp;&emsp;</b></p>
+                <div class="slider-width">
+                    <p> [[ 'Opacity' | translate]]:&emsp;&emsp; </p>
+                    <input id="historical-opacity" data-slider-id='historical-opacity' type="text" data-slider-min="0" data-slider-max="1" data-slider-step="0.1" data-slider-value="1" data-slider-enabled="true"
+                    style="width: 160px;left: 30px;"/>
+                </div>
+
+                <p>[[ 'Select reference period' | translate]]:</p>
+                <table style="width:100%">
+                    <tr>
+                        <td style="width:45%">
+                            <div class="form-group ">
+                                <input class = "form-control" id="start_year_selection_historical"
+                                name="end_year_selection_historical"
+                                type="text"
+                                data-provide="datepicker"
+                                value="2010"
+                                data-date-autoclose="true"
+                                data-date-clear-btn="true"
+                                data-date-format="yyyy"
+                                data-date-min-view-mode="years"
+                                data-date-multidate="1"
+                                data-date-start-view="years">
+                            </div>
+                        </td>
+                        <td style="width:10%; text-align: center;"><p><b>to</b></p></td>
+                        <td style="width:45%">
+                            <div class="form-group ">
+                                <input class = "form-control" id="end_year_selection_historical"
+                                name="end_year_selection_historical"
+                                type="text"
+                                data-provide="datepicker"
+                                value="2015"
+                                data-date-autoclose="true"
+                                data-date-clear-btn="true"
+                                data-date-format="yyyy"
+                                data-date-min-view-mode="years"
+                                data-date-multidate="1"
+                                data-date-start-view="years">
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+                <p>[[ 'Select seasonal period' | translate]]:</p>
+                <div style="width:95%; margin:3px;">
+                    <input type="text" class="js-range-slider" id="month_range" name="month_range" />
+                </div>
+                <br>
+                <div class="center_obj" >
+                    <button type="submit" id="update-button" name="update-button" class="btn_custom"><i class="glyphicon glyphicon-refresh"></i>[[ 'Update Water Layer' | translate ]]</button>
+                </div>
+            </div>
+        </div>
+
+        <hr style="margin-top:10px; margin-bottom:10px; border: 1px solid #fff;border-style: solid;">
+        <div id='browse-controls'>
+            <a data-toggle="collapse" href="#browse-collapse">
+                <div class='layer-header'>
+                    <img src="{% static 'images/browse-icon.png' %}"><p>[[ 'BASE MAP' | translate]]</p>
+                </div>
+            </a>
+            <div id="browse-collapse" class="panel-collapse collapse">
+                <label class="container">
+                    <input id="browse-check" type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+                <p><b>&emsp;&emsp;&emsp;[[ 'NRT BROWSE IMAGERY' | translate]]&emsp;&emsp;&emsp;</b></p>
+                <div class="slider-width">
+                    <p> [[ 'Opacity' | translate]]:&emsp;&emsp; </p>
+                    <input id="browse-opacity" data-slider-id='browse-opacity' type="text" data-slider-min="0" data-slider-max="1" data-slider-step="0.1" data-slider-value="1" data-slider-enabled="true"
+                    style="width: 160px;left: 30px;"/>
+                </div>
+                <p> [[ 'Select Browse Imagery' | translate]]: </p>
+                <select class="form-control" id="browse_selection">
+                    <option value="1|VIIRS_SNPP_CorrectedReflectance_TrueColor">VIIRS NRT TRUE COLOR</option>
+                    <option value="2|VIIRS_SNPP_CorrectedReflectance_BandsM11-I2-I1">VIIRS NRT NATURAL COLOR</option>
+                    <option value="3|MODIS_Aqua_CorrectedReflectance_TrueColor">MODIS AQUA TRUE COLOR</option>
+                    <option value="4|MODIS_Aqua_CorrectedReflectance_Bands721">MODIS AQUA NATURAL COLOR</option>
+                    <option value="5|MODIS_Terra_CorrectedReflectance_TrueColor">MODIS TERRA TRUE COLOR</option>
+                    <option value="5|MODIS_Terra_CorrectedReflectance_Bands721">MODIS TERRA NATURAL COLOR</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="map pull-margin" id="map" ng-init="initMap('2015-08-11', '#9999ff', 'sentinel1'); getpermanentwater('2010', '2015', '01', '12', 'discrete', '#00008b'); getPrecipMap();"></div>
+    <div id="layers" name="layers" data-precip-url="{{precip_layer}}"
+    data-historical-url="{{historical_layer}}"
+    data-admin-url="{{admin_layer}}"
+    data-flood-url="{{flood_layer}}"
+    style="display:none;">
+</div>
+{% include "panels/legendbox.html" %}
+
+</div>
+
+</div>
+{% endblock main_container %}

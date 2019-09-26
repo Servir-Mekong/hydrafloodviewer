@@ -1,0 +1,53 @@
+<div class="tooltpanel">
+    <div class="tool-box-header">
+        <span>Dancing Rivers - Irrawady v1.0</span>
+        <button class="tool-box-button btn btn-danger btn-xs" id="tool-collapse">
+            <i class="glyphicon glyphicon-remove"></i>
+        </button>
+        <button class="tool-box-button btn btn-success btn-xs" id="tool-expand" style="display:none;">
+            <i class="glyphicon glyphicon-plus"></i>
+        </button>
+    </div>
+    <div class="legend-line"></div>
+    <div id='tool-box'>
+        <label>1. Monitor Erosion and Deposition</label>
+        <div class="row padding-element">
+            <div class="col-md-12 padding-bottom">
+                <div class="col-md-5">
+                    <p>Select Region:</p>
+                </div>
+                <div class="col-md-7">
+                    <select name="area-variable-filter" class="form-control area-variable-filter" ng-options="option for option in areaFilterName"
+                    ng-model="areaName" ng-change="setCenterMap(areaName)">
+                </select>
+            </div>
+        </div>
+        <div class="col-md-12 padding-bottom">
+            <div class="col-md-5">
+                <p>Enter Year:</p>
+            </div>
+            <div class="col-md-7">
+                <div class="input-daterange datepicker-year-class">
+                    <input type="text" data-provide="datepicker" class="form-control" id="datepicker-year" ng-model="startyear">
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr class="full-divider"/>
+    <label>2. River Width Change</label>
+    <div class="row padding-element">
+        <div class="col-md-7">
+            <button type="button" class="btn btn-thmcolor btn-block"   ng-click="drawShape('polyline')"><i class="draw-line-icon" aria-hidden="true"></i> Draw streamline</button>
+        </div>
+        <div class="col-md-5" ng-show="clearBtn">
+            <button type="button" class="btn btn-light btn-block"  ng-show="calculateBtn" ng-click="getStats()">Calculate</button>
+        </div>
+        <div class="col-md-12">
+            <div class="geometry-textbox" ng-show="geometryBox">
+                <p class="geometry-text">[[shape]]</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+</div>

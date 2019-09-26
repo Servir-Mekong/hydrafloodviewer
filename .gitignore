@@ -1,0 +1,32 @@
+# python compile files
+# ===========
+*.pyc
+
+# private
+# ===========
+credentials/
+media/*
+# Exception to the rule
+!media/README.md
+static/*
+# Exception to the rule
+!static/README.md
+scripts/install.sh
+hydrafloodviewer/settings.py
+
+# Unused templates
+# ======================
+
+
+# Vendor files
+# ======================
+hydrafloodviewer/static/vendor/*
+hydrafloodviewer/static/dist/*
+# Exception to the rule
+!hydrafloodviewer/static/dist/README.md
+
+# Node and related environment
+# ======================
+.npmignore
+node_modules/
+_pycache_/

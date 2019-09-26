@@ -1,0 +1,24 @@
+{% load cms_tags staticfiles %}
+<div class="legend">
+    <div class="legend-text">
+        <span>River Changes</span>
+        <button class="legend-info-button btn btn-danger btn-xs" id="legend-collapse">
+            <i class="glyphicon glyphicon-remove"></i>
+        </button>
+        <button class="legend-info-button btn btn-success btn-xs" id="legend-expand" style="display:none;">
+            <i class="glyphicon glyphicon-plus"></i>
+        </button>
+    </div>
+    <div id='legend-content'>
+        <div>
+            <table>
+                <tbody>
+                    <tr><td rowspan="4"><img src="{% static 'images/legend.png' %}" alt="Flood legend"/></td></tr>
+                    <tr><td>No Change</td></tr>
+                    <tr><td>Erosion</td></tr>
+                    <tr><td>Deposition</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

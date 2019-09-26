@@ -1,0 +1,31 @@
+
+#toggle-nav {
+    opacity: 0.0;
+    pointer-events: none;
+  }
+
+.message {
+    display: block;
+    position: absolute;
+    left: 55px;
+    top: 128px;
+    width: 300px;
+    padding: 6px;
+    border-radius: 2px;
+    box-shadow: 0 0 5px grey;
+    background-color: white;
+    z-index: 1000;
+    font-size: 14px;
+}
+
+.event-info-button {
+  position: absolute;
+  right: 10px;
+  display: inline-block;
+}
+
+.event-title {
+  font-weight: bold;
+  margin-left: 3px;
+  margin-bottom: 5px;
+}

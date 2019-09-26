@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+{% load cms_tags staticfiles %}
+{% block extra_css %}
+<link href="{% static 'css/usecase-viewer.css' %}" rel="stylesheet">
+{% endblock %}
+{% block extra_script %}
+<script src="{% static 'app/controllers/usecase.js' %}"></script>
+{% endblock %}
+
+{% block main_container %}
+
+<!-- Main Container -->
+<div class="row" ng-controller="usecaseviewer">
+
+    <!-- Loader Container -->
+    <div id="loader" class="loader" ng-show="showLoader">
+        <i class="loading-img fas fa-spinner fa-pulse fa-4x"></i>
+    </div>
+    <!-- Alert Container -->
+    <div class="alert alert-dismissible text-center display-none custom-alert" role="alert">
+        <button type="button" class="close" ng-click="closeAlert()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>[[alertContent]]</strong>
+    </div>
+
+    <!-- Map Container -->
+    <div class="map" id="map" style="width:100%;" ng-init="initMap('{{ event_date }}', '#9999ff', '{{ sensor }}'); getpermanentwater('2010', '2015', '01', '12', 'discrete', '#00008b'); "></div>
+
+    <div id="layers" name="layers" data-precip-url="{{precip_layer}}" data-historical-url="{{historical_layer}}" data-admin-url="{{admin_layer}}" data-flood-url="{{flood_layer}}" style="display:none;"></div>
+
+    <div class="message">
+        <div class="event-title">
+            <span>Example event {{ event_date }}</span>
+            <input type="hidden" id="event_date" value="{{ event_date }}">
+            <input type="hidden" id="sensor" value="{{ sensor }}">
+            <button class="event-info-button btn btn-danger btn-xs" id="event-collapse">
+                <i class="glyphicon glyphicon-chevron-up"></i>
+            </button>
+            <button class="event-info-button btn btn-success btn-xs" id="event-expand" style="display:none;">
+                <i class="glyphicon glyphicon-chevron-down"></i>
+            </button>
+        </div>
+        <div id='event-content'>
+            {{ event_content }}
+        </div>
+    </div>
+    {% include "panels/legendbox.html" %}
+    
+</div>
+{% endblock main_container %}

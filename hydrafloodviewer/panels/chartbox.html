@@ -1,0 +1,26 @@
+<div class="chartpanel" ng-show="statisticsBox">
+    <div class="chartbox-header">
+        <span>River Width Statistics</span>
+        <button class="chart-info-button btn btn-danger btn-xs" id="chart-collapse">
+            <i class="glyphicon glyphicon-remove"></i>
+        </button>
+        <button class="chart-info-button btn btn-success btn-xs" id="chart-expand" style="display:none;">
+            <i class="glyphicon glyphicon-plus"></i>
+        </button>
+    </div>
+    <div id='chart-content'>
+        <div>
+            <div class="row padding-20">
+                <div class="col-md-12">
+                    <p><label>Pre-Monsoon: </label> [[premonsoon]]</p>
+                </div>
+                <div class="col-md-12">
+                    <p><label>Post-Monsoon: </label> [[postmonsoon]]</p>
+                </div>
+                <div class="col-md-12">
+                    <div id="chart" style="min-width: 150px; height: 200px; max-width: 330px; margin: 0 auto"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
