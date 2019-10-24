@@ -19,8 +19,6 @@
 		$layers_element;
 		//sentinel1_layer = addMapLayer(sentinel1_layer,$layers_element.attr('data-sentinel1-url'))
 
-
-
 		$('.js-range-slider').ionRangeSlider({
 			skin: "round",
 			type: "double",
@@ -61,11 +59,18 @@
 			},
 			_addElement: function () {
 				var elements = this._container.getElementsByClassName('leaflet-control-layers-list');
-				var div = L.DomUtil.create('div', '', elements[0]);
-				div.innerHTML = '<div class="leaflet-control-layers leaflet-control-layers-expanded">'+
-				'<input class="leaflet-control-layers-overlays" name="basemap_selection" id="street" checked="checked" value="street" type="radio">Streets</input>'+
-				'<input class="leaflet-control-layers-overlays" name="basemap_selection" id="satellite" value="satellite" type="radio">Satellite</input>'+
-				'<input class="leaflet-control-layers-overlays" name="basemap_selection" id="terrain" value="terrain" type="radio">Terrain</input></div>';
+				var div = L.DomUtil.create('div', 'leaflet-control-layers-overlays', elements[0]);
+				div.innerHTML = '<label><b>Basemap</b></label>'+
+				'<label class="container_radio">Streets<input name="basemap_selection" id="street" checked="checked" value="street" type="radio"></input><span class="checkmark_radio"></span></label>'+
+				'<label class="container_radio">Satellite<input name="basemap_selection" id="satellite" value="satellite" type="radio"></input><span class="checkmark_radio"></span></label>'+
+				'<label class="container_radio">Terrain<input name="basemap_selection" id="terrain" value="terrain" type="radio"></input><span class="checkmark_radio"></span></label>'+
+				'<hr>'+
+				'<label><b>Administrative Boundaries</b></label>'+
+				'<ul class="toggles-list">'+
+					'<li class="toggle"><label class="switch_layer"><input  name="country_toggle" id="country_toggle"  type="checkbox"><span class="slider_toggle round"></span></label><label>Country</label></li>'+
+				    '<li class="toggle"><label class="switch_layer"><input name="province_toggle" id="province_toggle" type="checkbox"><span class="slider_toggle round"></span></label><label>Province</label></li>'+
+					'<li class="toggle"><label class="switch_layer"><input name="township_toggle" id="township_toggle" type="checkbox"><span class="slider_toggle round"></span></label><label>Township</label></li>'+
+				'</ul>';
 			}
 		});
 
@@ -131,6 +136,52 @@
 			drawing_polygon = '';
 		});
 
+		var mmr_adm3_layer =L.geoJson(mmr_adm3, {
+			style: function(feature) {
+				return {
+					color: "#686868",
+					fill: false,
+					opacity: 0,
+					clickable: true,
+					weight: 0.5,
+				};
+			},
+			onEachFeature: function(feature, layer) {
+				layer.bindPopup('<p>'+feature.properties.ST+'</p>' );
+			}
+		}).addTo(map);
+		//control.addOverlay(mmr_adm3_layer, 'Township');
+		var mmr_adm2_layer =L.geoJson(mmr_adm2, {
+			style: function(feature) {
+				return {
+					color: "black",
+					fill: false,
+					opacity: 0,
+					clickable: true,
+					weight: 1,
+				};
+			},
+			onEachFeature: function(feature, layer) {
+				layer.bindPopup('<p>'+feature.properties.ST+'</p>' );
+			}
+		}).addTo(map);
+		//control.addOverlay(mmr_adm2_layer, 'Province/State');
+
+		var mmr_adm0_layer = L.geoJson(mmr_adm0, {
+			style: function(feature) {
+				return {
+					color: "black",
+					fill: false,
+					opacity: 0,
+					clickable: true,
+					weight: 2,
+				};
+			},
+			onEachFeature: function(feature, layer) {
+				layer.bindPopup('<p>'+feature.properties.Name+'</p>' );
+			}
+		}).addTo(map);
+		
 
 		basemap_layer = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
 			attribution: '<a href="https://google.com/maps" target="_">Google Maps</a>;',
@@ -159,6 +210,31 @@
 				basemap_layer.setUrl('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}');
 			}else if(selected_basemap === "terrain"){
 				basemap_layer.setUrl('http://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}');
+			}
+		});
+
+		/**
+		* Toggle layer visualizing
+		*/
+		$('input[type=checkbox][name=country_toggle]').click(function(){
+			if(this.checked) {
+				mmr_adm0_layer.setStyle({opacity: 1});
+			} else {
+				mmr_adm0_layer.setStyle({opacity: 0});
+			}
+		});
+		$('input[type=checkbox][name=province_toggle]').click(function(){
+			if(this.checked) {
+				mmr_adm2_layer.setStyle({opacity: 1});
+			} else {
+				mmr_adm2_layer.setStyle({opacity: 0});
+			}
+		});
+		$('input[type=checkbox][name=township_toggle]').click(function(){
+			if(this.checked) {
+				mmr_adm3_layer.setStyle({opacity: 1});
+			} else {
+				mmr_adm3_layer.setStyle({opacity: 0});
 			}
 		});
 
