@@ -81,3 +81,4 @@ tzlocal==1.4
 Unidecode==0.4.21
 uritemplate==3.0.0
 vine==1.1.4
+feedparser==5.2.1

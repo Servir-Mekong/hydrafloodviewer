@@ -46,8 +46,10 @@
 			maxBounds: [
 				[-120, -220],
 				[120, 220]
-			],
+			]
 		});
+
+
 
 		L.Control.Custom = L.Control.Layers.extend({
 			onAdd: function () {
@@ -58,13 +60,22 @@
 			},
 			_addElement: function () {
 				var elements = this._container.getElementsByClassName('leaflet-control-layers-list');
-				var div = L.DomUtil.create('div', '', elements[0]);
-				div.innerHTML = '<div class="leaflet-control-layers leaflet-control-layers-expanded">'+
-				'<input class="leaflet-control-layers-overlays" name="basemap_selection" id="street" checked="checked" value="street" type="radio">Streets</input>'+
-				'<input class="leaflet-control-layers-overlays" name="basemap_selection" id="satellite" value="satellite" type="radio">Satellite</input>'+
-				'<input class="leaflet-control-layers-overlays" name="basemap_selection" id="terrain" value="terrain" type="radio">Terrain</input></div>';
+				var div = L.DomUtil.create('div', 'leaflet-control-layers-overlays', elements[0]);
+				div.innerHTML = '<label><b>Basemap</b></label>'+
+				'<label class="container_radio">Streets<input name="basemap_selection" id="street" checked="checked" value="street" type="radio"></input><span class="checkmark_radio"></span></label>'+
+				'<label class="container_radio">Satellite<input name="basemap_selection" id="satellite" value="satellite" type="radio"></input><span class="checkmark_radio"></span></label>'+
+				'<label class="container_radio">Terrain<input name="basemap_selection" id="terrain" value="terrain" type="radio"></input><span class="checkmark_radio"></span></label>'+
+				'<hr>'+
+				'<label><b>Administrative Boundaries</b></label>'+
+				'<ul class="toggles-list">'+
+					'<li class="toggle"><label class="switch_layer"><input  name="country_toggle" id="country_toggle"  type="checkbox"><span class="slider_toggle round"></span></label><label>Country</label></li>'+
+				    '<li class="toggle"><label class="switch_layer"><input name="province_toggle" id="province_toggle" type="checkbox"><span class="slider_toggle round"></span></label><label>Province</label></li>'+
+					'<li class="toggle"><label class="switch_layer"><input name="township_toggle" id="township_toggle" type="checkbox"><span class="slider_toggle round"></span></label><label>Township</label></li>'+
+				'</ul>';
 			}
 		});
+
+
 
 		var control = new L.Control.Custom().addTo(map);
 
@@ -111,6 +122,8 @@
 			updateFloodMapLayer();
 			updatePermanentWater();
 			editableLayers.addLayer(layer);
+			$("#btn_download").prop("disabled",false);
+			$("#btn_download").removeClass("btn_custom_disable");
 		});
 		map.on('draw:edited', function(e) {
 			var editedlayers = e.layers;
@@ -126,13 +139,62 @@
 		map.on('draw:deleted', function(e) {
 			var userPolygon = '';
 			drawing_polygon = '';
+			$("#btn_download").prop("disabled","disabled");
+			$("#btn_download").addClass("btn_custom_disable");
 		});
 
+
+		var mmr_adm3_layer =L.geoJson(mmr_adm3, {
+			style: function(feature) {
+				return {
+					color: "#686868",
+					fill: false,
+					opacity: 0,
+					clickable: true,
+					weight: 0.5,
+				};
+			},
+			onEachFeature: function(feature, layer) {
+				layer.bindPopup('<p>'+feature.properties.ST+'</p>' );
+			}
+		}).addTo(map);
+ 		//control.addOverlay(mmr_adm3_layer, 'Township');
+		var mmr_adm2_layer =L.geoJson(mmr_adm2, {
+		    style: function(feature) {
+		        return {
+		            color: "black",
+		            fill: false,
+		            opacity: 0,
+		            clickable: true,
+					weight: 1,
+		        };
+		    },
+		    onEachFeature: function(feature, layer) {
+		        layer.bindPopup('<p>'+feature.properties.ST+'</p>' );
+		    }
+		}).addTo(map);
+		//control.addOverlay(mmr_adm2_layer, 'Province/State');
+
+		var mmr_adm0_layer = L.geoJson(mmr_adm0, {
+			style: function(feature) {
+				return {
+					color: "black",
+					fill: false,
+					opacity: 0,
+					clickable: true,
+					weight: 2,
+				};
+			},
+			onEachFeature: function(feature, layer) {
+				layer.bindPopup('<p>'+feature.properties.Name+'</p>' );
+			}
+		}).addTo(map);
 
 		basemap_layer = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
 			attribution: '<a href="https://google.com/maps" target="_">Google Maps</a>;',
 			subdomains:['mt0','mt1','mt2','mt3']
 		}).addTo(map);
+
 
 		selected_date = $('#date_selection').val();
 		var viirs_product = "VIIRS_SNPP_CorrectedReflectance_BandsM11-I2-I1";
@@ -143,6 +205,7 @@
 		/**
 		* Add file upload button on map
 		*/
+
 		var customControl = L.Control.extend({
 			options: {
 				position: 'topleft'
@@ -211,6 +274,31 @@
 				basemap_layer.setUrl('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}');
 			}else if(selected_basemap === "terrain"){
 				basemap_layer.setUrl('http://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}');
+			}
+		});
+
+		/**
+		* Toggle layer visualizing
+		*/
+		$('input[type=checkbox][name=country_toggle]').click(function(){
+			if(this.checked) {
+			    mmr_adm0_layer.setStyle({opacity: 1});
+			} else {
+			    mmr_adm0_layer.setStyle({opacity: 0});
+			}
+		});
+		$('input[type=checkbox][name=province_toggle]').click(function(){
+			if(this.checked) {
+			    mmr_adm2_layer.setStyle({opacity: 1});
+			} else {
+			    mmr_adm2_layer.setStyle({opacity: 0});
+			}
+		});
+		$('input[type=checkbox][name=township_toggle]').click(function(){
+			if(this.checked) {
+			    mmr_adm3_layer.setStyle({opacity: 1});
+			} else {
+			    mmr_adm3_layer.setStyle({opacity: 0});
 			}
 		});
 
@@ -389,6 +477,14 @@
 		});
 
 		/**
+		* Change Sensor to update enable date
+		*/
+		$('#sensor_selection').change(function(){
+			$scope.getAvailabelDate();
+		});
+
+
+		/**
 		* Change NRT Browse Imagery
 		*/
 		$('#browse_selection').change(function(){
@@ -415,6 +511,38 @@
 			updatePermanentWater();
 		});
 
+
+		  $("#btn_download").on("click",function(){
+			if(drawing_polygon === undefined || drawing_polygon === ''){
+			alert("Please draw a polygon");
+			}else{
+			   //var selected_date = $('#selected_date').val();
+			   var sensor_val = $('#sensor_selection').val();
+			   var selected_date = $('#date_selection').val();
+			   var geom = JSON.stringify(drawing_polygon);
+			   var parameters = {
+				   date: selected_date,
+				   sensor: sensor_val,
+				   geom: geom
+			   };
+			   MapService.downloadFloodMap(parameters)
+			   .then(function (data) {
+				   $scope.showLoader = false;
+				   if("success" in data) {
+			          //alert('Download URL: \n'+ data.url)
+			          window.open(data.url, '_blank');
+			        }else{
+			          alert('Opps, there was a problem processing the request. Please see the following error: '+data.error);
+			        }
+
+			   }, function (error) {
+				   $scope.showLoader = false;
+				   alert('Opps, there was a problem processing the request. Please see the following error: '+data.error);
+			   });
+			}
+		});
+
+
 		/**
 		* Update precipitation map
 		*/
@@ -423,6 +551,13 @@
 		});
 		$('#product_selection').change(function(){
 			updatePrecipitationData();
+		});
+
+		$("#legend-infobox").click(function () {
+			$("#legend-info-box").addClass("infobox-shown");
+		});
+		$("#legend-infobox").focusout(function () {
+			$("#legend-info-box").removeClass("infobox-shown");
 		});
 
 
@@ -483,6 +618,56 @@
 				console.log(error);
 			});
 		};
+
+		$scope.getAvailabelDate = function () {
+			var prod = $('#sensor_selection').val();
+			var parameters = {
+				sensor: prod,
+			};
+			MapService.getDateList(parameters)
+			.then(function (data) {
+				var enableDates = data;
+				var enableDatesArray=[];
+				$("#date_selection").datepicker("destroy");
+			       for (var i = 0; i < enableDates.length; i++) {
+			             var dt = enableDates[i];
+			             var dd, mm, yyy;
+			             if (parseInt(dt.split('-')[2]) <= 9 || parseInt(dt.split('-')[1]) <= 9) {
+			                       dd = parseInt(dt.split('-')[2]);
+			                      mm = parseInt(dt.split('-')[1]);
+			                      yyy = dt.split('-')[0];
+			                     enableDatesArray.push(yyy + '-' + mm + '-' + dd);
+			                }
+			                else {
+			                 enableDatesArray.push(dt);
+			           }
+			 	}
+				$('#date_selection').datepicker({
+					beforeShow: function (input, inst) {
+				        setTimeout(function () {
+				            inst.dpDiv.css({
+				                top: $(".datepicker").offset().top + 35,
+				                left: $(".datepicker").offset().left
+				            });
+				        }, 0);
+				    },
+					beforeShowDay: function (date) {
+				        var dt_ddmmyyyy = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() ;
+				        if (enableDatesArray.indexOf(dt_ddmmyyyy) != -1) {
+				            return {
+				                tooltip: 'There is data available',
+				                classes: 'active'
+				            };
+				        } else {
+				            return false;
+				        }
+				    }
+				});
+			}, function (error) {
+				console.log(error);
+			});
+		};
+
 
 		/**
 		* Upload Area Button
@@ -558,6 +743,9 @@
 							layer.addTo(map);
 							map.fitBounds(layer.getBounds());
 							editableLayers.addLayer(layer);
+							//active download button
+							$("#btn_download").prop("disabled",false);
+							$("#btn_download").removeClass("btn_custom_disable");
 
 						} else {
 							alert('multigeometry and multipolygon not supported yet!');
@@ -572,7 +760,7 @@
 		$('#input-file2').change(function (event) {
 			readFile(event);
 		});
-		
+
 			// function to add and update tile layer to map
 			function addMapLayer(layer,url){
 				layer = L.tileLayer(url,{attribution:

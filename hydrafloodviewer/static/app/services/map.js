@@ -21,6 +21,20 @@
 			return new google.maps.ImageMapType(eeMapOptions);
 		};
 
+		service.getDateList= function (options) {
+			var config = {
+				params: {
+					action: 'get-date-list',
+					snsr: options.sensor,
+				}
+			};
+			var promise = $http.get('/api/mapclient/', config)
+			.then(function (response) {
+				return response.data;
+			});
+			return promise;
+		};
+
 		service.getMap = function (options) {
 			var config = {
 				params: {
@@ -29,6 +43,22 @@
 					fcolor: options.fcolor,
 					sensor: options.sensor,
 					geom: options.geom
+				}
+			};
+			var promise = $http.get('/api/mapclient/', config)
+			.then(function (response) {
+				return response.data;
+			});
+			return promise;
+		};
+
+		service.downloadFloodMap = function (options) {
+			var config = {
+				params: {
+					action: 'download-flood-map',
+					download_date: options.date,
+					download_snsr: options.sensor,
+					download_shape: options.geom
 				}
 			};
 			var promise = $http.get('/api/mapclient/', config)
@@ -102,7 +132,6 @@
 			}
 			return geom;
 		};
-
 
 		service.getDrawingManagerOptions = function(type) {
 			if (!type) {

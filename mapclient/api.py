@@ -14,9 +14,9 @@ def api(request):
     action = get('action', '')
 
     if action:
-        public_methods = ['get-map-id', 'get-permanent-water', 'get-precipmap']
+        public_methods = ['get-map-id', 'get-permanent-water', 'get-precipmap', 'get-date-list', 'download-flood-map', 'get-feeds-data']
         if action in public_methods:
-            date = get('date', '2016-07-14')
+            date = get('date', '')
             shape = get('shape', '')
             geom = get('geom', '')
             fcolor = get('fcolor', '')
@@ -37,4 +37,14 @@ def api(request):
                 data = core.getHistoricalMap(startYear=startYear, endYear=endYear, startMonth=startMonth, endMonth=endMonth, method=method, wcolor=wcolor, climatology=False, algorithm='JRC', shape=geom)
             elif action == 'get-precipmap':
                 data = core.getPrecipMap(date=precipdate, accumulation=1, cmap_name=cmap)
+            elif action == 'get-date-list':
+                sensor_date_list = get('snsr', '')
+                data = core.dateList(snsr=sensor_date_list)
+            elif action == 'get-feeds-data':
+                data = core.getFeeds()
+            elif action == 'download-flood-map':
+                download_date = get('download_date', '')
+                download_snsr = get('download_snsr', '')
+                download_shape = get('download_shape', '')
+                data = core.getDownloadURL(download_date, download_snsr, download_shape)
             return JsonResponse(data, safe=False)

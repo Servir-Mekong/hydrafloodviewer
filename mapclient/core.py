@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
+from django.core import serializers
+from django.http import HttpResponse
 import datetime
 import numpy as np
 import base64
 import matplotlib as mpl
+import feedparser
 mpl.use('Agg')
 import matplotlib.pyplot as plt
 mpl.rcParams.update({'font.size': 14})
@@ -22,6 +25,7 @@ class GEEApi():
         WEST, SOUTH, EAST, NORTH = 92.0, 9.5, 101.5, 29
         BOUNDING_BOX = (WEST,SOUTH,EAST,NORTH)
         self.REGION = ee.Geometry.Rectangle(BOUNDING_BOX)
+        self.floodExtentCollection = ee.ImageCollection('projects/servir-mekong/hydrafloods/use_cases/hydra_extents')
 
 
     # -------------------------------------------------------------------------
@@ -108,7 +112,7 @@ class GEEApi():
             shape = ee.FeatureCollection(eval(shape));
         else:
             shape = self.REGION
-        fc = ee.ImageCollection('projects/servir-mekong/hydrafloods/use_cases/hydra_extents').filterDate(date).filter(ee.Filter.eq('sensor',sensor))
+        fc = self.floodExtentCollection.filterDate(date).filter(ee.Filter.eq('sensor',sensor))
         image = ee.Image(fc.first()).select(0).clip(shape)
         image = image.updateMask(image)
 
@@ -357,3 +361,51 @@ class GEEApi():
             raise NotImplementedError('Selected algorithm string not available. Options are: "SWT" or "JRC"')
 
         return waterMap
+
+
+    # -------------------------------------------------------------------------
+
+    def dateList(self, snsr):
+        pickup_dict = {}
+        def imgDate(d):
+            return ee.Date(d).format("YYYY-MM-dd")
+        ImageCollection = self.floodExtentCollection.filter(ee.Filter.eq('sensor',snsr))
+        dates = ee.List(ImageCollection.aggregate_array("system:time_start")).map(imgDate).getInfo()
+
+        return dates
+
+    # -------------------------------------------------------------------------
+    def getFeeds(self):
+        data = []
+        url = 'https://floods.einnews.com/rss/q3GkdukcNgWz8gPV'
+        items = feedparser.parse(url)
+        for item in items['entries']:
+            data.append({'title': item.title, 'published': item.published, 'link': item.link, 'summary': item.summary })
+        return data
+
+    # -------------------------------------------------------------------------
+    def getDownloadURL(self, sdate,snsr,shape):
+        return_obj = {}
+        try:
+            shape = shape.replace('["', '[');
+            shape = shape.replace('"]', ']');
+            shape = shape.replace('","', ',');
+            shape = ee.FeatureCollection(eval(shape));
+            t1 = ee.Date(sdate)
+            t2 = t1.advance(1,'day')
+            fc = self.floodExtentCollection.filterDate(t1,t2).filter(ee.Filter.eq('sensor',snsr))
+            image = ee.Image(fc.first()).select(0)
+            clip_image = image.clip(shape.geometry().dissolve())
+
+            dnldURL = clip_image.getDownloadURL({
+                'name': 'floodmap-'+snsr+'-'+sdate,
+        		'scale': 90,
+        		'crs': 'EPSG:4326'
+            })
+            return_obj["url"] = dnldURL
+            return_obj["success"] = "success"
+
+        except Exception as e:
+            return_obj["error"] = "Error Processing Request. Error: "+ str(e)
+
+        return return_obj

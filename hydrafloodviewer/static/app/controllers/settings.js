@@ -12,7 +12,6 @@
 		$scope.partnersFooter = appSettings.partnersFooter;
 
 		$scope.toggleSidePanel = function () {
-			console.log('click');
 			if ($('#map').hasClass('pull-margin')) {
 				$('#map').toggleClass('pull-margin');
 				$('#map').css('width', '100%');

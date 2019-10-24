@@ -1,7 +1,7 @@
 {% load static i18n %}
 {% load cms_tags menu_tags sekizai_tags staticfiles %}
 <!DOCTYPE html>
-<html lang="[[ lang ]]" ng-app="baseApp">
+<html lang="[[ lang ]]">
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -36,7 +36,6 @@
 	<link rel="stylesheet" href="https://cdn.rawgit.com/socib/Leaflet.TimeDimension/master/dist/leaflet.timedimension.control.min.css" />
 	<!--Plugin CSS file with desired skin-->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.0/css/ion.rangeSlider.min.css"/>
-
 	<!-- Load CSS -->
 	<!-- Custom CSS -->
 	<link href="{% static 'css/main.css' %}" rel="stylesheet">
@@ -128,6 +127,7 @@
 	{% else %}
 	<script src="{% static 'dist/application.min.js' %}"></script>
 	{% endif %}
+
 	{% block extra_script %}{% endblock %}
 
 	{% endaddtoblock %}

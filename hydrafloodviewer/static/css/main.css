@@ -241,6 +241,7 @@ h1, h2, h3, h4, h5, h6 {
     color: #FFF;
     background-color: #173F5F;
 }
+
 /***************************/
 /* Chart Penel */
 /***************************/
@@ -299,7 +300,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .legend-info-button {
     position: absolute;
-    margin-left: 62px;
+    margin-left: 40px;
     display: inline-block;
 }
 
@@ -411,6 +412,21 @@ p {
     background:#78e08f;
     color: #34495e;
 }
+.btn_custom_disable{
+    background-color:#A6ACAF;
+    margin: 10px;
+    text-align: center;
+    color: white;
+    padding: 7px 10px 7px 10px;
+    border-radius: 8px;
+    border-color: #A6ACAF;
+}
+.btn_custom_disable:hover{
+    background-color:#A6ACAF;
+    border-color: #A6ACAF;
+    color: white;
+}
+
 .center_obj{
     text-align: center;
 }
@@ -576,3 +592,36 @@ p {
     width: 8%;
     color: #fff;
 }
+
+.info-btn-xs {
+    padding: 1px 5px;
+    font-size: 12px;
+    line-height: 1;
+    border-radius: 50px;
+}
+
+.infobox {
+  display: none;
+}
+
+.infobox-shown {
+  display: inline;
+  position: absolute;
+  right: 175px;
+  bottom: 40px;
+  padding: 10px;
+  margin-bottom: -5px;
+  width: 380px;
+  border-radius: 2px;
+  background-color: white;
+  box-shadow: 0px 0px 5px gray;
+  overflow: auto;
+  margin-bottom: 0;
+  font-size: 12px;
+  font-weight: normal;
+  z-index: 9999;
+}
+
+select#cmap_selection option[value="nipy_spectral"]   { background-image:url(/static/images/gist_ncar.png);   }
+select#cmap_selection option[value="gist_ncar"] { background-image:url(/static/images/gist_ncar.png); }
+select#cmap_selection option[value="cubehelix"] { background-image:url(/static/images/gist_ncar.png); }

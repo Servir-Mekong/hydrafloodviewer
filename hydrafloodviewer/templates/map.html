@@ -1,6 +1,12 @@
 {% extends "layout.html" %}
 {% load cms_tags staticfiles %}
+{% block extra_script %}
+<script src="{% static 'data/mmr_adm0.js' %}"></script>
+<script src="{% static 'data/mmr_adm2.js' %}"></script>
+<script src="{% static 'data/mmr_adm3.js' %}"></script>
+{% endblock %}
 {% block main_container %}
+
 
 <!-- Main Container -->
 <div class="row" ng-controller="hydrafloodviewer">
@@ -35,7 +41,7 @@
                     data-date-min-view-mode="days"
                     data-date-multidate="1"
                     data-date-start-view="decade"
-                    data-date-today-btn="true">
+                    data-date-today-btn="false">
                 </div>
             </div>
         </div>
@@ -59,7 +65,7 @@
                     style="width: 160px;left: 30px;"/>
                 </div>
 
-                <p> [[ 'Select Accumulation Map' | translate]]: <i class="fas fa-info-circle" title="Exchange"></i></p>
+                <p> [[ 'Select Accumulation Map' | translate]]: </p>
                 <select class="form-control" id="product_selection">
                     <option value="1|0">1 Day Accumulation</option>
                     <option value="2|0">2 Day Accumulation</option>
@@ -67,7 +73,7 @@
                 </select>
                 <p> [[ 'Select Colormap' | translate]]: </p>
                 <select class="form-control" id="cmap_selection">
-                    <option value="nipy_spectral">nipy_spectral</option>
+                    <option style="background-image:url(/static/images/gist_ncar.png" value="nipy_spectral">nipy_spectral</option>
                     <option value="gist_ncar">gist_ncar</option>
                     <option value="cubehelix">cubehelix</option>
                 </select>
@@ -97,11 +103,11 @@
                 <select class="form-control" id="sensor_selection">
                     <option value="sentinel1">Sentinel 1</option>
                     <option value="viirs">VIIRS Downscaled</option>
-                    <option value="atms">ATMS (Comming soon)</option>
+                    <option value="atms">ATMS</option>
                 </select>
 
                 <div class="center_obj" >
-                    <button type="submit" id="btn_download" name="btn_download" class="btn_custom"><i class="glyphicon glyphicon-cloud-download"></i>[[ 'Download Data' | translate ]]</button>
+                    <button type="submit" id="btn_download" name="btn_download" class="btn_custom btn_custom_disable" disabled><i class="glyphicon glyphicon-cloud-download"></i>[[ 'Download Data' | translate ]]</button>
                 </div>
             </div>
         </div>
@@ -123,7 +129,7 @@
                     style="width: 160px;left: 30px;"/>
                 </div>
 
-                <p>[[ 'Select reference period' | translate]]:</p>
+                <p>[[ 'Select reference period' | translate]]: </p>
                 <table style="width:100%">
                     <tr>
                         <td style="width:45%">
@@ -160,7 +166,7 @@
                     </tr>
                 </table>
 
-                <p>[[ 'Select seasonal period' | translate]]:</p>
+                <p>[[ 'Select seasonal period' | translate]]: </p>
                 <div style="width:95%; margin:3px;">
                     <input type="text" class="js-range-slider" id="month_range" name="month_range" />
                 </div>
@@ -201,13 +207,23 @@
             </div>
         </div>
     </div>
-    <div class="map pull-margin" id="map" ng-init="initMap('2015-08-11', '#9999ff', 'sentinel1'); getpermanentwater('2010', '2015', '01', '12', 'discrete', '#00008b'); getPrecipMap();"></div>
+    <div class="map pull-margin" id="map" ng-init="initMap('2015-08-11', '#9999ff', 'sentinel1'); getpermanentwater('2010', '2015', '01', '12', 'discrete', '#00008b'); getPrecipMap(); getAvailabelDate();"></div>
     <div id="layers" name="layers" data-precip-url="{{precip_layer}}"
     data-historical-url="{{historical_layer}}"
     data-admin-url="{{admin_layer}}"
     data-flood-url="{{flood_layer}}"
     style="display:none;">
 </div>
+<div class="infobox" id="legend-info-box">
+    <span>
+        The legend clarifies the map layers. You can toggle between the water legend and precipitation legend by clicking on their respective tabs.
+        Moreover, you can change a water color by clicking on a color box.
+    </span>
+</div>
+
+
+
+
 {% include "panels/legendbox.html" %}
 
 </div>
