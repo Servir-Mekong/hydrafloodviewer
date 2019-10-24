@@ -4,6 +4,9 @@
 <link href="{% static 'css/usecase-viewer.css' %}" rel="stylesheet">
 {% endblock %}
 {% block extra_script %}
+<script src="{% static 'data/mmr_adm0.js' %}"></script>
+<script src="{% static 'data/mmr_adm2.js' %}"></script>
+<script src="{% static 'data/mmr_adm3.js' %}"></script>
 <script src="{% static 'app/controllers/usecase.js' %}"></script>
 {% endblock %}
 
@@ -44,6 +47,6 @@
         </div>
     </div>
     {% include "panels/legendbox.html" %}
-    
+
 </div>
 {% endblock main_container %}
