@@ -537,7 +537,7 @@
 
 			   }, function (error) {
 				   $scope.showLoader = false;
-				   alert('Opps, there was a problem processing the request. Please see the following error: '+data.error);
+				   alert('Opps, there was a problem processing the request. Please see the following error: '+error.error);
 			   });
 			}
 		});
@@ -653,7 +653,7 @@
 				    },
 					beforeShowDay: function (date) {
 				        var dt_ddmmyyyy = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() ;
-				        if (enableDatesArray.indexOf(dt_ddmmyyyy) != -1) {
+				        if (enableDatesArray.indexOf(dt_ddmmyyyy) !== -1) {
 				            return {
 				                tooltip: 'There is data available',
 				                classes: 'active'
