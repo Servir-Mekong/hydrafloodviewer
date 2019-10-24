@@ -20,7 +20,10 @@
 		"FileReader": true,
 		"DOMParser": true,
 		"ActiveXObject": true,
-		"toGeoJSON": true
+		"toGeoJSON": true,
+		"mmr_adm0": true,
+		"mmr_adm2": true,
+		"mmr_adm3": true
 	},
 	"predef": [ // Extra globals.
 		"inject",

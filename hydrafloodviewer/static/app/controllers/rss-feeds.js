@@ -25,7 +25,7 @@
 
         $scope.trustAsHtml = function(html) {
           return $sce.trustAsHtml(html);
-        }
+      };
 
     });
 
