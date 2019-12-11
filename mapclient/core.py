@@ -375,13 +375,27 @@ class GEEApi():
         return dates
 
     # -------------------------------------------------------------------------
+
+    def contains_wanted(self, in_str):
+        # Just some sample keywords to search for in the title
+        key_words = ['Flood','Water', 'Inundation', 'Surge', 'Tsunami', 'Flow']
+        # returns true if the in_str contains a keyword
+        # we are interested in. Case-insensitive
+        for wrd in key_words:
+            if wrd.lower() in in_str:
+                return True
+        return False
+
+    # -------------------------------------------------------------------------
     def getFeeds(self):
         data = []
         url = 'https://floods.einnews.com/rss/q3GkdukcNgWz8gPV'
         items = feedparser.parse(url)
         for item in items['entries']:
-            data.append({'title': item.title, 'published': item.published, 'link': item.link, 'summary': item.summary })
-        return data
+            if self.contains_wanted(item.title.lower()):
+                published_date = datetime.datetime.strptime(item.published, "%a, %d %b %Y %H:%M:%S GMT").strftime("%y/%m/%d")
+                data.append({'title': item.title, 'published': item.published, 'link': item.link, 'summary': item.summary, 'date': published_date})
+        return sorted(data, key=lambda k : map(int, k['date'].split('/')), reverse=True)
 
     # -------------------------------------------------------------------------
     def getDownloadURL(self, sdate,snsr,shape):
