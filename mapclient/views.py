@@ -13,4 +13,4 @@ def index(request):
     except Exception as e:
         oauth.get_authorize_redirect()
 
-    return render(request, 'map.html', {})
+    return render(request, 'map_v1.html', {})

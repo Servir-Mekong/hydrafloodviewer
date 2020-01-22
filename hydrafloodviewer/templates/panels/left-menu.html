@@ -1,0 +1,341 @@
+<div class="c-map-menu map-menu">
+  <div class="menu-tiles map-tour-data-layers">
+    <div class="c-menu-desktop menu-desktop">
+      <ul class="datasets-menu">
+        <li class="c-map-menu-tile datasets-tile" id="app-logo">
+          <button class="item-button" type="button" name="button">
+            <div class="button-wrapper">
+              <svg class="c-icon tile-icon-logo" viewBox="0 0 32 32">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" >
+                  <path d="M24.533 27.733v-2.133h-2.133v2.133h2.133zM27.733 24.533l-4.267-11.733-2.655 7.3 1.655 4.433h5.267zM14.933 28.8v-3.2h-3.2v3.2h3.2zM21.333 24.533l-8.001-21.333-8 21.333h16z"></path>
+                </svg>
+              </svg>
+            </div>
+          </button>
+        </li>
+        <li class="c-map-menu-tile active datasets-tile" id="flood-tab">
+          <button class="item-button" type="button" name="button">
+            <div class="button-wrapper">
+              <svg class="c-icon tile-icon" viewBox="0 0 32 32">
+                <image xlink:href="/static/images/flood.svg" />
+              </svg>
+              <span>FLOOD</span>
+            </div>
+          </button>
+        </li>
+        <li class="c-map-menu-tile datasets-tile" id="water-tab">
+          <button class="item-button" type="button" name="button">
+            <div class="button-wrapper">
+              <svg class="c-icon tile-icon" viewBox="0 0 32 32">
+                <image xlink:href="/static/images/water.svg" />
+              </svg>
+              <span>WATER</span>
+            </div>
+          </button>
+        </li>
+        <li class="c-map-menu-tile datasets-tile" id="basemap-tab">
+          <button class="item-button" type="button" name="button">
+            <div class="button-wrapper">
+              <svg class="c-icon tile-icon" viewBox="0 0 32 32">
+                <image xlink:href="/static/images/imagery.svg" />
+              </svg>
+              <span>IMAGERY</span>
+            </div>
+          </button>
+        </li>
+      </ul>
+      <ul class="datasets-menu align-bottom">
+        <li class="c-map-menu-tile datasets-tile" id="layers-tab">
+          <button class="item-button" type="button" name="button">
+            <div class="button-wrapper">
+              <svg class="c-icon tile-icon" viewBox="0 0 32 32">
+                <image xlink:href="/static/images/layer.svg" />
+              </svg>
+              <span>LAYERS</span>
+            </div>
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="c-menu-panel map-tour-menu-panel menu-panel" id="panel1" style="opacity: 1; transform: translateX(6.75rem) translateZ(0rem); ">
+    <button class="close-menu">
+      <svg class="c-icon icon-close-panel" viewBox="0 0 32 32">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+          <path d="M3.692 0l-3.692 3.692 12.308 12.308-12.308 12.308 3.692 3.692 12.308-12.308 12.308 12.308 3.692-3.692-12.308-12.308 12.308-12.308-3.692-3.692-12.308 12.308z"></path>
+        </svg>
+      </svg>
+    </button>
+    <div class="panel-body">
+      <label><b>Layer Setting</b></label>
+      <ul class="toggles-list">
+        <li class="toggle"><label class="switch_layer"><input  name="flood-check" id="flood-check" type="checkbox" checked><span class="slider_toggle round"></span></label><label>Surface Water</label></li>
+      </ul>
+      <div class="slider-width">
+        <p> [[ 'Opacity' | translate]]:&emsp;&emsp; </p>
+        <input id="flood1-opacity" data-slider-id='flood1-opacity' type="text" data-slider-min="0" data-slider-max="1" data-slider-step="0.1" data-slider-value="1" data-slider-enabled="true"
+        style="width: 160px;left: 30px;"/>
+      </div>
+      <hr>
+
+      <p class="hide"><b> [[ 'Select Sensor' | translate]]: </b></p>
+      <select class="form-control hide" id="sensor_selection">
+        <option value="sentinel1">Sentinel 1</option>
+        <option value="viirs">VIIRS Downscaled</option>
+        <option value="atms">ATMS</option>
+      </select>
+
+      <div class="options hide">
+        <button class="sentinel selected">
+          <div class="button-wrapper">
+            <svg class="c-icon icon-square-point" viewBox="0 0 280 280">
+              <image xlink:href="/static/images/satellite.svg" />
+            </svg>
+            <div class="label">
+              Sentinel 1
+            </div>
+          </div>
+        </button>
+        <button class="viirs" disabled>
+          <div class="button-wrapper">
+            <svg class="c-icon icon-square-point" viewBox="0 0 280 280">
+              <image xlink:href="/static/images/satellite.svg" />
+            </svg>
+            <div class="label">
+              VIIRS
+            </div>
+          </div>
+        </button>
+        <button class="atms" disabled>
+          <div class="button-wrapper">
+            <svg class="c-icon icon-square-point" viewBox="0 0 280 280">
+              <image xlink:href="/static/images/satellite.svg" />
+            </svg>
+            <div class="label">
+              ATMS
+            </div>
+          </div>
+        </button>
+      </div>
+
+      <br>
+      <p>Enter or select date to perform a flooded area map</p>
+      <p><b> [[ 'Select Date (YYYY-MM-DD)' | translate]]: </b></p>
+      <div class="form-group ">
+        <input class = "form-control" id="date_selection"
+        name="date_selection"
+        type="text"
+        data-provide="datepicker"
+        data-date-autoclose="true"
+        data-date-format="yyyy-mm-dd"
+        data-date-min-view-mode="days"
+        data-date-multidate="1"
+        data-date-start-view="decade"
+        data-date-today-btn="false">
+      </div>
+      <div class="center_obj" >
+        <button type="submit" id="btn_download" name="btn_download" class="btn_custom btn_custom_disable" disabled><i class="glyphicon glyphicon-cloud-download"></i>&nbsp;&nbsp;[[ 'Download Data' | translate ]]</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="c-menu-panel map-tour-menu-panel menu-panel" id="panel2" style="opacity: 0; transform: translateX(-25rem) translateZ(0rem);">
+    <button class="close-menu">
+      <svg class="c-icon icon-close-panel" viewBox="0 0 32 32">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+          <path d="M3.692 0l-3.692 3.692 12.308 12.308-12.308 12.308 3.692 3.692 12.308-12.308 12.308 12.308 3.692-3.692-12.308-12.308 12.308-12.308-3.692-3.692-12.308 12.308z"></path>
+        </svg>
+      </svg>
+    </button>
+    <div class="panel-body">
+      <label><b>Layer Setting</b></label>
+      <ul class="toggles-list">
+        <li class="toggle"><label class="switch_layer"><input  name="historical-check" id="historical-check" type="checkbox" checked><span class="slider_toggle round"></span></label><label>Surface Water</label></li>
+      </ul>
+      <div class="slider-width">
+        <p> [[ 'Opacity' | translate]]:&emsp;&emsp; </p>
+        <input id="historical-opacity" data-slider-id='historical-opacity' type="text" data-slider-min="0" data-slider-max="1" data-slider-step="0.1" data-slider-value="1" data-slider-enabled="true"
+        style="width: 160px;left: 30px;"/>
+      </div>
+      <hr>
+
+      <p>[[ 'Select reference period' | translate]]: </p>
+      <table style="width:100%">
+        <tr>
+          <td style="width:45%">
+            <div class="form-group ">
+              <input class = "form-control" id="start_year_selection_historical"
+              name="end_year_selection_historical"
+              type="text"
+              data-provide="datepicker"
+              value="2010"
+              data-date-autoclose="true"
+              data-date-clear-btn="true"
+              data-date-format="yyyy"
+              data-date-min-view-mode="years"
+              data-date-multidate="1"
+              data-date-start-view="years">
+            </div>
+          </td>
+          <td style="width:10%; text-align: center;"><p><b>to</b></p></td>
+          <td style="width:45%">
+            <div class="form-group ">
+              <input class = "form-control" id="end_year_selection_historical"
+              name="end_year_selection_historical"
+              type="text"
+              data-provide="datepicker"
+              value="2015"
+              data-date-autoclose="true"
+              data-date-clear-btn="true"
+              data-date-format="yyyy"
+              data-date-min-view-mode="years"
+              data-date-multidate="1"
+              data-date-start-view="years">
+            </div>
+          </td>
+        </tr>
+      </table>
+
+      <p>[[ 'Select seasonal period' | translate]]: </p>
+      <div style="width:95%; margin:3px;">
+        <input type="text" class="js-range-slider" id="month_range" name="month_range" />
+      </div>
+      <br>
+      <div class="center_obj" >
+        <button type="submit" id="update-button" name="update-button" class="btn_custom">[[ 'UPDATE MAP' | translate ]]</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="c-menu-panel map-tour-menu-panel menu-panel" id="panel3" style="opacity: 0; transform: translateX(-25rem) translateZ(0rem);">
+    <button class="close-menu">
+      <svg class="c-icon icon-close-panel" viewBox="0 0 32 32">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+          <path d="M3.692 0l-3.692 3.692 12.308 12.308-12.308 12.308 3.692 3.692 12.308-12.308 12.308 12.308 3.692-3.692-12.308-12.308 12.308-12.308-3.692-3.692-12.308 12.308z"></path>
+        </svg>
+      </svg>
+    </button>
+    <div class="panel-body">
+      <label><b>Layer Setting</b></label>
+      <ul class="toggles-list">
+        <li class="toggle"><label class="switch_layer"><input  name="browse-check" id="browse-check" type="checkbox"><span class="slider_toggle round"></span></label><label>Near Real-Time Browse Imagery</label></li>
+      </ul>
+      <div class="slider-width">
+        <p> [[ 'Opacity' | translate]]:&emsp;&emsp; </p>
+        <input id="browse-opacity" data-slider-id='browse-opacity' type="text" data-slider-min="0" data-slider-max="1" data-slider-step="0.1" data-slider-value="1" data-slider-enabled="true"
+        style="width: 160px;left: 30px;"/>
+      </div>
+      <hr>
+      <div class="cc-selector">
+        <table>
+          <tr>
+            <td width="30%">
+              <input id="VIIRS_NRT_TRUE_COLOR" type="radio" checked="checked" name="browse_selection" value="1|VIIRS_SNPP_CorrectedReflectance_TrueColor" />
+              <label class="drinkcard-cc viirs-nrt-true" for="VIIRS_NRT_TRUE_COLOR"></label>
+            </td>
+            <td width="70%">
+              <label for="VIIRS_NRT_TRUE_COLOR">VIIRS NRT TRUE COLOR</label>
+            </td>
+          </tr>
+          <tr>
+            <td width="30%">
+              <input id="VIIRS_NRT_NATURAL_COLOR" type="radio" name="browse_selection" value="2|VIIRS_SNPP_CorrectedReflectance_BandsM11-I2-I1" />
+              <label class="drinkcard-cc viirs-nrt-natural" for="VIIRS_NRT_NATURAL_COLOR"></label><br>
+            </td>
+            <td width="70%">
+              <label for="VIIRS_NRT_NATURAL_COLOR">VIIRS NRT NATURAL COLOR</label>
+            </td>
+          </tr>
+          <tr>
+            <td width="30%">
+              <input id="MODIS_AQUA_TRUE_COLOR" type="radio" name="browse_selection" value="3|MODIS_Aqua_CorrectedReflectance_TrueColor" />
+              <label class="drinkcard-cc modis-aqua-true" for="MODIS_AQUA_TRUE_COLOR"></label><br>
+            </td>
+            <td width="70%">
+              <label for="MODIS_AQUA_TRUE_COLOR">MODIS AQUA TRUE COLOR</label>
+            </td>
+          </tr>
+          <tr>
+            <td width="30%">
+              <input id="MODI_AQUA_NATURAL_COLOR" type="radio" name="browse_selection" value="4|MODIS_Aqua_CorrectedReflectance_Bands721" />
+              <label class="drinkcard-cc modis-aqua-natural" for="MODI_AQUA_NATURAL_COLOR"></label><br>
+            </td>
+            <td width="70%">
+              <label for="MODI_AQUA_NATURAL_COLOR">MODIS AQUA NATURAL COLOR</label>
+            </td>
+          </tr>
+          <tr>
+            <td width="30%">
+              <input id="MODIS_TERRA_TRUE_COLOR" type="radio" name="browse_selection" value="5|MODIS_Terra_CorrectedReflectance_TrueColor" />
+              <label class="drinkcard-cc modis-terra-true" for="MODIS_TERRA_TRUE_COLOR"></label><br>
+            </td>
+            <td width="70%">
+              <label for="MODIS_TERRA_TRUE_COLOR">MODIS TERRA TRUE COLOR</label>
+            </td>
+          </tr>
+          <tr>
+            <td width="30%">
+              <input id="MODIS_TERRA_NATURAL_COLOR" type="radio" name="browse_selection" value="5|MODIS_Terra_CorrectedReflectance_Bands721" />
+              <label class="drinkcard-cc modis-terra-natural" for="MODIS_TERRA_NATURAL_COLOR"></label><br>
+            </td>
+            <td width="70%">
+              <label for="MODIS_TERRA_NATURAL_COLOR">MODIS TERRA NATURAL COLOR</label>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="c-menu-panel map-tour-menu-panel menu-panel" id="panel-layers" style="opacity: 0; transform: translateX(-25rem) translateZ(0rem);">
+    <button class="close-menu">
+      <svg class="c-icon icon-close-panel" viewBox="0 0 32 32">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+          <path d="M3.692 0l-3.692 3.692 12.308 12.308-12.308 12.308 3.692 3.692 12.308-12.308 12.308 12.308 3.692-3.692-12.308-12.308 12.308-12.308-3.692-3.692-12.308 12.308z"></path>
+        </svg>
+      </svg>
+    </button>
+    <div class="panel-body">
+      <label><b>Basemap</b></label>
+      <div class="cc-selector">
+        <table>
+          <tr>
+            <td width="30%">
+              <input id="street" type="radio" name="basemap_selection" value="street" />
+              <label class="drinkcard-cc street" for="street"></label>
+            </td>
+            <td width="70%">
+              <label for="street">STREETS</label>
+            </td>
+          </tr>
+          <tr>
+            <td width="30%">
+              <input id="satellite" type="radio" name="basemap_selection" value="satellite" />
+              <label class="drinkcard-cc satellite" for="satellite"></label><br>
+            </td>
+            <td width="70%">
+              <label for="satellite">SATELLITE</label>
+            </td>
+          </tr>
+          <tr>
+            <td width="30%">
+              <input id="terrain" type="radio" checked="checked" name="basemap_selection" value="terrain" />
+              <label class="drinkcard-cc terrain" for="terrain"></label><br>
+            </td>
+            <td width="70%">
+              <label for="terrain">TERRAIN</label>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <hr>
+      <label><b>Administrative Boundaries</b></label>
+      <ul class="toggles-list">
+        <li class="toggle"><label class="switch_layer"><input  name="country_toggle" id="country_toggle"  type="checkbox"><span class="slider_toggle round"></span></label><label>Country</label></li>
+        <li class="toggle"><label class="switch_layer"><input name="province_toggle" id="province_toggle" type="checkbox"><span class="slider_toggle round"></span></label><label>Province</label></li>
+        <li class="toggle"><label class="switch_layer"><input name="township_toggle" id="township_toggle" type="checkbox"><span class="slider_toggle round"></span></label><label>Township</label></li>
+      </ul>
+    </div>
+  </div>
+</div>

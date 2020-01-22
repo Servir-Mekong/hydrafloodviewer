@@ -45,7 +45,7 @@
         background-color: #34495e ;
         border: 0 solid #333;
     }
-    
+
 }
 
 .banner-container {
@@ -56,7 +56,8 @@
 }
 
 .menu-container {
-	background-color: #34495e !important;
+	/*background-color: #34495e !important;*/
+    background-color: #333!important;
 }
 
 .banner {
@@ -119,13 +120,19 @@
 	}
 }
 
+.navbar-default {
+    background-color: #f8f8f8;
+    border-color: #e7e7e7;
+    z-index: 10;
+}
+
 .navmenu {
 	color: rgb(255,255,255) !important;
     color: rgba(255,255,255,0.87) !important;
     text-transform: uppercase;
 }
 
-#toggle-nav:hover, .nav > li > a:hover {
-    background-color: #78e08f !important;
+#toggle-nav:hover, .nav  > li >a:hover {
+    color: #9999ff !important;
     font-weight: 700;
 }

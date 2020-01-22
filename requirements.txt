@@ -40,7 +40,6 @@ earthengine-api==0.1.119
 easy-thumbnails==2.4.1
 enum34==1.1.6
 fasteners==0.14.1
-Fiona==1.7.12
 geopandas==0.3.0
 get==1.0.3
 google-api-python-client==1.6.3

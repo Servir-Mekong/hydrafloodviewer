@@ -2,43 +2,31 @@
 <div class="legend">
     <div class="legend-text">
         <span>[[ 'Legend' | translate]] <button class="btn btn-default info-btn-xs" id="legend-infobox">i</button></span>
-        <button class="legend-info-button btn btn-danger btn-xs" id="legend-collapse">
+        <!-- <button class="legend-info-button btn btn-danger btn-xs" id="legend-collapse">
             <i class="glyphicon glyphicon-remove"></i>
         </button>
         <button class="legend-info-button btn btn-success btn-xs" id="legend-expand" style="display:none;">
             <i class="glyphicon glyphicon-plus"></i>
-        </button>
+        </button> -->
     </div>
-    <div class="legend-tabs">
+    <!-- <div class="legend-tabs">
         <button class="legend-tab" id="tab-water">[[ 'Water' | translate]]</button>
         <button class="legend-tab" id="tab-precip">[[ 'Precip' | translate]]</button>
-    </div>
+    </div> -->
     <div class="legend-line"></div>
     <div id='legend-content'>
         <div id="legend-tab-water" class="legend-tab-content">
             <div class="legend-value" id="legend-water-perm">
                 <div id="color-picker-wrapper-water" class="color-picker-wrapper"><input type="color" value="#00008b" id="color-picker-water"></div>
                 <div class="legend-textlist">[[ 'Permanent' | translate]]</div>
-                <div class="toggle-legend">
-                    <label class="switch">
-                        <input type="checkbox" id="toggle_switch_historic" checked>
-                        <span class="toggle-slider round"></span>
-                    </label>
-                </div>
             </div>
             <div class="legend-value" id="legend-water-temp">
                 <div id="color-picker-wrapper-flood" class="color-picker-wrapper"><input type="color" value="#9999ff" id="color-picker-flood"></div>
                 <div class="legend-textlist">[[ 'Daily' | translate]]</div>
-                <div class="toggle-legend">
-                    <label class="switch">
-                        <input type="checkbox" id="toggle_switch_daily" checked>
-                        <span class="toggle-slider round"></span>
-                    </label>
-                </div>
             </div>
         </div>
-        <div id="legend-tab-precip" class="legend-tab-content">
+        <!-- <div id="legend-tab-precip" class="legend-tab-content">
             <img class="legend-cb" id="precip-cb" src="{% static 'images/precip_colorbar.png' %}" alt="Precipitation Colorbar">
-        </div>
+        </div> -->
     </div>
 </div>

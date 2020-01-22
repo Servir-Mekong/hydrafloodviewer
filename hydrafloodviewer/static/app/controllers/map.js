@@ -13,6 +13,7 @@
 		precip_layer,
 		historical_layer,
 		sentinel1_layer,
+		recent_date,
 		admin_layer,
 		flood_layer,
 		drawing_polygon,
@@ -39,8 +40,8 @@
 
 		// init map
 		map = L.map('map',{
-			center: [16.8,95.7],
-			zoom: 8,
+			center: [17.5,95.7],
+			zoom: 6,
 			minZoom:2,
 			maxZoom: 16,
 			maxBounds: [
@@ -49,35 +50,6 @@
 			]
 		});
 
-
-
-		L.Control.Custom = L.Control.Layers.extend({
-			onAdd: function () {
-				this._initLayout();
-				this._addElement();
-				this._update();
-				return this._container;
-			},
-			_addElement: function () {
-				var elements = this._container.getElementsByClassName('leaflet-control-layers-list');
-				var div = L.DomUtil.create('div', 'leaflet-control-layers-overlays', elements[0]);
-				div.innerHTML = '<label><b>Basemap</b></label>'+
-				'<label class="container_radio">Streets<input name="basemap_selection" id="street" checked="checked" value="street" type="radio"></input><span class="checkmark_radio"></span></label>'+
-				'<label class="container_radio">Satellite<input name="basemap_selection" id="satellite" value="satellite" type="radio"></input><span class="checkmark_radio"></span></label>'+
-				'<label class="container_radio">Terrain<input name="basemap_selection" id="terrain" value="terrain" type="radio"></input><span class="checkmark_radio"></span></label>'+
-				'<hr>'+
-				'<label><b>Administrative Boundaries</b></label>'+
-				'<ul class="toggles-list">'+
-					'<li class="toggle"><label class="switch_layer"><input  name="country_toggle" id="country_toggle"  type="checkbox"><span class="slider_toggle round"></span></label><label>Country</label></li>'+
-				    '<li class="toggle"><label class="switch_layer"><input name="province_toggle" id="province_toggle" type="checkbox"><span class="slider_toggle round"></span></label><label>Province</label></li>'+
-					'<li class="toggle"><label class="switch_layer"><input name="township_toggle" id="township_toggle" type="checkbox"><span class="slider_toggle round"></span></label><label>Township</label></li>'+
-				'</ul>';
-			}
-		});
-
-
-
-		var control = new L.Control.Custom().addTo(map);
 
 		// Initialise the FeatureGroup to store editable layers
 		var editableLayers = new L.FeatureGroup();
@@ -92,14 +64,23 @@
 						message: '<strong>Oh snap!<strong> you can\'t draw that!' // Message that will show when intersect
 					},
 					shapeOptions: {
-						color: '#97009c'
+						color: '#fd5a24',
+						strokeWeight: 2,
+						fillOpacity: 0
 					}
 				},
+
 				// disable toolbar item by setting it to false
 				polyline: false,
 				circle: false, // Turns off this drawing tool
 				circlemarker: false,
-				rectangle: true,
+				rectangle: {
+					shapeOptions: {
+						color: '#fd5a24',
+						strokeWeight: 2,
+						fillOpacity: 0
+					}
+				},
 				marker: false,
 			},
 			edit: {
@@ -190,7 +171,7 @@
 			}
 		}).addTo(map);
 
-		basemap_layer = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+		basemap_layer = L.tileLayer('http://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}', {
 			attribution: '<a href="https://google.com/maps" target="_">Google Maps</a>;',
 			subdomains:['mt0','mt1','mt2','mt3']
 		}).addTo(map);
@@ -245,6 +226,77 @@
 			$('.custom-alert').removeClass('display-none').removeClass('alert-success').removeClass('alert-danger').addClass('alert-info');
 		};
 
+
+		$(".draw-tab").click(function () {
+				$(".draw-menu").removeClass('hide');
+				$(".draw-menu").addClass('show');
+				$(".uploadfile-menu").removeClass('show');
+				$(".uploadfile-menu").addClass('hide');
+				$(".draw-upload-tab").removeClass('selected');
+				$(this).addClass('selected');
+		});
+		$(".draw-upload-tab").click(function () {
+				$(".draw-menu").removeClass('show');
+				$(".draw-menu").addClass('hide');
+				$(".uploadfile-menu").removeClass('hide');
+				$(".uploadfile-menu").addClass('show');
+				$(".draw-tab").removeClass('selected');
+				$(this).addClass('selected');
+		});
+
+		$(".sentinel").click(function () {
+				$(".viirs").removeClass('selected');
+				$(".atms").removeClass('selected');
+				$(this).addClass('selected');
+				$('#sensor_selection').val("sentinel1");
+				$('#sensor_selection').trigger("change");
+
+		});
+		$(".viirs").click(function () {
+				$(".sentinel").removeClass('selected');
+				$(".atms").removeClass('selected');
+				$(this).addClass('selected');
+				$('#sensor_selection').val("viirs");
+				$('#sensor_selection').trigger("change");
+		});
+		$(".atms").click(function () {
+				$(".sentinel").removeClass('selected');
+				$(".viirs").removeClass('selected');
+				$(this).addClass('selected');
+				$('#sensor_selection').val("atms");
+				$('#sensor_selection').trigger("change");
+		});
+
+		$("#draw-tool").click(function() {
+			$("#drawing-modal").removeClass('hide');
+			$("#drawing-modal").addClass('show');
+		});
+
+		$("#draw-polygon").click(function() {
+			$(".modal-background").click();
+			new L.Draw.Polygon(map, drawControl.options.draw.polygon).enable();
+		});
+		$("#draw-rectangle").click(function() {
+			$(".modal-background").click();
+			new L.Draw.Rectangle(map, drawControl.options.draw.rectangle).enable();
+		});
+		$("#draw-clear").click(function() {
+			$(".modal-background").click();
+			editableLayers.clearLayers();
+			$("#btn_download").prop("disabled",true);
+			$("#btn_download").addClass("btn_custom_disable");
+
+		});
+		$(".draw-menu-input").click(function() {
+			$("input[type='file']").click();
+		});
+
+		// Modal Close Function
+		$(".modal-background").click(function() {
+			$(".modal").removeClass('show');
+			$(".modal").addClass('hide');
+		});
+
 		/**
 		* Change permanent water color
 		*/
@@ -276,6 +328,10 @@
 				basemap_layer.setUrl('http://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}');
 			}
 		});
+
+
+    $(".datepicker .datepicker-dropdown .dropdown-menu .datepicker-orient-left .datepicker-orient-top").addClass("zIndex9999");
+
 
 		/**
 		* Toggle layer visualizing
@@ -317,28 +373,33 @@
 				$("#legend-expand").css("display","inline-block");
 			}
 		});
-		$("#tab-water").click(function () {
-			$("#legend-tab-water").css("display", "block");
-			$("#legend-tab-precip").css("display", "none");
-			$("#tab-water").addClass("active");
-			$("#tab-precip").removeClass("active");
-		});
-		$("#tab-precip").click(function () {
-			$("#legend-tab-water").css("display", "none");
-			$("#legend-tab-precip").css("display", "block");
-			$("#tab-precip").addClass("active");
-			$("#tab-water").removeClass("active");
-		});
-		$("#tab-water").click();
+		// $("#tab-water").click(function () {
+		// 	$("#legend-tab-water").css("display", "block");
+		// 	$("#legend-tab-precip").css("display", "none");
+		// 	$("#tab-water").addClass("active");
+		// 	$("#tab-precip").removeClass("active");
+		// });
+		// $("#tab-precip").click(function () {
+		// 	$("#legend-tab-water").css("display", "none");
+		// 	$("#legend-tab-precip").css("display", "block");
+		// 	$("#tab-precip").addClass("active");
+		// 	$("#tab-water").removeClass("active");
+		// });
+		// $("#tab-water").click();
+
+		$("#legend-tab-water").css("display", "block");
 
 		/**
 		* Update layers when date selection is changed
 		*/
 		$('#date_selection').change(function(){
+			console.log("datee selection changed");
+
 			updateFloodMapLayer();
-			updatePrecipitationData();
-			var prod = $('#browse_selection').val();
+			//updatePrecipitationData();
+			var prod = $('input[type=radio][name=browse_selection]:checked').val();
 			var id = prod.split('|')[1];
+			var selected_date = $(this).val();
 			var template =
 			'//gibs-{s}.earthdata.nasa.gov/wmts/epsg3857/best/' +
 			id + '/default/' + selected_date + '/{tileMatrixSet}/{z}/{y}/{x}.jpg';
@@ -416,12 +477,10 @@
 				historicalSlider.slider('enable');
 				var opac = parseFloat($('input[id="historical-opacity"]').slider('getValue'));
 				historical_layer.setOpacity(opac);
-				$("#toggle_switch_historic").prop('checked',true).change();
 			}
 			else{
 				historicalSlider.slider('disable');
 				historical_layer.setOpacity(0);
-				$("#toggle_switch_historic").prop('checked',false).change();
 			}
 		});
 
@@ -433,12 +492,10 @@
 				floodSlider1.slider('enable');
 				var opac = parseFloat($('input[id="flood1-opacity"]').slider('getValue'));
 				flood_layer.setOpacity(opac);
-				$("#toggle_switch_daily").prop('checked',true).change();
 			}
 			else{
 				floodSlider1.slider('disable');
 				flood_layer.setOpacity(0);
-				$("#toggle_switch_daily").prop('checked',false).change();
 			}
 		});
 
@@ -487,9 +544,10 @@
 		/**
 		* Change NRT Browse Imagery
 		*/
-		$('#browse_selection').change(function(){
-			var prod = $('#browse_selection').val();
+		$('input[type=radio][name=browse_selection]').change(function(){
+			var prod = $(this).val();
 			var id = prod.split('|')[1];
+			var selected_date = $("#date_selection").val();
 			var template =
 			'//gibs-{s}.earthdata.nasa.gov/wmts/epsg3857/best/' +
 			id + '/default/' + selected_date + '/{tileMatrixSet}/{z}/{y}/{x}.jpg';
@@ -549,6 +607,7 @@
 		$('#cmap_selection').change(function(){
 			updatePrecipitationData();
 		});
+
 		$('#product_selection').change(function(){
 			updatePrecipitationData();
 		});
@@ -556,28 +615,105 @@
 		$("#legend-infobox").click(function () {
 			$("#legend-info-box").addClass("infobox-shown");
 		});
+
 		$("#legend-infobox").focusout(function () {
 			$("#legend-info-box").removeClass("infobox-shown");
 		});
 
+		$("#zoom-in").click(function() {
+					map.zoomIn();
+				});
 
-		$scope.initMap = function (date, fcolor, sensor) {
-			$scope.showLoader = true;
-			var parameters = {
-				date: date,
-				fcolor: fcolor,
-				sensor: sensor
-			};
-			MapService.getMap(parameters)
-			.then(function (data) {
-				$scope.showLoader = false;
-				flood_layer = addMapLayer(flood_layer, data);
+		$("#zoom-out").click(function() {
+			map.zoomOut();
+		});
 
-			}, function (error) {
-				$scope.showLoader = false;
-				console.log(error);
-			});
-		};
+		$("#legend-toggle").click(function () {
+			if($(".legend").css("display") == "none"){
+				$(".legend").show();
+			}else{
+				$(".legend").hide();
+			}
+
+		});
+
+		$("#full-screen").click(function() {
+			if($(".container-wrapper").css("margin-top") ==  "115px" ){
+				$("nav").hide();
+				$(".container-wrapper").css("margin-top", "0");
+				$(".c-map-menu .menu-tiles").css("top", "0");
+				$(".c-menu-panel").css("top", "0");
+				$(".map").css("height", "100vh");
+			}else{
+				$("nav").show();
+				$(".container-wrapper").css("margin-top", "115px");
+				$(".c-map-menu .menu-tiles").css("top", "113px");
+				$(".c-menu-panel").css("top", "113px");
+				$(".map").css("height", "calc(100vh - 115px)");
+			}
+		});
+
+		$(".close-menu").click(function () {
+			$('.c-menu-panel').css('transform', ' translateX(-26rem)');
+			$('.c-menu-panel').css('opacity', 0);
+			$("#flood-tab").removeClass("active");
+			$("#basemap-tab").removeClass("active");
+			$("#water-tab").removeClass("active");
+			$("#layers-tab").removeClass("active");
+			$("#usecase-tab").removeClass("active");
+		});
+
+		$("#flood-tab").click(function () {
+			$("#water-tab").removeClass("active");
+			$("#basemap-tab").removeClass("active");
+			$("#usecase-tab").removeClass("active");
+			$("#layers-tab").removeClass("active");
+			$(this).addClass("active");
+			$('.c-menu-panel').css('transform', ' translateX(-26rem)');
+			$('#panel1').css('transform', ' translateX(6.75rem)');
+			$('#panel1').css('opacity', 1);
+		});
+		$("#water-tab").click(function () {
+			$("#flood-tab").removeClass("active");
+			$("#basemap-tab").removeClass("active");
+			$("#usecase-tab").removeClass("active");
+			$("#layers-tab").removeClass("active");
+			$(this).addClass("active");
+			$('.c-menu-panel').css('transform', ' translateX(-26rem)');
+			$('#panel2').css('transform', ' translateX(6.75rem)');
+			$('#panel2').css('opacity', 1);
+		});
+		$("#basemap-tab").click(function () {
+			$("#water-tab").removeClass("active");
+			$("#flood-tab").removeClass("active");
+			$("#usecase-tab").removeClass("active");
+			$("#layers-tab").removeClass("active");
+			$(this).addClass("active");
+			$('.c-menu-panel').css('transform', ' translateX(-26rem)');
+			$('#panel3').css('transform', ' translateX(6.75rem)');
+			$('#panel3').css('opacity', 1);
+		});
+		$("#usecase-tab").click(function () {
+			$("#water-tab").removeClass("active");
+			$("#flood-tab").removeClass("active");
+			$("#basemap-tab").removeClass("active");
+			$("#layers-tab").removeClass("active");
+			$(this).addClass("active");
+			$('.c-menu-panel').css('transform', ' translateX(-26rem)');
+			$('#panel-usecase').css('transform', ' translateX(6.75rem)');
+			$('#panel-usecase').css('opacity', 1);
+		});
+		$("#layers-tab").click(function () {
+			$("#water-tab").removeClass("active");
+			$("#flood-tab").removeClass("active");
+			$("#usecase-tab").removeClass("active");
+			$("#basemap-tab").removeClass("active");
+			$(this).addClass("active");
+			$('.c-menu-panel').css('transform', ' translateX(-26rem)');
+			$('#panel-layers').css('transform', ' translateX(6.75rem)');
+			$('#panel-layers').css('opacity', 1);
+		});
+
 
 		$scope.getpermanentwater = function (startYear, endYear, startMonth, endMonth, method, wcolor) {
 			$scope.showLoader = true;
@@ -620,6 +756,7 @@
 		};
 
 		$scope.getAvailabelDate = function () {
+			$scope.showLoader = true;
 			var prod = $('#sensor_selection').val();
 			var parameters = {
 				sensor: prod,
@@ -627,6 +764,7 @@
 			MapService.getDateList(parameters)
 			.then(function (data) {
 				var enableDates = data;
+				var recent_date = enableDates[enableDates.length - 1];
 				var enableDatesArray=[];
 				$("#date_selection").datepicker("destroy");
 			       for (var i = 0; i < enableDates.length; i++) {
@@ -663,6 +801,14 @@
 				        }
 				    }
 				});
+				if (parseInt(recent_date.split('-')[2]) <= 9 || parseInt(recent_date.split('-')[1]) <= 9) {
+						  dd = parseInt(recent_date.split('-')[2]);
+						 mm = parseInt(recent_date.split('-')[1]);
+						 yyy = recent_date.split('-')[0];
+						 var setDate = yyy + '-' + mm + '-' + dd;
+				   }
+				 $("#date_selection").datepicker("setDate", setDate);
+				 $("#date_selection").trigger("changed");
 			}, function (error) {
 				console.log(error);
 			});
@@ -770,7 +916,6 @@
 			}
 
 			function updatePermanentWater(){
-				$scope.showLoader = true;
 				var startYear = $('#start_year_selection_historical').val();
 				var endYear = $('#end_year_selection_historical').val();
 				var slider = $("#month_range").data("ionRangeSlider");
@@ -818,7 +963,12 @@
 				MapService.getMap(parameters)
 				.then(function (data) {
 					$scope.showLoader = false;
-					flood_layer.setUrl(data);
+					console.log(data);
+					if(map.hasLayer(flood_layer)){
+						flood_layer.setUrl(data);
+					}else{
+						flood_layer = addMapLayer(flood_layer, data);
+					}
 				}, function (error) {
 					$scope.showLoader = false;
 					console.log(error);
