@@ -629,7 +629,7 @@
 		});
 
 		$("#legend-toggle").click(function () {
-			if($(".legend").css("display") == "none"){
+			if($(".legend").css("display") === "none"){
 				$(".legend").show();
 			}else{
 				$(".legend").hide();
@@ -638,7 +638,7 @@
 		});
 
 		$("#full-screen").click(function() {
-			if($(".container-wrapper").css("margin-top") ==  "115px" ){
+			if($(".container-wrapper").css("margin-top") ===  "115px" ){
 				$("nav").hide();
 				$(".container-wrapper").css("margin-top", "0");
 				$(".c-map-menu .menu-tiles").css("top", "0");
@@ -801,11 +801,12 @@
 				        }
 				    }
 				});
+				var ddate, mmonth, yyear, setDate;
 				if (parseInt(recent_date.split('-')[2]) <= 9 || parseInt(recent_date.split('-')[1]) <= 9) {
-						  dd = parseInt(recent_date.split('-')[2]);
-						 mm = parseInt(recent_date.split('-')[1]);
-						 yyy = recent_date.split('-')[0];
-						 var setDate = yyy + '-' + mm + '-' + dd;
+						 ddate = parseInt(recent_date.split('-')[2]);
+						 mmonth = parseInt(recent_date.split('-')[1]);
+						 yyear = recent_date.split('-')[0];
+						 setDate = yyear + '-' + mmonth + '-' + ddate;
 				   }
 				 $("#date_selection").datepicker("setDate", setDate);
 				 $("#date_selection").trigger("changed");
