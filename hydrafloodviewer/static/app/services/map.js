@@ -52,6 +52,23 @@
 			return promise;
 		};
 
+		service.getFloods = function (options) {
+			var config = {
+				params: {
+					action: 'get-floods-id',
+					date: options.date,
+					fcolor: options.fcolor,
+					sensor: options.sensor,
+					geom: options.geom
+				}
+			};
+			var promise = $http.get('/api/mapclient/', config)
+			.then(function (response) {
+				return response.data;
+			});
+			return promise;
+		};
+
 		service.downloadFloodMap = function (options) {
 			var config = {
 				params: {

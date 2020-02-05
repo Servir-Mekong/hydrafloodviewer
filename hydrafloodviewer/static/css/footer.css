@@ -10,7 +10,7 @@ footer {
 .footer-container {
     /*margin-right: 3em;
     margin-left: 3em;*/
-    padding-top: 1em;
+    padding-top: 4em;
 }
 
 footer .partner-deltares {
@@ -48,7 +48,7 @@ footer > div img {
 }
 
 .info-footer {
-	background-color: rgb(241, 241, 241);	
+	background-color: rgb(241, 241, 241);
 }
 
 .copyright {

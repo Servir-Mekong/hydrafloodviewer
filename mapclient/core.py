@@ -24,8 +24,11 @@ class GEEApi():
         self.geom = geom
         WEST, SOUTH, EAST, NORTH = 92.0, 9.5, 101.5, 29
         BOUNDING_BOX = (WEST,SOUTH,EAST,NORTH)
-        self.REGION = ee.Geometry.Rectangle(BOUNDING_BOX)
+        #self.REGION = ee.Geometry.Rectangle(BOUNDING_BOX)
+        #Myanmar Boundary
+        self.REGION = ee.FeatureCollection('USDOS/LSIB/2013').filter(ee.Filter.eq("cc", "BM"))
         self.floodExtentCollection = ee.ImageCollection('projects/servir-mekong/hydrafloods/use_cases/hydra_extents')
+        self.water_extent_sentinel = ee.ImageCollection('projects/servir-mekong/hydrafloods/sentinelOtsu');
 
 
     # -------------------------------------------------------------------------
@@ -113,8 +116,29 @@ class GEEApi():
         else:
             shape = self.REGION
         fc = self.floodExtentCollection.filterDate(date).filter(ee.Filter.eq('sensor',sensor))
+        #fc = self.water_extent_sentinel.sort("system:time_start",False);
         image = ee.Image(fc.first()).select(0).clip(shape)
         image = image.updateMask(image)
+        #image = fc.reduce(ee.Reducer.firstNonNull()).clip(shape)
+
+        floodMap = self.getTileLayerUrl(image.visualize(palette=fcolor,min=0,max=1))
+        return floodMap
+
+    # -------------------------------------------------------------------------
+    def get_flood_id(self, date, fcolor, sensor, shape):
+        if shape:
+            shape = shape.replace('["', '[')
+            shape = shape.replace('"]', ']')
+            shape = shape.replace('","', ',')
+            shape = ee.FeatureCollection(eval(shape))
+        else:
+            shape = self.REGION
+        #fc = self.floodExtentCollection.filterDate(date).filter(ee.Filter.eq('sensor',sensor))
+        t2 = ee.Date(date)
+        t1 = ee.Date.fromYMD(2014,1,1) #t2.advance(-4,'day')
+        image = self.water_extent_sentinel.filterDate(t1,t2).sort('system:time_start', False)
+        image = image.reduce(ee.Reducer.firstNonNull()).clip(shape)
+        #image = image.clip(shape)
 
         floodMap = self.getTileLayerUrl(image.visualize(palette=fcolor,min=0,max=1))
         return floodMap
@@ -369,7 +393,8 @@ class GEEApi():
         pickup_dict = {}
         def imgDate(d):
             return ee.Date(d).format("YYYY-MM-dd")
-        ImageCollection = self.floodExtentCollection.filter(ee.Filter.eq('sensor',snsr))
+        #ImageCollection = self.floodExtentCollection.filter(ee.Filter.eq('sensor',snsr))
+        ImageCollection = self.water_extent_sentinel
         dates = ee.List(ImageCollection.aggregate_array("system:time_start")).map(imgDate).getInfo()
 
         return dates

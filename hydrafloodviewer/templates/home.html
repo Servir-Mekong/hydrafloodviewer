@@ -2,6 +2,9 @@
 {% load cms_tags staticfiles %}
 {% block extra_css %}
 <link href="{% static 'css/home.css' %}" rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 {% endblock %}
 {% block extra_script %}
 
@@ -11,10 +14,141 @@
 <!-- Main Container -->
 {% url 'hydraviewer:mapviewer' as map_url %}
 <div class="row" ng-controller="rss">
-    <h1 style="text-align: center;">Welcome to the <b>HYDRAFloods Viewer</h1>
-        <h3 style="text-align: center;"><b>HYD</b>rologic <b>R</b>emote Sensing <b>A</b>nalysis</h3>
+  <div class="row home-section" style="background: url(/static/images/floods-myanmar.jpg)">
+    <div class="col-md-12 text-center">
+        <br><br><br><br><br>
+      <!-- <img src="/static/images/swarm-logo.png" id="swarm-logo" alt=""> -->
+      <h1 style="color: #FFF; font-size:60px;">Near Real-time Flood Mapping and Monitoring System</h1>
+      <p style="color: #FFF; text-align:center;font-size:26px">Web-based platform for Monitoring Flood events using Hydrologic Remote Sensing Analysis</p>
+      <br><br><br><br><br>  <br><br><br><br><br>
+    </div>
+  </div>
+
+
+  <div class="row home-section">
+    <div class="col-md-7">
+      <div class="text-center">
+        <a href="/mapviewer">
+        <img src="/static/images/home-demo.png" alt="" style="width: 100%">
+        </a>
+      </div>
+    </div>
+    <div class="col-md-5" style="padding-right:50px;">
+      <div>
+        <h2 style="color:#424949;">HYDralogic Remote sensing Analysis for Floods</h2>
+        <h4>The publicly available web-based service delivering near real-time information for flood mapping and monitoring</h4>
         <br>
-        <div class="">
+        <a href="/mapviewer" class="btn_custom btn_custom">EXPLORE</a>
+      </div>
+    </div>
+
+  </div>
+
+<div class="row home-section">
+  <div id="homecorousel" class="carousel slide" data-ride="carousel">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+      <li data-target="#homecorousel" data-slide-to="0" class="active"></li>
+      <li data-target="#homecorousel" data-slide-to="1"></li>
+      <li data-target="#homecorousel" data-slide-to="2"></li>
+    </ol>
+
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner">
+      <div class="item active">
+        <img src="/static/images/Cloudthrough.jpg" alt="Los Angeles" style="width:100%;">
+        <div class="header-text hidden-xs">
+              <div class="col-md-12 text-center">
+                  <h2>
+                  	<span><strong><i class="fas fa-quote-left"></i> Providing the most recent data on flood locations and extent <i class="fas fa-quote-left"></i></strong></span>
+                  </h2>
+                  <br>
+                  <h3>
+                  	<span></span>
+                  </h3>
+                  <br>
+              </div>
+          </div>
+      </div>
+
+      <div class="item">
+        <img src="/static/images/MyanmarDelta.jpg" alt="Chicago" style="width:100%;">
+        <div class="header-text hidden-xs">
+              <div class="col-md-12 text-center">
+                  <h2>
+                  	<span><strong><i class="fas fa-quote-left"></i> Innovative all-weather, multi-sensor technology <i class="fas fa-quote-right"></i></strong></span>
+                  </h2>
+                  <br>
+                  	<!-- <span><img src="/static/images/servir-mekong.png" alt="Chicago" style="width:30%;"></span> -->
+                  <br>
+              </div>
+          </div>
+      </div>
+
+      <div class="item">
+        <img src="/static/images/floods-response.jpg" alt="New york" style="width:100%;">
+        <div class="header-text hidden-xs">
+              <div class="col-md-12 text-center">
+                  <h2>
+                  	<span><strong><i class="fas fa-quote-left"></i> Designed to assist flood preparedness and disaster response <i class="fas fa-quote-right"></i></strong></span>
+                  </h2>
+                  <br>
+                  <h3>
+                  	<span></span>
+                  </h3>
+                  <br>
+              </div>
+          </div>
+      </div>
+    </div>
+
+    <!-- Left and right controls -->
+    <a class="left carousel-control" href="#homecorousel" data-slide="prev">
+      <span class="glyphicon glyphicon-chevron-left"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#homecorousel" data-slide="next">
+      <span class="glyphicon glyphicon-chevron-right"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+</div>
+
+</div>
+
+
+
+      <div class="row home-section">
+        <div class="col-md-4">
+          <div class="text-center">
+            <a href="https://hfa.adpc.net">
+            <img src="/static/images/hfa-tool.png" alt="" style="width:45%">
+            </a>
+            <h3>Related Web Application</h3>
+            <p>Provide the information regarding flood prone areas in the Lower Mekong Region</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="text-center">
+            <a href="https://docs.google.com/document/d/e/2PACX-1vSqgJ4ZtD9NgD3DONduglm6YWVRh2RHcydyD-hzCH6pCZy5Awr9m0WomODZ6CRIQqMKyBsOWKIsFiWK/pub">
+            <img src="/static/images/document.png" alt="" style="width:27%">
+            </a>
+            <h3>Methods</h3>
+            <p>Overview of the Remote Sensing Data Used for HYDRAFloods</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="text-center">
+            <a href="https://hydra-floods.readthedocs.io">
+            <img src="/static/images/technicaldocument.png" alt="" style="width:27%">
+            </a>
+            <h3>Getting Started</h3>
+            <p>Open source Python application for downloading, processing, and delivering flood maps derived from remote sensing data</p>
+          </div>
+        </div>
+      </div>
+
+        <div class="hide">
             <div class="row" style="margin-bottom: 15px;">
                 <div class="col-md-6">
                     <div class="card" id="precip">
@@ -42,7 +176,7 @@
 
                 </div>
             </div>
-            <div class="row" style="margin-bottom: 15px;">
+            <!-- <div class="row" style="margin-bottom: 15px;">
                 <div class="col-md-6">
                     <div class="card" id="scienceDoc">
                         <div class="card-image">
@@ -64,9 +198,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
-            <div class="row" style="margin-bottom: 15px;">
+            <!-- <div class="row" style="margin-bottom: 15px;">
                 <div class="col-md-6">
                     <div class="card" id="historic">
                         <div class="card-image">
@@ -78,7 +212,7 @@
 
                     </div>
                 </div>
-            </div>
+            </div> -->
 
         </div>
     </div>

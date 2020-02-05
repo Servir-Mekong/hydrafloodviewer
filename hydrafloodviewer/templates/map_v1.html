@@ -24,7 +24,8 @@
   {% include "panels/left-menu.html" %}
 
   <!-- Map Container -->
-  <div class="map" id="map" ng-init="getAvailabelDate(); getpermanentwater('2010', '2015', '01', '12', 'discrete', '#00008b');">
+  <!-- <div class="map" id="map" ng-init="getAvailabelDate();"> -->
+  <div class="map" id="map" ng-init="getpermanentwater('2010', '2015', '01', '12', 'discrete', '#00008b'); getAvailabelDate(); ">
     <div class="control-panel map-component">
       <div class="scalebar-container"></div>
       <!-- Map Munu -->

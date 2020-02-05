@@ -5,10 +5,8 @@
         <li class="c-map-menu-tile datasets-tile" id="app-logo">
           <button class="item-button" type="button" name="button">
             <div class="button-wrapper">
-              <svg class="c-icon tile-icon-logo" viewBox="0 0 32 32">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" >
-                  <path d="M24.533 27.733v-2.133h-2.133v2.133h2.133zM27.733 24.533l-4.267-11.733-2.655 7.3 1.655 4.433h5.267zM14.933 28.8v-3.2h-3.2v3.2h3.2zM21.333 24.533l-8.001-21.333-8 21.333h16z"></path>
-                </svg>
+              <svg class="c-icon tile-icon-logo" viewBox="0 0 35 35">
+                <image xlink:href="/static/images/hydrafloodsicon.svg" />
               </svg>
             </div>
           </button>
@@ -19,7 +17,7 @@
               <svg class="c-icon tile-icon" viewBox="0 0 32 32">
                 <image xlink:href="/static/images/flood.svg" />
               </svg>
-              <span>FLOOD</span>
+              <span>[[ 'Flood' | translate]]</span>
             </div>
           </button>
         </li>
@@ -29,7 +27,19 @@
               <svg class="c-icon tile-icon" viewBox="0 0 32 32">
                 <image xlink:href="/static/images/water.svg" />
               </svg>
-              <span>WATER</span>
+              <span>[[ 'Historical Flood' | translate]]</span>
+            </div>
+          </button>
+        </li>
+      </ul>
+      <ul class="datasets-menu align-bottom">
+        <li class="c-map-menu-tile datasets-tile" id="usecase-tab">
+          <button class="item-button" type="button" name="button">
+            <div class="button-wrapper">
+              <svg class="c-icon tile-icon" viewBox="0 0 32 32">
+                <image xlink:href="/static/images/grid.svg" />
+              </svg>
+              <span>[[ 'Use Cases' | translate]]</span>
             </div>
           </button>
         </li>
@@ -39,19 +49,17 @@
               <svg class="c-icon tile-icon" viewBox="0 0 32 32">
                 <image xlink:href="/static/images/imagery.svg" />
               </svg>
-              <span>IMAGERY</span>
+              <span>[[ 'Imagery' | translate]]</span>
             </div>
           </button>
         </li>
-      </ul>
-      <ul class="datasets-menu align-bottom">
         <li class="c-map-menu-tile datasets-tile" id="layers-tab">
           <button class="item-button" type="button" name="button">
             <div class="button-wrapper">
               <svg class="c-icon tile-icon" viewBox="0 0 32 32">
                 <image xlink:href="/static/images/layer.svg" />
               </svg>
-              <span>LAYERS</span>
+              <span>[[ 'Layers' | translate]]</span>
             </div>
           </button>
         </li>
@@ -85,7 +93,7 @@
         <option value="atms">ATMS</option>
       </select>
 
-      <div class="options hide">
+      <div class="image-options hide">
         <button class="sentinel selected">
           <div class="button-wrapper">
             <svg class="c-icon icon-square-point" viewBox="0 0 280 280">
@@ -226,12 +234,12 @@
         style="width: 160px;left: 30px;"/>
       </div>
       <hr>
-      <div class="cc-selector">
+      <div class="circle-selector">
         <table>
           <tr>
             <td width="30%">
               <input id="VIIRS_NRT_TRUE_COLOR" type="radio" checked="checked" name="browse_selection" value="1|VIIRS_SNPP_CorrectedReflectance_TrueColor" />
-              <label class="drinkcard-cc viirs-nrt-true" for="VIIRS_NRT_TRUE_COLOR"></label>
+              <label class="radiocard-cc viirs-nrt-true" for="VIIRS_NRT_TRUE_COLOR"></label>
             </td>
             <td width="70%">
               <label for="VIIRS_NRT_TRUE_COLOR">VIIRS NRT TRUE COLOR</label>
@@ -240,7 +248,7 @@
           <tr>
             <td width="30%">
               <input id="VIIRS_NRT_NATURAL_COLOR" type="radio" name="browse_selection" value="2|VIIRS_SNPP_CorrectedReflectance_BandsM11-I2-I1" />
-              <label class="drinkcard-cc viirs-nrt-natural" for="VIIRS_NRT_NATURAL_COLOR"></label><br>
+              <label class="radiocard-cc viirs-nrt-natural" for="VIIRS_NRT_NATURAL_COLOR"></label><br>
             </td>
             <td width="70%">
               <label for="VIIRS_NRT_NATURAL_COLOR">VIIRS NRT NATURAL COLOR</label>
@@ -249,7 +257,7 @@
           <tr>
             <td width="30%">
               <input id="MODIS_AQUA_TRUE_COLOR" type="radio" name="browse_selection" value="3|MODIS_Aqua_CorrectedReflectance_TrueColor" />
-              <label class="drinkcard-cc modis-aqua-true" for="MODIS_AQUA_TRUE_COLOR"></label><br>
+              <label class="radiocard-cc modis-aqua-true" for="MODIS_AQUA_TRUE_COLOR"></label><br>
             </td>
             <td width="70%">
               <label for="MODIS_AQUA_TRUE_COLOR">MODIS AQUA TRUE COLOR</label>
@@ -258,7 +266,7 @@
           <tr>
             <td width="30%">
               <input id="MODI_AQUA_NATURAL_COLOR" type="radio" name="browse_selection" value="4|MODIS_Aqua_CorrectedReflectance_Bands721" />
-              <label class="drinkcard-cc modis-aqua-natural" for="MODI_AQUA_NATURAL_COLOR"></label><br>
+              <label class="radiocard-cc modis-aqua-natural" for="MODI_AQUA_NATURAL_COLOR"></label><br>
             </td>
             <td width="70%">
               <label for="MODI_AQUA_NATURAL_COLOR">MODIS AQUA NATURAL COLOR</label>
@@ -267,7 +275,7 @@
           <tr>
             <td width="30%">
               <input id="MODIS_TERRA_TRUE_COLOR" type="radio" name="browse_selection" value="5|MODIS_Terra_CorrectedReflectance_TrueColor" />
-              <label class="drinkcard-cc modis-terra-true" for="MODIS_TERRA_TRUE_COLOR"></label><br>
+              <label class="radiocard-cc modis-terra-true" for="MODIS_TERRA_TRUE_COLOR"></label><br>
             </td>
             <td width="70%">
               <label for="MODIS_TERRA_TRUE_COLOR">MODIS TERRA TRUE COLOR</label>
@@ -276,7 +284,7 @@
           <tr>
             <td width="30%">
               <input id="MODIS_TERRA_NATURAL_COLOR" type="radio" name="browse_selection" value="5|MODIS_Terra_CorrectedReflectance_Bands721" />
-              <label class="drinkcard-cc modis-terra-natural" for="MODIS_TERRA_NATURAL_COLOR"></label><br>
+              <label class="radiocard-cc modis-terra-natural" for="MODIS_TERRA_NATURAL_COLOR"></label><br>
             </td>
             <td width="70%">
               <label for="MODIS_TERRA_NATURAL_COLOR">MODIS TERRA NATURAL COLOR</label>
@@ -298,12 +306,12 @@
     </button>
     <div class="panel-body">
       <label><b>Basemap</b></label>
-      <div class="cc-selector">
+      <div class="circle-selector">
         <table>
           <tr>
             <td width="30%">
               <input id="street" type="radio" name="basemap_selection" value="street" />
-              <label class="drinkcard-cc street" for="street"></label>
+              <label class="radiocard-cc street" for="street"></label>
             </td>
             <td width="70%">
               <label for="street">STREETS</label>
@@ -312,7 +320,7 @@
           <tr>
             <td width="30%">
               <input id="satellite" type="radio" name="basemap_selection" value="satellite" />
-              <label class="drinkcard-cc satellite" for="satellite"></label><br>
+              <label class="radiocard-cc satellite" for="satellite"></label><br>
             </td>
             <td width="70%">
               <label for="satellite">SATELLITE</label>
@@ -321,7 +329,7 @@
           <tr>
             <td width="30%">
               <input id="terrain" type="radio" checked="checked" name="basemap_selection" value="terrain" />
-              <label class="drinkcard-cc terrain" for="terrain"></label><br>
+              <label class="radiocard-cc terrain" for="terrain"></label><br>
             </td>
             <td width="70%">
               <label for="terrain">TERRAIN</label>
@@ -332,10 +340,99 @@
       <hr>
       <label><b>Administrative Boundaries</b></label>
       <ul class="toggles-list">
-        <li class="toggle"><label class="switch_layer"><input  name="country_toggle" id="country_toggle"  type="checkbox"><span class="slider_toggle round"></span></label><label>Country</label></li>
+        <!-- <li class="toggle"><label class="switch_layer"><input  name="country_toggle" id="country_toggle"  type="checkbox"><span class="slider_toggle round"></span></label><label>Country</label></li> -->
         <li class="toggle"><label class="switch_layer"><input name="province_toggle" id="province_toggle" type="checkbox"><span class="slider_toggle round"></span></label><label>Province</label></li>
         <li class="toggle"><label class="switch_layer"><input name="township_toggle" id="township_toggle" type="checkbox"><span class="slider_toggle round"></span></label><label>Township</label></li>
       </ul>
+    </div>
+  </div>
+
+  <div class="c-menu-panel map-tour-menu-panel menu-panel" id="panel-usecase" style="opacity: 0; transform: translateX(-60rem) translateZ(0rem); width:35%">
+    <button class="close-menu">
+      <svg class="c-icon icon-close-panel" viewBox="0 0 32 32">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+          <path d="M3.692 0l-3.692 3.692 12.308 12.308-12.308 12.308 3.692 3.692 12.308-12.308 12.308 12.308 3.692-3.692-12.308-12.308 12.308-12.308-3.692-3.692-12.308 12.308z"></path>
+        </svg>
+      </svg>
+    </button>
+    <div class="panel-body">
+      <p><b>[[ 'Select a title below to explore HYDRAFloods surface water maps generated for past flood events in Myanmar' | translate ]]</b></p>
+      <div class="row">
+        <div class="col-md-6 columns">
+          <div class="c-card map-card theme-card-small">
+            <div class="image" style="background-image: url('http://floodlist.com/wp-content/uploads/2016/07/floods-2-myanmar-july-2016.jpg');">
+            </div>
+            <div class="body">
+              <div class="text-content">
+                <h3 class="title">Cyclone Komen August 2015</h3>
+              </div>
+              <div class="summary">
+                <div style="overflow: hidden; text-overflow: ellipsis; -webkit-box-orient: vertical; display: -webkit-box; -webkit-line-clamp: 3;">
+                  [[ 'Cyclone Komen has occured in late July, ' | translate ]]
+                </div>
+
+              </div>
+              <div class="buttons">
+                <div class="usecase-button theme-button-small">
+                  <div class="button-wrapper" ng-click="floodMapUsecase('2015-08-11', 'sentinel1', 'Cyclone Komen August 2015 - During the 2015 monsoon season, Cyclone Komen has occured in late July, bringing additional unusual torrential rains into Myanmar, Bangladesh and India. These rains has lead to a significant increase in monsoonal flood water, leading to severe flooding and landslides in Myanmar');">
+                    VIEW ON MAP
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 columns">
+          <div class="c-card map-card theme-card-small">
+            <div class="image" style="background-image: url('http://earth-chronicles.com/wp-content/uploads/2016/08/Rem_06CNxDE.jpg');">
+            </div>
+            <div class="body">
+              <div class="text-content">
+                <h3 class="title">Monsoonal Rains July 2016</h3>
+              </div>
+              <div class="summary">
+                <div style="overflow: hidden; text-overflow: ellipsis; -webkit-box-orient: vertical; display: -webkit-box; -webkit-line-clamp: 3;">
+                  [[ 'Cyclone Komen has occured in late July,' | translate ]]
+                </div>
+
+              </div>
+              <div class="buttons">
+                <div class="usecase-button theme-button-small">
+                  <div class="button-wrapper" ng-click="floodMapUsecase('2016-07-14', 'sentinel1', 'Monsoonal Rains July 2016 - Heavy torrential monsoonal rains has started in June of 2016 and the continued heavy rainfall in July has lead to exacerbated flooding in Myanmar.');">
+                    VIEW ON MAP
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 columns">
+          <div class="c-card map-card theme-card-small">
+            <div class="image" style="background-image: url('https://gdb.voanews.com/8CB04EB8-1B16-4183-B2F9-33CB2FD801A9_cx0_cy1_cw0_w1200_s.jpg');">
+            </div>
+
+            <div class="body">
+              <div class="text-content">
+                <h3 class="title">Monsoonal Rains August 2018</h3>
+              </div>
+              <div class="summary">
+                <div style="overflow: hidden; text-overflow: ellipsis; -webkit-box-orient: vertical; display: -webkit-box; -webkit-line-clamp: 3;">
+                  [[ 'Leading to severe flooding and landslides in Myanmar' | translate ]]
+                </div>
+
+              </div>
+              <div class="buttons">
+                <div class="usecase-button theme-button-small">
+                  <div class="button-wrapper" ng-click="floodMapUsecase('2018-08-30', 'sentinel1','Monsoonal Rains August 2018 - Torrential monsoonal rains and abnormal rainfall pattern has caused the riverine flood in Sittaung River basin and Thanlwin river (Salween river) bansin from July to September 2018 and eventually caused the failure of Swar dam, in Yedashe Township, Bago region of Myanmar at the end of August.');">
+                    VIEW ON MAP
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>

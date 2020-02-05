@@ -40,6 +40,7 @@
 	<link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
 	<!-- Load CSS -->
 	<!-- Custom CSS -->
+
 	<link href="{% static 'css/main.css' %}" rel="stylesheet">
 	<link href="{% static 'css/map.css' %}" rel="stylesheet">
 	<link href="{% static 'css/navigation.css' %}" rel="stylesheet">
@@ -49,6 +50,7 @@
 	<!-- ng-Dialog -->
 	<link href="{% static 'vendor/ng-dialog/css/ngDialog.min.css' %}" rel="stylesheet">
 	<link href="{% static 'vendor/ng-dialog/css/ngDialog-theme-default.min.css' %}" rel="stylesheet">
+
 	{% block extra_css %}{% endblock %}
 
 	{% endaddtoblock %}
@@ -58,7 +60,7 @@
 </head>
 <body>
 
-	<div ng-cloak class="container-fluid">
+	<div ng-cloak class="container-fluid-custom">
 		{% cms_toolbar %}
 		<!-- CMS Menu -->
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -71,6 +73,9 @@
 			{% block main_container %} {% endblock main_container %}
 		</div>
 	</div>
+	{% block footer %}
+    	{% include "footer.html" %}
+	{% endblock footer %}
 
 
 	{% addtoblock "js" %}

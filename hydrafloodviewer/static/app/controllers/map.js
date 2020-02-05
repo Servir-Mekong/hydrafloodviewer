@@ -5,6 +5,7 @@
 
 		/* global variables to be tossed around like hot potatoes */
 		$scope.initdate = '';
+		$scope.showAlert = false;
 
 		var map,
 		selected_date,
@@ -37,10 +38,12 @@
 		var sentinel1Slider = $('#sentinel1-opacity').slider();
 		var floodSlider = $('#flood-opacity').slider();
 		var floodSlider1 = $('#flood1-opacity').slider();
+		var ip_lat = 17.5;
+		var ip_long = 95.7;
 
 		// init map
 		map = L.map('map',{
-			center: [17.5,95.7],
+			center: [ip_lat,ip_long],
 			zoom: 6,
 			minZoom:2,
 			maxZoom: 16,
@@ -48,6 +51,21 @@
 				[-120, -220],
 				[120, 220]
 			]
+		});
+		map.createPane('floodsLayer');
+		map.createPane('waterLayer');
+		map.getPane('floodsLayer').style.zIndex = 998;
+		map.getPane('waterLayer').style.zIndex = 999;
+
+		$.ajax({
+				url: "http://gd.geobytes.com/GetCityDetails?callback=?",
+				async: false,
+				dataType: 'json',
+				success: function(data) {
+						ip_lat = data.geobyteslatitude;
+						ip_long = data.geobyteslongitude;
+						map.setView([ip_lat, ip_long], 7);
+				}
 		});
 
 
@@ -393,8 +411,6 @@
 		* Update layers when date selection is changed
 		*/
 		$('#date_selection').change(function(){
-			console.log("datee selection changed");
-
 			updateFloodMapLayer();
 			//updatePrecipitationData();
 			var prod = $('input[type=radio][name=browse_selection]:checked').val();
@@ -654,7 +670,7 @@
 		});
 
 		$(".close-menu").click(function () {
-			$('.c-menu-panel').css('transform', ' translateX(-26rem)');
+			$('.c-menu-panel').css('transform', ' translateX(-60rem)');
 			$('.c-menu-panel').css('opacity', 0);
 			$("#flood-tab").removeClass("active");
 			$("#basemap-tab").removeClass("active");
@@ -664,52 +680,57 @@
 		});
 
 		$("#flood-tab").click(function () {
+			$(".close-menu").click();
 			$("#water-tab").removeClass("active");
 			$("#basemap-tab").removeClass("active");
 			$("#usecase-tab").removeClass("active");
 			$("#layers-tab").removeClass("active");
 			$(this).addClass("active");
-			$('.c-menu-panel').css('transform', ' translateX(-26rem)');
+			$('.c-menu-panel').css('transform', ' translateX(-60rem)');
 			$('#panel1').css('transform', ' translateX(6.75rem)');
 			$('#panel1').css('opacity', 1);
 		});
 		$("#water-tab").click(function () {
+			$(".close-menu").click();
 			$("#flood-tab").removeClass("active");
 			$("#basemap-tab").removeClass("active");
 			$("#usecase-tab").removeClass("active");
 			$("#layers-tab").removeClass("active");
 			$(this).addClass("active");
-			$('.c-menu-panel').css('transform', ' translateX(-26rem)');
+			$('.c-menu-panel').css('transform', ' translateX(-60rem)');
 			$('#panel2').css('transform', ' translateX(6.75rem)');
 			$('#panel2').css('opacity', 1);
 		});
 		$("#basemap-tab").click(function () {
+			$(".close-menu").click();
 			$("#water-tab").removeClass("active");
 			$("#flood-tab").removeClass("active");
 			$("#usecase-tab").removeClass("active");
 			$("#layers-tab").removeClass("active");
 			$(this).addClass("active");
-			$('.c-menu-panel').css('transform', ' translateX(-26rem)');
+			$('.c-menu-panel').css('transform', ' translateX(-60rem)');
 			$('#panel3').css('transform', ' translateX(6.75rem)');
 			$('#panel3').css('opacity', 1);
 		});
 		$("#usecase-tab").click(function () {
+			$(".close-menu").click();
 			$("#water-tab").removeClass("active");
 			$("#flood-tab").removeClass("active");
 			$("#basemap-tab").removeClass("active");
 			$("#layers-tab").removeClass("active");
 			$(this).addClass("active");
-			$('.c-menu-panel').css('transform', ' translateX(-26rem)');
+			$('.c-menu-panel').css('transform', ' translateX(-60rem)');
 			$('#panel-usecase').css('transform', ' translateX(6.75rem)');
 			$('#panel-usecase').css('opacity', 1);
 		});
 		$("#layers-tab").click(function () {
+			$(".close-menu").click();
 			$("#water-tab").removeClass("active");
 			$("#flood-tab").removeClass("active");
 			$("#usecase-tab").removeClass("active");
 			$("#basemap-tab").removeClass("active");
 			$(this).addClass("active");
-			$('.c-menu-panel').css('transform', ' translateX(-26rem)');
+			$('.c-menu-panel').css('transform', ' translateX(-60rem)');
 			$('#panel-layers').css('transform', ' translateX(6.75rem)');
 			$('#panel-layers').css('opacity', 1);
 		});
@@ -728,12 +749,44 @@
 			MapService.getPermanentWater(parameters)
 			.then(function (data) {
 				$scope.showLoader = false;
-				historical_layer = addMapLayer(historical_layer, data);
+				historical_layer = addMapLayer(historical_layer, data, 'waterLayer');
 			}, function (error) {
 				$scope.showLoader = false;
 				console.log(error);
 			});
 		};
+
+		$scope.floodMapUsecase = function(usecase_date, sensor, desc){
+			$scope.showLoader = true;
+			var sensor_val = sensor;
+			var flood_color = $('#color-picker-flood').val();
+			console.log(flood_color);
+			var selected_date = usecase_date;
+			var geom = JSON.stringify(drawing_polygon);
+			var parameters = {
+				date: selected_date,
+				fcolor: flood_color,
+				sensor: sensor_val,
+				geom: geom
+			};
+			MapService.getMap(parameters)
+			.then(function (data) {
+				$scope.showLoader = false;
+				flood_layer.setUrl(data);
+				$timeout(function () {
+					showInfoAlert(desc);
+				}, 1500);
+				console.log(data);
+			}, function (error) {
+				$scope.showLoader = false;
+				console.log(error);
+				$timeout(function () {
+					showErrorAlert(error);
+				}, 1500);
+			});
+
+		};
+
 
 		$scope.getPrecipMap = function () {
 			var prod = $('#product_selection').val();
@@ -909,14 +962,16 @@
 		});
 
 			// function to add and update tile layer to map
-			function addMapLayer(layer,url){
-				layer = L.tileLayer(url,{attribution:
-					'<a href="https://earthengine.google.com" target="_">' +
-					'Google Earth Engine</a>;'}).addTo(map);
+			function addMapLayer(layer,url, pane){
+				layer = L.tileLayer(url,{
+					attribution: '<a href="https://earthengine.google.com" target="_">' +
+					'Google Earth Engine</a>;',
+				 	pane: pane}).addTo(map);
 					return layer;
 			}
 
 			function updatePermanentWater(){
+				$scope.showLoader = true;
 				var startYear = $('#start_year_selection_historical').val();
 				var endYear = $('#end_year_selection_historical').val();
 				var slider = $("#month_range").data("ionRangeSlider");
@@ -942,7 +997,12 @@
 				MapService.getPermanentWater(parameters)
 				.then(function (data) {
 					$scope.showLoader = false;
-					historical_layer.setUrl(data);
+					if(map.hasLayer(historical_layer)){
+						historical_layer.setUrl(data);
+					}else{
+						historical_layer = addMapLayer(historical_layer, data, 'waterLayer');
+					}
+
 				}, function (error) {
 					$scope.showLoader = false;
 					console.log(error);
@@ -961,19 +1021,37 @@
 					sensor: sensor_val,
 					geom: geom
 				};
-				MapService.getMap(parameters)
-				.then(function (data) {
-					$scope.showLoader = false;
-					console.log(data);
-					if(map.hasLayer(flood_layer)){
+
+				if(map.hasLayer(flood_layer)){
+
+					MapService.getFloods(parameters)
+					.then(function (data) {
+						$scope.showLoader = false;
 						flood_layer.setUrl(data);
-					}else{
-						flood_layer = addMapLayer(flood_layer, data);
-					}
-				}, function (error) {
-					$scope.showLoader = false;
-					console.log(error);
-				});
+		    		$timeout(function () {
+						showInfoAlert('The map data shows the data from ...');
+					}, 1500);
+
+					}, function (error) {
+						$scope.showLoader = false;
+						console.log(error);
+					});
+
+				}else{
+
+					MapService.getFloods(parameters)
+					.then(function (data) {
+						$scope.showLoader = false;
+						flood_layer = addMapLayer(flood_layer, data, 'floodsLayer');
+						$timeout(function () {
+							showInfoAlert('The map data shows the data on ...');
+						}, 1500);
+					}, function (error) {
+						$scope.showLoader = false;
+						console.log(error);
+					});
+
+				}
 
 			}
 			function updatePrecipitationData(){

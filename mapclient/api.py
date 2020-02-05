@@ -14,7 +14,7 @@ def api(request):
     action = get('action', '')
 
     if action:
-        public_methods = ['get-map-id', 'get-permanent-water', 'get-precipmap', 'get-date-list', 'download-flood-map', 'get-feeds-data']
+        public_methods = ['get-map-id', 'get-permanent-water', 'get-precipmap', 'get-date-list', 'download-flood-map', 'get-feeds-data', 'get-floods-id']
         if action in public_methods:
             date = get('date', '')
             shape = get('shape', '')
@@ -33,6 +33,8 @@ def api(request):
             core = GEEApi(date, shape, geom, fcolor, sensor )
             if action == 'get-map-id':
                 data = core.get_map_id(date=date, fcolor=fcolor, sensor=sensor, shape=geom)
+            elif action == 'get-floods-id':
+                data = core.get_flood_id(date=date, fcolor=fcolor, sensor=sensor, shape=geom)
             elif action == 'get-permanent-water':
                 data = core.getHistoricalMap(startYear=startYear, endYear=endYear, startMonth=startMonth, endMonth=endMonth, method=method, wcolor=wcolor, climatology=False, algorithm='JRC', shape=geom)
             elif action == 'get-precipmap':
