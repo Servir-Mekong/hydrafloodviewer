@@ -1061,7 +1061,7 @@
 				};
 
 
-				//
+				// 
 				// MapService.getSchoolGeojson(parameters)
 				// .then(function (data) {
 				// 	console.log(data);
@@ -1101,7 +1101,7 @@
 						$scope.showLoader = false;
 						flood_layer.setUrl(data);
 		    		$timeout(function () {
-						showInfoAlert('The map data shows the surface water extent over Myanmar');
+						showInfoAlert('The map data shows the surface water extent over Mekong Region');
 					}, 1500);
 
 					}, function (error) {
@@ -1116,7 +1116,7 @@
 						$scope.showLoader = false;
 						flood_layer = addMapLayer(flood_layer, data, 'floodsLayer');
 						$timeout(function () {
-							showInfoAlert('The map data shows the surface water extent over Myanmar');
+							showInfoAlert('The map data shows the surface water extent over Mekong Region');
 						}, 1500);
 					}, function (error) {
 						$scope.showLoader = false;

@@ -157,7 +157,7 @@ ul, ol {
   height: 0;
 }
 
-.slider_toggle {
+.slider_toggle, .slider_toggle_jrc {
   position: absolute;
   cursor: pointer;
   top: 0;
@@ -169,7 +169,7 @@ ul, ol {
   transition: .4s;
 }
 
-.slider_toggle:before {
+.slider_toggle:before, .slider_toggle_jrc:before {
   position: absolute;
   content: "";
   height: 9px;
@@ -185,22 +185,30 @@ input:checked + .slider_toggle {
   background-color: #9999ff;
 }
 
+input:checked + .slider_toggle_jrc {
+  background-color: #00008b;
+}
+
 input:focus + .slider_toggle {
   box-shadow: 0 0 1px #9999ff;
 }
 
-input:checked + .slider_toggle:before {
+input:focus + .slider_toggle_jrc {
+  box-shadow: 0 0 1px #00008b;
+}
+
+input:checked + .slider_toggle:before, input:checked + .slider_toggle_jrc:before  {
   -webkit-transform: translateX(12px);
   -ms-transform: translateX(12px);
   transform: translateX(12px);
 }
 
 /* Rounded sliders */
-.slider_toggle.round {
+.slider_toggle.round, .slider_toggle_jrc.round {
   border-radius: 34px;
 }
 
-.slider_toggle.round:before {
+.slider_toggle.round:before, .slider_toggle_jrc.round:before  {
   border-radius: 50%;
 }
 
@@ -274,7 +282,7 @@ input:checked + .slider_toggle:before {
 }
 
 .c-map-menu .menu-tiles {
-    width: 6.75rem;
+    width: 7.7rem;
     top: 0;
 }
 
@@ -312,7 +320,7 @@ input:checked + .slider_toggle:before {
     -ms-flex-pack: justify;
     justify-content: space-between;
     position: relative;
-    width: 6.75rem;
+    width: 7.7rem;
     height: 100%;
 }
 
@@ -411,6 +419,10 @@ input:checked + .slider_toggle:before {
     width: 2.875rem;
     height: 2.875rem;
     fill: #4a4a4a;
+}
+
+.c-map-menu-tile .item-button span {
+    font-size: 11px;
 }
 
 .c-menu-panel {
