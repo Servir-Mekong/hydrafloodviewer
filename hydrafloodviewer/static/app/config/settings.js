@@ -26,7 +26,7 @@ angular.module('baseApp').constant('appSettings', {
 			'code': 'mm'
 		}
 	],
-	applicationName: 'HydraFloods Viewer',
+	applicationName: 'HYDRAFloods',
 	footerLinks: [
 		{
 			'name': 'About',

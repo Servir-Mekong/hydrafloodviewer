@@ -912,6 +912,7 @@ svg image{
     background-color: #fff;
     border: solid 1px #e5e5df;
     height: 100%;
+    max-height: 250px;
 }
 
 .theme-card-small .image {
@@ -980,7 +981,7 @@ svg image{
 }
 
 .usecase-button {
-    height: 2.5rem;
+    height: 2rem;
     font-family: "Fira Sans", sans-serif;
     border-radius: 1.25rem;
     padding: 0 0.9375rem;
@@ -1026,4 +1027,23 @@ svg image{
     -ms-flex-align: center;
     align-items: center;
     line-height: 100%;
+}
+
+.theme-button-light {
+    background-color: #fff;
+    color: #555;
+    border: solid 1px #97be32;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.close-btn-usecase {
+    float: right;
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 1;
+    color: #FFF;
+    text-shadow: 0 1px 0 #fff;
+    filter: alpha(opacity=20);
+    opacity: .2;
 }

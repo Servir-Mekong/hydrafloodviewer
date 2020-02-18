@@ -28,7 +28,21 @@ class GEEApi():
         #Myanmar Boundary
         self.REGION = ee.FeatureCollection('USDOS/LSIB/2013').filter(ee.Filter.eq("cc", "BM"))
         self.floodExtentCollection = ee.ImageCollection('projects/servir-mekong/hydrafloods/use_cases/hydra_extents')
-        self.water_extent_sentinel = ee.ImageCollection('projects/servir-mekong/hydrafloods/sentinelOtsu');
+        self.water_extent_sentinel = ee.ImageCollection('projects/servir-mekong/hydrafloods/sentinelOtsu')
+        self.buildingMyanmar  = ee.FeatureCollection("projects/servir-mekong/osm/myanmar/gis_osm_buildings")
+        self.roadsMyanmar  = ee.FeatureCollection("projects/servir-mekong/osm/myanmar/gis_osm_roads")
+        self.phoneTowers = ee.FeatureCollection("projects/servir-mekong/osm/myanmar/phoneTowers")
+        self.admin3 = ee.FeatureCollection("projects/servir-mekong/admin/MMR_adm3")
+        self.hospital = self.buildingMyanmar.filter(ee.Filter.eq("type","hospital"))
+        self.schools = self.buildingMyanmar.filter(ee.Filter.eq("type","school"))
+        self.university = self.buildingMyanmar.filter(ee.Filter.eq("type","university"))
+        self.education  = self.schools.merge(self.university)
+        self.roadType = ["motorway","motorway_link","primary","primary_link","residential","secondary","secondary_link","tertiary","tertiary_link","trunk","trunk_link"]
+        self.roadsMyanmar = self.roadsMyanmar.filter(ee.Filter.inList("fclass",self.roadType))
+
+        #world Population
+        self.worldpop = ee.ImageCollection("WorldPop/POP")
+        self.meanPopulation = self.worldpop.reduce(ee.Reducer.mean())
 
 
     # -------------------------------------------------------------------------
@@ -142,6 +156,11 @@ class GEEApi():
 
         floodMap = self.getTileLayerUrl(image.visualize(palette=fcolor,min=0,max=1))
         return floodMap
+
+    # -------------------------------------------------------------------------
+    def get_schoolGeojson(self):
+        geometry = self.schools.getInfo()
+        return geometry
 
     # -------------------------------------------------------------------------
     def SurfaceWaterAlgorithm(aoi,images, pcnt_perm, pcnt_temp, water_thresh, ndvi_thresh, hand_mask):
@@ -448,3 +467,32 @@ class GEEApi():
             return_obj["error"] = "Error Processing Request. Error: "+ str(e)
 
         return return_obj
+
+    # -------------------------------------------------------------------------
+    def getFeatureCentroid(self, feature):
+        return ee.Feature(feature.geometry().centroid())
+
+    # -------------------------------------------------------------------------
+    def getFloodAlerts(self):
+        jrc = ee.Image("JRC/GSW1_0/GlobalSurfaceWater").select("occurrence")
+
+        admin3 = ee.FeatureCollection("projects/servir-mekong/admin/MMR_adm3")
+        geometry = admin3.filter(ee.Filter.eq("NAME_3","Ma-Ubin"))
+
+        water = ee.ImageCollection("projects/servir-mekong/hydrafloods/sentinelOtsu");
+        water = water.reduce(ee.Reducer.firstNonNull()).clip(geometry)
+        floodMask = ee.Image(jrc.lt(5))
+        flood2 = water.updateMask(floodMask).unmask(0).rename(['flood'])
+        building = self.buildingMyanmar.filterBounds(geometry)
+
+        points = building.map(self.getFeatureCentroid)
+
+        floodsAlerts = flood2.sampleRegions(
+                collection= points,
+                geometries=True,
+                scale=10
+            )
+
+        alert2 = floodsAlerts.filter(ee.Filter.eq('flood',1))
+
+        return alert2.getInfo()

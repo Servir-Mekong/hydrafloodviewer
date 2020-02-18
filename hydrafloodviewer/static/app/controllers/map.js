@@ -54,8 +54,10 @@
 		});
 		map.createPane('floodsLayer');
 		map.createPane('waterLayer');
-		map.getPane('floodsLayer').style.zIndex = 998;
-		map.getPane('waterLayer').style.zIndex = 999;
+		map.createPane('pointsCluster');
+		map.getPane('floodsLayer').style.zIndex = 555;
+		map.getPane('waterLayer').style.zIndex = 556;
+		map.getPane('pointsCluster').style.zIndex = 999;
 
 		$.ajax({
 				url: "http://gd.geobytes.com/GetCityDetails?callback=?",
@@ -232,17 +234,32 @@
 		var showErrorAlert = function (alertContent) {
 			$scope.alertContent = alertContent;
 			$('.custom-alert').removeClass('display-none').removeClass('alert-info').removeClass('alert-success').addClass('alert-danger');
+			$timeout(function () {
+					$scope.closeAlert();
+			}, 10000);
 		};
 
 		var showSuccessAlert = function (alertContent) {
 			$scope.alertContent = alertContent;
 			$('.custom-alert').removeClass('display-none').removeClass('alert-info').removeClass('alert-danger').addClass('alert-success');
+			$timeout(function () {
+					$scope.closeAlert();
+			}, 10000);
 		};
 
 		var showInfoAlert = function (alertContent) {
 			$scope.alertContent = alertContent;
 			$('.custom-alert').removeClass('display-none').removeClass('alert-success').removeClass('alert-danger').addClass('alert-info');
+			$timeout(function () {
+					$scope.closeAlert();
+			}, 10000);
+
 		};
+
+		$scope.closeUsecaseInfo = function () {
+			$("#usecase-info-box").removeClass("usecase-infobox-shown");
+		};
+
 
 
 		$(".draw-tab").click(function () {
@@ -636,6 +653,7 @@
 			$("#legend-info-box").removeClass("infobox-shown");
 		});
 
+
 		$("#zoom-in").click(function() {
 					map.zoomIn();
 				});
@@ -756,7 +774,7 @@
 			});
 		};
 
-		$scope.floodMapUsecase = function(usecase_date, sensor, desc){
+		$scope.floodMapUsecase = function(usecase_date, sensor, title, desc, desc2){
 			$scope.showLoader = true;
 			var sensor_val = sensor;
 			var flood_color = $('#color-picker-flood').val();
@@ -774,7 +792,15 @@
 				$scope.showLoader = false;
 				flood_layer.setUrl(data);
 				$timeout(function () {
-					showInfoAlert(desc);
+					//showInfoAlert(desc);
+					$("#usecase-title").text(title);
+					$("#usecase-info").text(desc);
+					$("#usecase-info-2").text(desc2);
+					$("#usecase-info-box").addClass("usecase-infobox-shown");
+					$timeout(function () {
+						$("#usecase-info-box").removeClass("usecase-infobox-shown");
+					}, 20000);
+
 				}, 1500);
 				console.log(data);
 			}, function (error) {
@@ -785,6 +811,16 @@
 				}, 1500);
 			});
 
+		};
+
+		$scope.usecaseInfo = function(title, desc, desc2){
+			  $("#usecase-title").text(title);
+				$("#usecase-info").text(desc);
+				$("#usecase-info-2").text(desc2);
+				$("#usecase-info-box").addClass("usecase-infobox-shown");
+				$timeout(function () {
+					$("#usecase-info-box").removeClass("usecase-infobox-shown");
+				}, 20000);
 		};
 
 
@@ -971,6 +1007,7 @@
 			}
 
 			function updatePermanentWater(){
+				$("#usecase-info-box").removeClass("usecase-infobox-shown");
 				$scope.showLoader = true;
 				var startYear = $('#start_year_selection_historical').val();
 				var endYear = $('#end_year_selection_historical').val();
@@ -1011,6 +1048,7 @@
 			}
 			function updateFloodMapLayer(){
 				$scope.showLoader = true;
+				$("#usecase-info-box").removeClass("usecase-infobox-shown");
 				var sensor_val = $('#sensor_selection').val();
 				var flood_color = $('#color-picker-flood').val();
 				var selected_date = $('#date_selection').val();
@@ -1022,6 +1060,40 @@
 					geom: geom
 				};
 
+
+				//
+				// MapService.getSchoolGeojson(parameters)
+				// .then(function (data) {
+				// 	console.log(data);
+				// 	L.geoJson(data, {
+				// 		onEachFeature: function(feature, layer) {
+				// 		layer.bindPopup('<p>'+feature.properties.type+'</p>' );
+				// 	}
+				// }).addTo(map);
+				//
+				// }, function (error) {
+				// 	console.log(error);
+				// });
+				//
+				// MapService.getFloodAlerts(parameters)
+				// .then(function (data) {
+				// 	console.log(data);
+				// 	var markers = L.markerClusterGroup({pane: 'pointsCluster'});
+				// 	var points_rand = L.geoJson(data, {
+				// 	    onEachFeature: function (feature, layer) //functionality on click on feature
+				// 	        {
+				// 	        layer.bindPopup("Flood Alert"); //just to show something in the popup. could be part of the geojson as well!
+				// 				}
+				//
+				// 	});
+				//
+				// 	markers.addLayer(points_rand);
+				// 	map.addLayer(markers);
+				//
+				// }, function (error) {
+				// 	console.log(error);
+				// });
+
 				if(map.hasLayer(flood_layer)){
 
 					MapService.getFloods(parameters)
@@ -1029,7 +1101,7 @@
 						$scope.showLoader = false;
 						flood_layer.setUrl(data);
 		    		$timeout(function () {
-						showInfoAlert('The map data shows the data from ...');
+						showInfoAlert('The map data shows the surface water extent over Myanmar');
 					}, 1500);
 
 					}, function (error) {
@@ -1044,7 +1116,7 @@
 						$scope.showLoader = false;
 						flood_layer = addMapLayer(flood_layer, data, 'floodsLayer');
 						$timeout(function () {
-							showInfoAlert('The map data shows the data on ...');
+							showInfoAlert('The map data shows the surface water extent over Myanmar');
 						}, 1500);
 					}, function (error) {
 						$scope.showLoader = false;

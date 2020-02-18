@@ -85,6 +85,32 @@
 			return promise;
 		};
 
+		service.getSchoolGeojson = function (options) {
+			var config = {
+				params: {
+					action: 'get-school-geojson'
+				}
+			};
+			var promise = $http.get('/api/mapclient/', config)
+			.then(function (response) {
+				return response.data;
+			});
+			return promise;
+		};
+
+		service.getFloodAlerts = function (options) {
+			var config = {
+				params: {
+					action: 'get-flood-alert'
+				}
+			};
+			var promise = $http.get('/api/mapclient/', config)
+			.then(function (response) {
+				return response.data;
+			});
+			return promise;
+		};
+
 		service.getPermanentWater = function (options) {
 			var config = {
 				params: {

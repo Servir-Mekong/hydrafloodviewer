@@ -14,7 +14,7 @@ def api(request):
     action = get('action', '')
 
     if action:
-        public_methods = ['get-map-id', 'get-permanent-water', 'get-precipmap', 'get-date-list', 'download-flood-map', 'get-feeds-data', 'get-floods-id']
+        public_methods = ['get-map-id', 'get-permanent-water', 'get-precipmap', 'get-date-list', 'download-flood-map', 'get-feeds-data', 'get-floods-id', 'get-school-geojson', 'get-flood-alert']
         if action in public_methods:
             date = get('date', '')
             shape = get('shape', '')
@@ -49,4 +49,8 @@ def api(request):
                 download_snsr = get('download_snsr', '')
                 download_shape = get('download_shape', '')
                 data = core.getDownloadURL(download_date, download_snsr, download_shape)
+            elif action == 'get-school-geojson':
+                data = core.get_schoolGeojson()
+            elif action == 'get-flood-alert':
+                data = core.getFloodAlerts()
             return JsonResponse(data, safe=False)
