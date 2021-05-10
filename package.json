@@ -9,7 +9,7 @@
 	"repository": {},
 	"dependencies": {
 		"bower": "^1.8.8",
-		"lodash": "^3.10.0"
+		"lodash": "^4.17.21"
 	},
 	"devDependencies": {
 		"gulp": "^3.9.0",
