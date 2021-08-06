@@ -209,25 +209,19 @@
         </div>
     </div>
     <div class="map pull-margin" id="map" ng-init="initMap('2015-08-11', '#9999ff', 'sentinel1'); getpermanentwater('2010', '2015', '01', '12', 'discrete', '#00008b'); getPrecipMap(); getAvailabelDate();"></div>
-    <div id="layers" name="layers" data-precip-url="{{precip_layer}}"
-    data-historical-url="{{historical_layer}}"
-    data-admin-url="{{admin_layer}}"
-    data-flood-url="{{flood_layer}}"
-    style="display:none;">
-</div>
-<div class="infobox" id="legend-info-box">
-    <span>
-        The legend clarifies the map layers. You can toggle between the water legend and precipitation legend by clicking on their respective tabs.
-        Moreover, you can change a water color by clicking on a color box.
-    </span>
-</div>
-
-
-
-
-{% include "panels/legendbox.html" %}
-
-</div>
-
+    <div id="layers" name="layers" 
+         data-precip-url="{{precip_layer}}"
+        data-historical-url="{{historical_layer}}"
+        data-admin-url="{{admin_layer}}"
+        data-flood-url="{{flood_layer}}"
+        style="display:none;">
+    </div>
+    <div class="infobox" id="legend-info-box">
+        <span>
+            The legend clarifies the map layers. You can toggle between the water legend and precipitation legend by clicking on their respective tabs.
+            Moreover, you can change a water color by clicking on a color box.
+        </span>
+    </div>
+    {% include "panels/legendbox.html" %}
 </div>
 {% endblock main_container %}
