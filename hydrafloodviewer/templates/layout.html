@@ -64,7 +64,9 @@
 				{% show_menu 0 100 100 100 %}
 			</ul>
 		</div>
-		{% include "navigation.html" %}
+		{% block navigation_container %}
+		
+		{% endblock navigation_container %}
 		<div class="container-fluid container-wrapper">
 			{% block main_container %} {% endblock main_container %}
 		</div>
