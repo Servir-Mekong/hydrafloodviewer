@@ -1,115 +1,126 @@
-{% extends "layout.html" %}
+{% extends "base.html" %}
 {% load cms_tags staticfiles %}
 {% block extra_css %}
-<link href="{% static 'css/usecase.css' %}" rel="stylesheet">
+    <link href="{% static 'css/usecase.css' %}" rel="stylesheet">
 {% endblock %}
-{% block main_container %}
+
+{% block container %}
+
+{% include "navigation.html" %}
 
 <!-- Main Container -->
-<div class="row" >
-    <h1 style="text-align: center;"><b>[[ 'Use Cases' | translate ]]</h1>
-        <h4 style="text-align: center;">[[ 'Select a title below to explore HYDRAFloods surface water maps generated for past flood events in Myanmar' | translate ]]</h4>
-        <br>
-        <div class="container-fluid">
-            <div class="row" style="margin-bottom: 15px;">
-                <div class="col-md-4">
-                    <div class="flip-card">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front" id="card_front_1">
-                                <div class="card-image">
-                                    <img class="zoom img-responsive"  src="http://floodlist.com/wp-content/uploads/2016/07/floods-2-myanmar-july-2016.jpg">
-                                    <div class="centered">[[ 'Cyclone Komen August 2015' | translate ]]</div>
-                                </div>
+<div class="container-fluid" ng-controller="settingsCtrl" style="margin-top: 70px;">
+    <h1 style="text-align: center; color: black; margin-top: 100px;"><b>[[ 'Use Cases' | translate ]]</h1>
+    <h4 style="text-align: center;">[[ 'Select a title below to explore HYDRAFloods surface water maps generated for past flood events in Myanmar' | translate ]]</h4>
+    <br>
+    <div class="container-fluid">
+        <div class="row" style="margin-bottom: 15px; margin-top: 10px;">
+            <div class="col-md-4">
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front" id="card_front_1">
+                            <div class="card-image">
+                                <img class="zoom img-responsive"  src="http://floodlist.com/wp-content/uploads/2016/07/floods-2-myanmar-july-2016.jpg">
+                                <div class="centered">[[ 'Cyclone Komen August 2015' | translate ]]</div>
                             </div>
-                            <div class="flip-card-back" id="card_back_1">
-                                <div class="card-content">
-                                    <p class="collapse-text-toggle">
-                                        <b>[[ 'Cyclone Komen August 2015' | translate ]]</b><br>[[ 'Cyclone Komen August 2015 - During the 2015 monsoon season, Cyclone Komen has occured in late July, bringing additional unusual torrential rains into Myanmar, Bangladesh and India. These rains has lead to a significant increase in monsoonal flood water, leading to severe flooding and landslides in Myanmar' | translate ]]
-                                    </p>
-                                    <p class="collapse-text-toggle">
-                                        <ul>
-                                            <li>
-                                                <form action="/usecase-viewer/" method="post">
-                                                    {% csrf_token %}
-                                                    <input id="viewer" name="viewer" type="hidden" value="usecase">
-                                                    <input id="sDate" name="sDate" type="hidden" value="2015-08-11">
-                                                    <input id="sensor_txt" name="sensor_txt" type="hidden" value="sentinel1">
-                                                    <input id="text" name="text" type="hidden" value="[[ 'Cyclone Komen August 2015 - During the 2015 monsoon season, Cyclone Komen has occured in late July, bringing additional unusual torrential rains into Myanmar, Bangladesh and India. These rains has lead to a significant increase in monsoonal flood water, leading to severe flooding and landslides in Myanmar' | translate ]]">
-                                                    <p><a href="#" onclick="$(this).closest('form').submit(); return false;" >Example event 2015-08-11</a></p>
-                                                </form>
-                                            </li>
-                                        </ul>
-                                    </p>
-                                </div>
+                        </div>
+                        <div class="flip-card-back" id="card_back_1">
+                            <div class="card-content">
+                                <p class="card-title">
+                                    [[ 'Cyclone Komen August 2015' | translate ]]
+                                </p>
+                                <p class="collapse-text-toggle">
+                                    [[ 'Cyclone Komen August 2015 - During the 2015 monsoon season, Cyclone Komen has occured in late July, bringing additional unusual torrential rains into Myanmar, Bangladesh and India. These rains has lead to a significant increase in monsoonal flood water, leading to severe flooding and landslides in Myanmar' | translate ]]
+                                </p>
+                                <p class="collapse-text-toggle">
+                                    <ul>
+                                        <li>
+                                            <form action="/usecase-viewer/" method="post">
+                                                {% csrf_token %}
+                                                <input id="viewer" name="viewer" type="hidden" value="usecase">
+                                                <input id="sDate" name="sDate" type="hidden" value="2015-08-11">
+                                                <input id="sensor_txt" name="sensor_txt" type="hidden" value="sentinel1">
+                                                <input id="text" name="text" type="hidden" value="[[ 'Cyclone Komen August 2015 - During the 2015 monsoon season, Cyclone Komen has occured in late July, bringing additional unusual torrential rains into Myanmar, Bangladesh and India. These rains has lead to a significant increase in monsoonal flood water, leading to severe flooding and landslides in Myanmar' | translate ]]">
+                                                <p class="card-example"><a href="#" onclick="$(this).closest('form').submit(); return false;" class="btn btn-info" role="button">Example event 2015-08-11</a></p>
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- <div class="row" style="margin-bottom: 15px;"> -->
-                <div class="col-md-4">
-                    <div class="flip-card">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front" id="card_front_2">
-                                <div class="card-image">
-                                    <img class="zoom img-responsive"  src="http://earth-chronicles.com/wp-content/uploads/2016/08/Rem_06CNxDE.jpg">
-                                    <div class="centered">[[ 'Monsoonal Rains July 2016' | translate ]]</div>
+            </div>
+            <!-- <div class="row" style="margin-bottom: 15px;"> -->
+            <div class="col-md-4">
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front" id="card_front_2">
+                            <div class="card-image">
+                                <img class="zoom img-responsive"  src="http://earth-chronicles.com/wp-content/uploads/2016/08/Rem_06CNxDE.jpg">
+                                <div class="centered">[[ 'Monsoonal Rains July 2016' | translate ]]</div>
 
-                                </div>
                             </div>
-                            <div class="flip-card-back" id="card_back_2">
-                                <div class="card-content">
-                                    <p class="collapse-text-toggle">
-                                        <b>[[ 'Monsoonal Rains July 2016' | translate ]]</b><br>[[ 'Monsoonal Rains July 2016 - Heavy torrential monsoonal rains has started in June of 2016 and the continued heavy rainfall in July has lead to exacerbated flooding in Myanmar.' | translate ]]
-                                    </p>
-                                    <p class="collapse-text-toggle">
-                                        <ul>
-                                            <li>
-                                                <form action="/usecase-viewer/" method="post">
-                                                    {% csrf_token %}
-                                                    <input id="viewer" name="viewer" type="hidden" value="usecase">
-                                                    <input id="sDate" name="sDate" type="hidden" value="2016-07-14">
-                                                    <input id="sensor_txt" name="sensor_txt" type="hidden" value="sentinel1">
-                                                    <input id="text" name="text" type="hidden" value="[[ 'Monsoonal Rains July 2016 - Heavy torrential monsoonal rains has started in June of 2016 and the continued heavy rainfall in July has lead to exacerbated flooding in Myanmar.' | translate ]]">
-                                                    <p><a href="" onclick="$(this).closest('form').submit(); return false;">Example event 2016-07-14</a></p>
-                                                </form>
-                                            </li>
-                                        </ul>
-                                    </p>
-                                </div>
+                        </div>
+                        <div class="flip-card-back" id="card_back_2">
+                            <div class="card-content">
+                                <p class="card-title">
+                                    [[ 'Monsoonal Rains July 2016' | translate ]]
+                                </p>
+                                <p class="collapse-text-toggle">
+                                    [[ 'Monsoonal Rains July 2016 - Heavy torrential monsoonal rains has started in June of 2016 and the continued heavy rainfall in July has lead to exacerbated flooding in Myanmar.' | translate ]]
+                                </p>
+                                <p class="collapse-text-toggle">
+                                    <ul>
+                                        <li>
+                                            <form action="/usecase-viewer/" method="post">
+                                                {% csrf_token %}
+                                                <input id="viewer" name="viewer" type="hidden" value="usecase">
+                                                <input id="sDate" name="sDate" type="hidden" value="2016-07-14">
+                                                <input id="sensor_txt" name="sensor_txt" type="hidden" value="sentinel1">
+                                                <input id="text" name="text" type="hidden" value="[[ 'Monsoonal Rains July 2016 - Heavy torrential monsoonal rains has started in June of 2016 and the continued heavy rainfall in July has lead to exacerbated flooding in Myanmar.' | translate ]]">
+                                                <p class="card-example"><a href="" onclick="$(this).closest('form').submit(); return false;" class="btn btn-info" role="button">Example event 2016-07-14</a></p>
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </p>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="col-md-4">
-                    <div class="flip-card">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front" id="card_front_2">
-                                <div class="card-image">
-                                    <img class="zoom img-responsive"  src="https://gdb.voanews.com/8CB04EB8-1B16-4183-B2F9-33CB2FD801A9_cx0_cy1_cw0_w1200_s.jpg">
-                                    <div class="centered">[[ 'Monsoonal Rains August 2018' | translate ]]</div>
-                                </div>
+            <div class="col-md-4">
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front" id="card_front_2">
+                            <div class="card-image">
+                                <img class="zoom img-responsive"  src="https://gdb.voanews.com/8CB04EB8-1B16-4183-B2F9-33CB2FD801A9_cx0_cy1_cw0_w1200_s.jpg">
+                                <div class="centered">[[ 'Monsoonal Rains August 2018' | translate ]]</div>
                             </div>
-                            <div class="flip-card-back" id="card_back_2">
-                                <div class="card-content">
-                                    <p class="collapse-text-toggle">
-                                        <b>[[ 'Monsoonal Rains August 2018' | translate ]]</b><br>[[ 'Monsoonal Rains August 2018 - Torrential monsoonal rains and abnormal rainfall pattern has caused the riverine flood in Sittaung River basin and Thanlwin river (Salween river) bansin from July to September 2018 and eventually caused the failure of Swar dam, in Yedashe Township, Bago region of Myanmar at the end of August.' | translate ]]
-                                    </p>
-                                    <p class="collapse-text-toggle">
-                                        <ul>
-                                            <li>
-                                                <form action="/usecase-viewer/" method="post">
-                                                    {% csrf_token %}
-                                                    <input id="viewer" name="viewer" type="hidden" value="usecase">
-                                                    <input id="sDate" name="sDate" type="hidden" value="2018-08-30">
-                                                    <input id="sensor_txt" name="sensor_txt" type="hidden" value="sentinel1">
-                                                    <input id="text" name="text" type="hidden" value="[[ 'Monsoonal Rains August 2018 - Torrential monsoonal rains and abnormal rainfall pattern has caused the riverine flood in Sittaung River basin and Thanlwin river (Salween river) bansin from July to September 2018 and eventually caused the failure of Swar dam, in Yedashe Township, Bago region of Myanmar at the end of August.' | translate ]]" >
-                                                    <p><a href="" onclick="$(this).closest('form').submit(); return false;">Example event 2018-08-30</a></p>
-                                                </form>
-                                            </li>
-                                        </ul>
-                                    </p>
-                                </div>
+                        </div>
+                        <div class="flip-card-back" id="card_back_2">
+                            <div class="card-content">
+                                <p class="card-title">
+                                    [[ 'Monsoonal Rains August 2018' | translate ]]
+                                </p>
+                                <p class="collapse-text-toggle">
+                                   [[ 'Monsoonal Rains August 2018 - Torrential monsoonal rains and abnormal rainfall pattern has caused the riverine flood in Sittaung River basin and Thanlwin river (Salween river) bansin from July to September 2018 and eventually caused the failure of Swar dam, in Yedashe Township, Bago region of Myanmar at the end of August.' | translate ]]
+                                </p>
+                                <p class="collapse-text-toggle">
+                                    <ul>
+                                        <li>
+                                            <form action="/usecase-viewer/" method="post">
+                                                {% csrf_token %}
+                                                <input id="viewer" name="viewer" type="hidden" value="usecase">
+                                                <input id="sDate" name="sDate" type="hidden" value="2018-08-30">
+                                                <input id="sensor_txt" name="sensor_txt" type="hidden" value="sentinel1">
+                                                <input id="text" name="text" type="hidden" value="[[ 'Monsoonal Rains August 2018 - Torrential monsoonal rains and abnormal rainfall pattern has caused the riverine flood in Sittaung River basin and Thanlwin river (Salween river) bansin from July to September 2018 and eventually caused the failure of Swar dam, in Yedashe Township, Bago region of Myanmar at the end of August.' | translate ]]" >
+                                                <p class="card-example"><a href="" onclick="$(this).closest('form').submit(); return false;" class="btn btn-info" role="button">Example event 2018-08-30</a></p>
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -117,4 +128,7 @@
             </div>
         </div>
     </div>
-    {% endblock main_container %}
+</div>
+{% include "footer.html" %}
+{% endblock container %}
+
