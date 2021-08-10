@@ -15,7 +15,6 @@
   display:inline-flex;
   justify-content: center;
   flex-direction: row;
-  margin: auto;
   box-sizing: border-box;
   border-radius: 2px;
   background-clip: padding-box;
@@ -27,6 +26,7 @@
   perspective: 1000px;
   text-align: center;
   margin-left: 75px;
+  margin-bottom: 50px;
 }
 
 /* This container is needed to position the front and back side */
@@ -78,4 +78,25 @@
   color: #f1f1f1; /* Grey text */
   width: 100%; /* Full width */
   padding: 20px; /* Some padding */
+  font-size: 15px;
+}
+.card-title{
+  padding-top: 10px;
+  font-size: 15px;
+  font-weight: bold;
+}
+.collapse-text-toggle{
+  font-size: 12px;
+}
+.card-example {
+  margin-top: 15px;
+}
+.card-example .btn-info{
+  background-color: #34495e;
+  border: none;
+  border-radius: 0;
+}
+.card-example .btn-info:hover {
+  border-radius: 0;
+  background-color: #960a39;
 }

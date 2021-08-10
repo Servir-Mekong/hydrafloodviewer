@@ -1,39 +1,74 @@
 <!-- Footer -->
 {% load cms_tags staticfiles %}
-<footer ng-cloak ng-controller="settingsCtrl" class="main-padding">
-	<div class="container-fluid footer-container">
-		<div class="row">
-			<div ng-repeat="partner in partnersFooter" class="col-md-4 col-sm-4 col-lg-4">
+<footer ng-cloak ng-controller="settingsCtrl">
+	<div class="container-fluid" style="margin-top: 100px;">
+		<div class="row main-padding">
+			<div ng-repeat="partner in partnersFooter" class="col-md-4">
 				<a href="[[partner.url]]" target="_blank">
-					<img class="grow img-responsive [[partner.className]]" src="{% static '' %}[[partner.src]]" alt="[[partner.alt]]">
+					<img class="img-responsive grow [[partner.className]]" src="{% static '' %}[[partner.src]]" style="padding-bottom: 25px;" alt="[[partner.alt]]">
 				</a>
 			</div>
 		</div>
 	</div>
-
-	<div class="container-fluid footer-container info-footer" id="footer-content">
-		<div class="row">
-			<div class="col-sm-12 col-lg-4 col-md-4">
+</footer>
+<footer ng-cloak ng-controller="settingsCtrl">
+	<div class="container-fluid footer-container">
+		<div class="row main-padding" style="margin-top: 25px; margin-bottom: 25px;">
+			<div class="col-md-6">
 				<img class="logo-servir" src="{% static 'images/servir-mekong.png' %}" alt="SERVIR Mekong">
+				<br>
+				<h1>
+					<b>ASIAN DISASTER PREPAREDNESS CENTER (ADPC)</b>
+				</h1>
+				<p>
+					SM Tower, 24th Floor, 979/69 Paholyothin Road, Samsen Nai Phayathai,
+					<br>
+					Bangkok 10400 Thailand
+					<br>
+					BTS Skytrain: Sanam Pao, Exit 1
+					<br>
+					<b>Phone:</b> +66 2 298 0681-92
+					<br>
+					<b>Fax:</b> +66 2 298 0012
+				</p>
 				<br>
 				<a type="button" class="btn btn-primary" href="https://servir.adpc.net/services/technical-assistance">
 					Request Technical Assistance
 				</a>
-				<br>
-				<p class="copyright">
-					<em>© 2017 Asian Disaster Preparedness Center (ADPC). All Rights Reserved.</em>
-				</p>
 			</div>
-			<div class="col-sm-12 col-lg-4 col-md-4">
-				{% static_placeholder "Footer" %}
+			<div class="col-md-3">
+				<h4><b>Menu Links</b></h4>
+				<ul class="footer-links">
+					<li class="footer-link">
+                    	<i class="fa fa-angle-right" aria-hidden="true"></i><a ng-show=true href="/home/" target="_blank">[[ 'Home' | translate]]</a>
+					</li>
+					<li class="footer-link">
+						<i class="fa fa-angle-right" aria-hidden="true"></i><a ng-show=true href="/mapviewer/" target="_blank">[[ 'Map Viewer' | translate]]</a>
+					</li>
+					<li class="footer-link">
+						<i class="fa fa-angle-right" aria-hidden="true"></i><a ng-show=true href="/usecase/" target="_blank">[[ 'Use Cases' | translate]]</a>
+					</li>
+				</ul>
 			</div>
-			<div class="col-sm-12 col-lg-4 col-md-4">
+			<div class="col-md-3">
+				<h4><b>Explore SERVIR Mekong</b></h4>
 				<ul class="footer-links">
 					<li class="footer-link" ng-repeat="footerLink in footerLinks">
-						<a ng-show="footerLink.show" href="[[footerLink.url]]" target="_blank">[[footerLink.name]]</a>
+						<i class="fa fa-angle-right" aria-hidden="true"></i><a ng-show="footerLink.show" href="[[footerLink.url]]" target="_blank">[[footerLink.name]]</a>
 					</li>
 				</ul>
 			</div>
 		</div>
 	</div>
+	<div class="container-fluid" style="background-color: #34495e; text-align: center;">
+		<div class="row main-padding">
+			<div class="col-md-12">
+				<p class="copyright">
+					<em>© 2021 Asian Disaster Preparedness Center (ADPC). All Rights Reserved.</em>
+				</p>
+			</div>
+		</div>
+	</div>
 </footer>
+
+

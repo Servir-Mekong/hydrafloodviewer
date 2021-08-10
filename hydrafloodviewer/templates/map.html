@@ -7,6 +7,9 @@
 {% endblock %}
 {% block main_container %}
 
+{% block navigation_container %}
+    {% include "map_navigation.html" %}
+{% endblock navigation_container %}
 
 <!-- Main Container -->
 <div class="row" ng-controller="hydrafloodviewer">
@@ -79,7 +82,6 @@
                 </select>
             </div>
         </div>
-
         <hr style="margin-top:10px; margin-bottom:10px; border: 1px solid #fff; border-style: solid;">
         <div id='flood-controls'>
             <a data-toggle="collapse" href="#flood-collapse">
@@ -111,6 +113,7 @@
                 </div>
             </div>
         </div>
+        <hr style="margin-top:10px; margin-bottom:10px; border: 1px solid #fff; border-style: solid;">
         <div id='historical-controls'>
             <a data-toggle="collapse" href="#historical-collapse">
                 <div class='layer-header'>
@@ -208,25 +211,20 @@
         </div>
     </div>
     <div class="map pull-margin" id="map" ng-init="initMap('2015-08-11', '#9999ff', 'sentinel1'); getpermanentwater('2010', '2015', '01', '12', 'discrete', '#00008b'); getPrecipMap(); getAvailabelDate();"></div>
-    <div id="layers" name="layers" data-precip-url="{{precip_layer}}"
-    data-historical-url="{{historical_layer}}"
-    data-admin-url="{{admin_layer}}"
-    data-flood-url="{{flood_layer}}"
-    style="display:none;">
-</div>
-<div class="infobox" id="legend-info-box">
-    <span>
-        The legend clarifies the map layers. You can toggle between the water legend and precipitation legend by clicking on their respective tabs.
-        Moreover, you can change a water color by clicking on a color box.
-    </span>
-</div>
-
-
-
-
-{% include "panels/legendbox.html" %}
-
-</div>
-
+    <div id="layers" name="layers" 
+        data-precip-url="{{precip_layer}}"
+        data-historical-url="{{historical_layer}}"
+        data-admin-url="{{admin_layer}}"
+        data-flood-url="{{flood_layer}}"
+        style="display:none;">
+    </div>
+    <div class="infobox" id="legend-info-box">
+        <span>
+            The legend clarifies the map layers. You can toggle between the water legend and precipitation legend by clicking on their respective tabs.
+            Moreover, you can change a water color by clicking on a color box.
+        </span>
+    </div>
+    {% include "panels/legendbox.html" %}
 </div>
 {% endblock main_container %}
+
