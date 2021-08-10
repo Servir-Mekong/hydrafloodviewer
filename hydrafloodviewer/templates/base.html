@@ -5,8 +5,8 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=1024">
-	<!--<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">-->
+	<!--<meta name="viewport" content="width=1024">-->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
 	<meta name="description" content="The HYDRAFloods Viewer is a web application used to view flood map results from the HYDRAFloods processing package along with additional hydrologic variables">
 	<meta name="author" content="SERVIR MEKONG">
 	<meta name="keywords" content="Hydraflood, Hydrafloods viewer, SERVIR MEKONG, Mekong region, Myanmar, Thailand">
@@ -56,23 +56,7 @@
 </head>
 <body>
 
-	<div ng-cloak class="container-fluid">
-		
-		<!-- CMS Menu -->
-		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-			<ul class="nav navbar-nav navbar-right">
-				{% show_menu 0 100 100 100 %}
-			</ul>
-		</div>
-		{% block navigation_container %}
-		
-		{% endblock navigation_container %}
-		<div class="container-fluid container-wrapper">
-			{% block main_container %} {% endblock main_container %}
-		</div>	
-	</div>
-	
-
+    {% block container %}{% endblock container %}
 
 	{% addtoblock "js" %}
 

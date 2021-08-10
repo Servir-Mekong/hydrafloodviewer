@@ -18,7 +18,10 @@
                 <span class="icon-bar"></span>
             </button>
 
-            <a class="navbar-brand" style="padding-top: 5px; padding-bottom: 5px; padding-left: 18px;" href="http://disputebills.com" ng-show="true">
+            <a id="toggle-nav" class="navbar-brand" style="border-radius: 50%; color: white;" ng-click="toggleSidePanel()">
+                <i class="fas fa-bars"></i>
+            </a>
+            <a class="navbar-brand" style="padding: 5px;" href="http://disputebills.com" ng-show="true">
                 <img src="{% static 'images/hydrafloodsicon_lrgnotxt.png' %}" style="width: 40px;" >
             </a>            
             <a class="navbar-brand navmenu" style="padding: 15px 15px;" href="/">[[ applicationName ]]</a>
@@ -50,4 +53,3 @@
     </div>
     <!-- /.navbar-collapse -->
 </nav>
-
