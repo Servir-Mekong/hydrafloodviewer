@@ -1,0 +1,55 @@
+<!-- Navigation -->
+{% load staticfiles %}
+<nav ng-cloak class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="navbar-container" ng-controller="settingsCtrl" >
+        <div class="container-fluid banner-container main-padding">
+            <div ng-repeat="partner in partnersHeader" class="banner">
+                <a href="[[partner.url]]" target="_blank">
+                    <img class="grow img-responsive [[partner.className]]" src="{% static '' %}[[partner.src]]" alt="[[partner.alt]]">
+                </a>
+            </div>
+        </div>
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header menu-container main-padding">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+            <a id="toggle-nav" class="navbar-brand" style="border-radius: 50%; color: white;" ng-click="toggleSidePanel()">
+                <i class="fas fa-bars"></i>
+            </a>
+            <a class="navbar-brand" style="padding: 5px;" href="http://disputebills.com" ng-show="true">
+                <img src="{% static 'images/hydrafloodsicon_lrgnotxt.png' %}" style="width: 40px;" >
+            </a>            
+            <a class="navbar-brand navmenu" style="padding: 15px 15px;" href="/">[[ applicationName ]]</a>
+        </div>
+        <div class="container-fluid menu-container collapse navbar-collapse main-padding" id="navbar-collapse">
+            <!-- <div class="collapse navbar-collapse"> -->
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a ng-show=true class="navmenu" href="/" target="_blank">[[ 'Home' | translate]]</a>
+                </li>
+                <li>
+                    <a ng-show=true class="navmenu" href="/mapviewer/" target="_blank">[[ 'Map Viewer' | translate]]</a>
+                </li>
+                <li>
+                    <a ng-show=true class="navmenu" href="/usecase/" target="_blank">[[ 'Use Cases' | translate]]</a>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="navmenu dropdown-toggle display-inline-block-imp" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        [[ 'Language' | translate]] <span class="caret" style="color: white;"></span>
+                    </a>
+                    <ul style="cursor: pointer;" class="dropdown-menu">
+                        <li><a ng-click="changeLanguage('en')">[[ 'English' | translate ]]</a></li>
+                        <li><a ng-click="changeLanguage('mm')">[[ 'Burmese' | translate]]</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <!-- </div> -->
+        </div>
+    </div>
+    <!-- /.navbar-collapse -->
+</nav>
