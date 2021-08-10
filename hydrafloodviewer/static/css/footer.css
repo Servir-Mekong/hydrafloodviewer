@@ -1,22 +1,13 @@
 footer {
-    /*margin: 3em auto;
-    margin-bottom: 20px;
-    margin-left: 150px;
-    margin-right: 150px;*/
     margin-top: 10px;
-    margin-bottom: 20px;
-}
-
-.footer-container {
-    /*margin-right: 3em;
-    margin-left: 3em;*/
-    padding-top: 1em;
+    margin-bottom: 0px;
 }
 
 footer .partner-deltares {
     margin-top: -5%;
     width: 230px !important;
     float: right;
+    margin-right: 100px;
 }
 
 /*
@@ -25,12 +16,6 @@ footer .partner-deltares {
 @media(min-width:992px){} --> medium devices
 @media(min-width:1200px){} --> large devices
 */
-
-@media (max-width: 1024px) {
-	#footer-content {
-    	display: none;
-	}
-}
 
 footer .partner-sig {
     width: 250px !important;
@@ -46,27 +31,69 @@ footer > div img {
 	width: 70%;
 	display: block;
 }
+.footer-container {
+    padding-top: 25px;
+    width: 100%;
+    background-color: rgb(241, 241, 241);
+}
+
+.footer-container h1 {
+    font-size: 16px;
+    padding-left: 6px;
+    letter-spacing: 0px;
+}
+.footer-container p {
+    font-size: 15px;
+    padding-left: 6px;
+}
+.footer-container .btn-primary {
+    margin-top: 10px;
+    margin-left: 6px;
+    font-size: 15px;
+    border-radius: 0;
+    background-color: #34495e;
+}
+.footer-container .btn-primary:hover {
+    margin-left: 6px;
+    border-radius: 0;
+    font-size: 15px;
+    background-color: #4a6785;
+    border: 1px solid #4a6785;
+}
 
 .info-footer {
 	background-color: rgb(241, 241, 241);	
 }
 
-.copyright {
-    margin-top: 1.5em;
-    font-size: 1.1em;
-}
-
 .footer-links {
     letter-spacing: 0.02em;
     font-size: 1.1em;
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
+    margin-top: 25px;
+    margin-left: px;
 }
 
 .footer-link {
-	margin-bottom: 0.35em;
-	font-weight: bold;
+    padding-left: 10px;
+	padding-bottom: 10px; 
 }
 
-footer > div ul, ol {
-	list-style-type: none;
+.footer-link a{
+    font-size: 15px;
+    font-weight: 500;
+    padding-left: 10px;
+    color: #34495e;
+    text-decoration: none;
+}
+
+.footer-link a:hover{
+    color: rgb(202, 56, 56);
+    font-weight: bold;
+}
+
+.copyright {
+    margin-top: 1.5em;
+    margin-bottom: 1.5em;
+    font-size: 1.1em;
+    color: white;   
 }
