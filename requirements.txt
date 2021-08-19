@@ -85,7 +85,7 @@ python-dateutil==2.8.1
 pytz==2020.4
 query-string==1.0.2
 requests==2.24.0
-rsa==3.4.2
+rsa==4.7
 six==1.13.0
 subprocess32==3.5.2
 tzlocal==1.4
