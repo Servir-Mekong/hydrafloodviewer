@@ -56,9 +56,10 @@ class GEEApi():
     # -------------------------------------------------------------------------
     def getTileLayerUrl(self, ee_image_object):
         map_id = ee.Image(ee_image_object).getMapId()
-        tile_url_template = "https://earthengine.googleapis.com/map/{mapid}/{{z}}/{{x}}/{{y}}?token={token}"
-        return tile_url_template.format(**map_id)
-
+        #tile_url_template = "https://earthengine.googleapis.com/map/{mapid}/{{z}}/{{x}}/{{y}}?token={token}"
+        tile_url_template = str(map_id['tile_fetcher'].url_format)
+        #return tile_url_template.format(**map_id)
+        return tile_url_template
     # -------------------------------------------------------------------------
     def getPrecipMap(self, date, accumulation=1, cmap_name='nipy_spectral'):
 

@@ -2,7 +2,7 @@ angular.module('baseApp').constant('appSettings', {
 	menus: [
 		{
 			'name': 'Home',
-			'url': '/home/',
+			'url': '/',
 			'show': true
 		},
 		{

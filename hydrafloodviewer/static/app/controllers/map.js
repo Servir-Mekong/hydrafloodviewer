@@ -61,8 +61,9 @@
 			_addElement: function () {
 				var elements = this._container.getElementsByClassName('leaflet-control-layers-list');
 				var div = L.DomUtil.create('div', 'leaflet-control-layers-overlays', elements[0]);
-				div.innerHTML = '<label><b>Basemap</b></label>'+
-				'<label class="container_radio">Streets<input name="basemap_selection" id="street" checked="checked" value="street" type="radio"></input><span class="checkmark_radio"></span></label>'+
+				div.innerHTML ='<label><b>Basemap</b></label>'+
+				'<label class="container_radio">Open Street Map<input name="basemap_selection" id="osm" checked="checked" value="osm" type="radio"></input><span class="checkmark_radio"></span></label>'+
+				'<label class="container_radio">Streets<input name="basemap_selection" id="street" value="street" type="radio"></input><span class="checkmark_radio"></span></label>'+
 				'<label class="container_radio">Satellite<input name="basemap_selection" id="satellite" value="satellite" type="radio"></input><span class="checkmark_radio"></span></label>'+
 				'<label class="container_radio">Terrain<input name="basemap_selection" id="terrain" value="terrain" type="radio"></input><span class="checkmark_radio"></span></label>'+
 				'<hr>'+
@@ -74,10 +75,41 @@
 				'</ul>';
 			}
 		});
-
-
-
+		
 		var control = new L.Control.Custom().addTo(map);
+
+		//Default basemap
+		basemap_layer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+			attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+		}).addTo(map); 
+
+		/**
+		* Change basemap layer(satellite, terrain, street)
+		*/
+		
+		$('input[type=radio][name=basemap_selection]').change(function(){
+			var selected_basemap = $(this).val();
+			if(selected_basemap === "osm"){
+				basemap_layer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+					attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+				}).addTo(map);
+			}else if(selected_basemap === "street"){
+				basemap_layer = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+					attribution: '<a href="https://google.com/maps" target="_">Google Maps</a>;',
+					subdomains:['mt0','mt1','mt2','mt3']
+				}).addTo(map);
+			}else if(selected_basemap === "satellite"){
+				basemap_layer = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+					attribution: '<a href="https://google.com/maps" target="_">Google Maps</a>;',
+					subdomains:['mt0','mt1','mt2','mt3']
+				}).addTo(map);
+			}else if(selected_basemap === "terrain"){
+				basemap_layer = L.tileLayer('http://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}', {
+					attribution: '<a href="https://google.com/maps" target="_">Google Maps</a>;',
+					subdomains:['mt0','mt1','mt2','mt3']
+				}).addTo(map);
+			}
+		}); 
 
 		// Initialise the FeatureGroup to store editable layers
 		var editableLayers = new L.FeatureGroup();
@@ -155,7 +187,7 @@
 				};
 			},
 			onEachFeature: function(feature, layer) {
-				layer.bindPopup('<p>'+feature.properties.ST+'</p>' );
+				layer.bindPopup('<p>'+feature.properties.ST+'</p>' ); 
 			}
 		}).addTo(map);
  		//control.addOverlay(mmr_adm3_layer, 'Township');
@@ -168,10 +200,10 @@
 		            clickable: true,
 					weight: 1,
 		        };
-		    },
+		    }, 
 		    onEachFeature: function(feature, layer) {
 		        layer.bindPopup('<p>'+feature.properties.ST+'</p>' );
-		    }
+		    } 
 		}).addTo(map);
 		//control.addOverlay(mmr_adm2_layer, 'Province/State');
 
@@ -186,13 +218,8 @@
 				};
 			},
 			onEachFeature: function(feature, layer) {
-				layer.bindPopup('<p>'+feature.properties.Name+'</p>' );
+				layer.bindPopup('<p>'+feature.properties.ST+'</p>' ); 
 			}
-		}).addTo(map);
-
-		basemap_layer = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
-			attribution: '<a href="https://google.com/maps" target="_">Google Maps</a>;',
-			subdomains:['mt0','mt1','mt2','mt3']
 		}).addTo(map);
 
 
@@ -264,20 +291,6 @@
 		$("#color-picker-wrapper-flood").css("background-color", $("#color-picker-flood").val());
 
 		/**
-		* Change basemap layer(satellite, terrain, street)
-		*/
-		$('input[type=radio][name=basemap_selection]').change(function(){
-			var selected_basemap = $(this).val();
-			if(selected_basemap === "street"){
-				basemap_layer.setUrl('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}');
-			}else if(selected_basemap === "satellite"){
-				basemap_layer.setUrl('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}');
-			}else if(selected_basemap === "terrain"){
-				basemap_layer.setUrl('http://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}');
-			}
-		});
-
-		/**
 		* Toggle layer visualizing
 		*/
 		$('input[type=checkbox][name=country_toggle]').click(function(){
@@ -336,7 +349,7 @@
 		*/
 		$('#date_selection').change(function(){
 			updateFloodMapLayer();
-			updatePrecipitationData();
+			//updatePrecipitationData();
 			var prod = $('#browse_selection').val();
 			var id = prod.split('|')[1];
 			var template =
@@ -512,7 +525,7 @@
 		});
 
 
-		  $("#btn_download").on("click",function(){
+		$("#btn_download").on("click",function(){
 			if(drawing_polygon === undefined || drawing_polygon === ''){
 			alert("Please draw a polygon");
 			}else{
@@ -629,19 +642,19 @@
 				var enableDates = data;
 				var enableDatesArray=[];
 				$("#date_selection").datepicker("destroy");
-			       for (var i = 0; i < enableDates.length; i++) {
-			             var dt = enableDates[i];
-			             var dd, mm, yyy;
-			             if (parseInt(dt.split('-')[2]) <= 9 || parseInt(dt.split('-')[1]) <= 9) {
-			                       dd = parseInt(dt.split('-')[2]);
-			                      mm = parseInt(dt.split('-')[1]);
-			                      yyy = dt.split('-')[0];
-			                     enableDatesArray.push(yyy + '-' + mm + '-' + dd);
-			                }
-			                else {
-			                 enableDatesArray.push(dt);
-			           }
-			 	}
+			        for (var i = 0; i < enableDates.length; i++) {
+			            var dt = enableDates[i];
+			            var dd, mm, yyyy;
+			            if (parseInt(dt.split('-')[2]) <= 9 || parseInt(dt.split('-')[1]) <= 9) {
+							dd = parseInt(dt.split('-')[2]);
+							mm = parseInt(dt.split('-')[1]);
+							yyyy = dt.split('-')[0];
+							enableDatesArray.push(yyyy + '-' + mm + '-' + dd);
+						}
+						else {
+							enableDatesArray.push(dt);
+						}
+			 		}
 				$('#date_selection').datepicker({
 					beforeShow: function (input, inst) {
 				        setTimeout(function () {
@@ -761,123 +774,123 @@
 			readFile(event);
 		});
 
-			// function to add and update tile layer to map
-			function addMapLayer(layer,url){
-				layer = L.tileLayer(url,{attribution:
-					'<a href="https://earthengine.google.com" target="_">' +
-					'Google Earth Engine</a>;'}).addTo(map);
-					return layer;
-			}
-
-			function updatePermanentWater(){
-				$scope.showLoader = true;
-				var startYear = $('#start_year_selection_historical').val();
-				var endYear = $('#end_year_selection_historical').val();
-				var slider = $("#month_range").data("ionRangeSlider");
-
-				// Get values
-				var startMonth = slider.result.from + 1;
-				var endMonth= slider.result.to + 1;
-				var method = 'discrete';
-				var wcolor = $('#color-picker-water').val();
-				var geom = JSON.stringify(drawing_polygon);
-
-				if (startMonth === endMonth) { endMonth += 1; }
-
-				var parameters = {
-					startYear: startYear,
-					endYear: endYear,
-					startMonth: startMonth,
-					endMonth: endMonth,
-					method: method,
-					wcolor: wcolor,
-					geom: geom
-				};
-				MapService.getPermanentWater(parameters)
-				.then(function (data) {
-					$scope.showLoader = false;
-					historical_layer.setUrl(data);
-				}, function (error) {
-					$scope.showLoader = false;
-					console.log(error);
-				});
-
-			}
-			function updateFloodMapLayer(){
-				$scope.showLoader = true;
-				var sensor_val = $('#sensor_selection').val();
-				var flood_color = $('#color-picker-flood').val();
-				var selected_date = $('#date_selection').val();
-				var geom = JSON.stringify(drawing_polygon);
-				var parameters = {
-					date: selected_date,
-					fcolor: flood_color,
-					sensor: sensor_val,
-					geom: geom
-				};
-				MapService.getMap(parameters)
-				.then(function (data) {
-					$scope.showLoader = false;
-					flood_layer.setUrl(data);
-				}, function (error) {
-					$scope.showLoader = false;
-					console.log(error);
-				});
-
-			}
-			function updatePrecipitationData(){
-				$scope.showLoader = true;
-				var prod = $('#product_selection').val();
-				var cmap = $('#cmap_selection').val();
-				var accum = prod.split('|')[0];
-				var selected_date = $('#date_selection').val();
-
-				var parameters = {
-					date: selected_date,
-					cmap: cmap,
-					accum: accum,
-				};
-				MapService.getPrecipitationData(parameters)
-				.then(function (data) {
-					$scope.showLoader = false;
-					precip_layer.setUrl(data);
-				}, function (error) {
-					$scope.showLoader = false;
-					console.log(error);
-				});
-
-			}
-
-
-			function addGibsLayer(layer,product,date){
-				var template =
-				'//gibs-{s}.earthdata.nasa.gov/wmts/epsg3857/best/' +
-				'{layer}/default/{time}/{tileMatrixSet}/{z}/{y}/{x}.jpg';
-
-				layer = L.tileLayer(template, {
-					layer: product,
-					tileMatrixSet: 'GoogleMapsCompatible_Level9',
-					maxZoom: 9,
-					time: date,
-					tileSize: 256,
-					subdomains: 'abc',
-					noWrap: true,
-					continuousWorld: true,
-					// Prevent Leaflet from retrieving non-existent tiles on the
-					// borders.
-					bounds: [
-						[-85.0511287776, -179.999999975],
-						[85.0511287776, 179.999999975]
-					],
-					attribution:
-					'<a href="https://wiki.earthdata.nasa.gov/display/GIBS" target="_">' +
-					'NASA EOSDIS GIBS</a>;'
-				});
-
-				map.addLayer(layer);
-
+		// function to add and update tile layer to map
+		function addMapLayer(layer,url){
+			layer = L.tileLayer(url, {attribution:
+				'<a href="https://earthengine.google.com" target="_">' +
+				'Google Earth Engine</a>;'}).addTo(map);
 				return layer;
-			}
-		});
+		}
 
-	})();
+		function updatePermanentWater(){
+			$scope.showLoader = true;
+			var startYear = $('#start_year_selection_historical').val();
+			var endYear = $('#end_year_selection_historical').val();
+			var slider = $("#month_range").data("ionRangeSlider");
+
+			// Get values
+			var startMonth = slider.result.from + 1;
+			var endMonth= slider.result.to + 1;
+			var method = 'discrete';
+			var wcolor = $('#color-picker-water').val();
+			var geom = JSON.stringify(drawing_polygon);
+
+			if (startMonth === endMonth) { endMonth += 1; }
+
+			var parameters = {
+				startYear: startYear,
+				endYear: endYear,
+				startMonth: startMonth,
+				endMonth: endMonth,
+				method: method,
+				wcolor: wcolor,
+				geom: geom
+			};
+			MapService.getPermanentWater(parameters)
+			.then(function (data) {
+				$scope.showLoader = false;
+				historical_layer.setUrl(data);
+			}, function (error) {
+				$scope.showLoader = false;
+				console.log(error);
+			});
+
+		}
+		function updateFloodMapLayer(){
+			$scope.showLoader = true;
+			var sensor_val = $('#sensor_selection').val();
+			var flood_color = $('#color-picker-flood').val();
+			var selected_date = $('#date_selection').val();
+			var geom = JSON.stringify(drawing_polygon);
+			var parameters = {
+				date: selected_date,
+				fcolor: flood_color,
+				sensor: sensor_val,
+				geom: geom
+			};
+			MapService.getMap(parameters)
+			.then(function (data) {
+				$scope.showLoader = false;
+				flood_layer.setUrl(data);
+			}, function (error) {
+				$scope.showLoader = false;
+				console.log(error);
+			});
+
+		}
+		function updatePrecipitationData(){
+			$scope.showLoader = true;
+			var prod = $('#product_selection').val();
+			var cmap = $('#cmap_selection').val();
+			var accum = prod.split('|')[0];
+			var selected_date = $('#date_selection').val();
+
+			var parameters = {
+				date: selected_date,
+				cmap: cmap,
+				accum: accum,
+			};
+			MapService.getPrecipitationData(parameters)
+			.then(function (data) {
+				$scope.showLoader = false;
+				precip_layer.setUrl(data);
+			}, function (error) {
+				$scope.showLoader = false;
+				console.log(error);
+			});
+
+		}
+
+
+		function addGibsLayer(layer,product,date){
+			var template =
+			'//gibs-{s}.earthdata.nasa.gov/wmts/epsg3857/best/' +
+			'{layer}/default/{time}/{tileMatrixSet}/{z}/{y}/{x}.jpg';
+
+			layer = L.tileLayer(template, {
+				layer: product,
+				tileMatrixSet: 'GoogleMapsCompatible_Level9',
+				maxZoom: 9,
+				time: date,
+				tileSize: 256,
+				subdomains: 'abc',
+				noWrap: true,
+				continuousWorld: true,
+				// Prevent Leaflet from retrieving non-existent tiles on the
+				// borders.
+				bounds: [
+					[-85.0511287776, -179.999999975],
+					[85.0511287776, 179.999999975]
+				],
+				attribution:
+				'<a href="https://wiki.earthdata.nasa.gov/display/GIBS" target="_">' +
+				'NASA EOSDIS GIBS</a>;'
+			});
+
+			map.addLayer(layer);
+
+			return layer;
+		}
+	});
+
+})();
