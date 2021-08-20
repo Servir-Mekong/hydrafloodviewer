@@ -5,11 +5,12 @@
 <script src="{% static 'data/mmr_adm2.js' %}"></script>
 <script src="{% static 'data/mmr_adm3.js' %}"></script>
 {% endblock %}
-{% block main_container %}
 
-    {% block navigation_container %}
+{% block navigation_container %}
         {% include "map_navigation.html" %}
-    {% endblock navigation_container %}
+{% endblock navigation_container %}
+
+{% block main_container %}
 
 <!-- Main Container -->
 <div class="row" ng-controller="hydrafloodviewer">

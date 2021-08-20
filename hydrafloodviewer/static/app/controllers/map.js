@@ -1,4 +1,4 @@
-window.onload = (function () {
+(function () {
 	'use strict';
 	angular.module('baseApp')
 	.controller('hydrafloodviewer' ,function ($scope, $timeout, MapService) {
@@ -61,11 +61,11 @@ window.onload = (function () {
 			_addElement: function () {
 				var elements = this._container.getElementsByClassName('leaflet-control-layers-list');
 				var div = L.DomUtil.create('div', 'leaflet-control-layers-overlays', elements[0]);
-				div.innerHTML ='<label><b>Basemap</b></label>'+
-				'<label class="container_radio">Open Street Map<input name="basemap_selection" id="osm" checked="checked" value="osm" type="radio"></input><span class="checkmark_radio"></span></label>'+
-				'<label class="container_radio">Streets<input name="basemap_selection" id="street" value="street" type="radio"></input><span class="checkmark_radio"></span></label>'+
+				div.innerHTML ='<label><b>Basemap</b></label>'+				
+				'<label class="container_radio">Streets<input name="basemap_selection" id="street" checked="checked" value="street" type="radio"></input><span class="checkmark_radio"></span></label>'+
 				'<label class="container_radio">Satellite<input name="basemap_selection" id="satellite" value="satellite" type="radio"></input><span class="checkmark_radio"></span></label>'+
 				'<label class="container_radio">Terrain<input name="basemap_selection" id="terrain" value="terrain" type="radio"></input><span class="checkmark_radio"></span></label>'+
+				/* '<label class="container_radio">Open Street Map<input name="basemap_selection" id="osm" value="osm" type="radio"></input><span class="checkmark_radio"></span></label>'+ */
 				'<hr>'+
 				'<label><b>Administrative Boundaries</b></label>'+
 				'<ul class="toggles-list">'+
@@ -79,15 +79,34 @@ window.onload = (function () {
 		var control = new L.Control.Custom().addTo(map);
 
 		//Default basemap
-		basemap_layer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+		/* basemap_layer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 			attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-		}).addTo(map); 
+		}).addTo(map);  */
+
+		basemap_layer = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+			attribution: '<a href="https://google.com/maps" target="_">Google Maps</a>;',
+			subdomains:['mt0','mt1','mt2','mt3']
+		}).addTo(map);
+
 
 		/**
 		* Change basemap layer(satellite, terrain, street)
 		*/
-		
+
 		$('input[type=radio][name=basemap_selection]').change(function(){
+			var selected_basemap = $(this).val();
+			if(selected_basemap === "street"){
+				basemap_layer.setUrl('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}');
+			}else if(selected_basemap === "satellite"){
+				basemap_layer.setUrl('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}');
+			}else if(selected_basemap === "terrain"){
+				basemap_layer.setUrl('http://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}');
+			}/* else if(selected_basemap === "osm"){
+				basemap_layer.setUrl('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
+			} */
+		});
+		
+		/* $('input[type=radio][name=basemap_selection]').change(function(){
 			var selected_basemap = $(this).val();
 			if(selected_basemap === "osm"){
 				basemap_layer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -109,7 +128,7 @@ window.onload = (function () {
 					subdomains:['mt0','mt1','mt2','mt3']
 				}).addTo(map);
 			}
-		}); 
+		});  */
 
 		// Initialise the FeatureGroup to store editable layers
 		var editableLayers = new L.FeatureGroup();
