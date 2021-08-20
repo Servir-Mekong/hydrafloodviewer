@@ -1,4 +1,4 @@
-(function () {
+window.onload = (function () {
 	'use strict';
 	angular.module('baseApp')
 	.controller('hydrafloodviewer' ,function ($scope, $timeout, MapService) {
