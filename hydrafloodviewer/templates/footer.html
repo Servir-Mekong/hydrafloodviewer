@@ -5,7 +5,7 @@
 		<div class="row main-padding">
 			<div ng-repeat="partner in partnersFooter" class="col-md-4">
 				<a href="[[partner.url]]" target="_blank">
-					<img class="img-responsive grow [[partner.className]]" src="{% static '' %}[[partner.src]]" style="padding-bottom: 25px;" alt="[[partner.alt]]">
+					<img class="img-responsive grow [[partner.className]]" ng-src="{% static '' %}[[partner.src]]" style="padding-bottom: 25px;" alt="[[partner.alt]]">
 				</a>
 			</div>
 		</div>

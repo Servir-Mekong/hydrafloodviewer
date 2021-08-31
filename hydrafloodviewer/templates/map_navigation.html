@@ -5,7 +5,7 @@
         <div class="container-fluid banner-container main-padding">
             <div ng-repeat="partner in partnersHeader" class="banner">
                 <a href="[[partner.url]]" target="_blank">
-                    <img class="grow img-responsive [[partner.className]]" src="{% static '' %}[[partner.src]]" alt="[[partner.alt]]">
+                    <img class="grow img-responsive [[partner.className]]" ng-src="{% static '' %}[[partner.src]]" alt="[[partner.alt]]">
                 </a>
             </div>
         </div>
