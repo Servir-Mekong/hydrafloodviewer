@@ -4,54 +4,78 @@
 <link href="{% static 'css/usecase-viewer.css' %}" rel="stylesheet">
 {% endblock %}
 {% block extra_script %}
-<script src="{% static 'data/mmr_adm0.js' %}"></script>
+<!-- <script src="{% static 'data/mmr_adm0.js' %}"></script>
 <script src="{% static 'data/mmr_adm2.js' %}"></script>
-<script src="{% static 'data/mmr_adm3.js' %}"></script>
+<script src="{% static 'data/mmr_adm3.js' %}"></script> -->
+<script src="{% static 'data/usecase.geojson' %}"></script>
+<script src="{% static 'data/mekong.geojson' %}"></script> 
+<script src="{% static 'data/adm0.geojson' %}"></script> 
+<script src="{% static 'data/adm1.geojson' %}"></script>
+<script src="{% static 'data/adm2.geojson' %}"></script> 
 <script src="{% static 'app/controllers/usecase.js' %}"></script>
 {% endblock %}
-
-{% block navigation_container %}
-    {% include "navigation.html" %}
-{% endblock navigation_container %}
 
 {% block main_container %}
 
 <!-- Main Container -->
 <div class="row" ng-controller="usecaseviewer">
-
     <!-- Loader Container -->
     <div id="loader" class="loader" ng-show="showLoader">
         <i class="loading-img fas fa-spinner fa-pulse fa-4x"></i>
-    </div>
-    <!-- Alert Container -->
-    <div class="alert alert-dismissible text-center display-none custom-alert" role="alert">
-        <button type="button" class="close" ng-click="closeAlert()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <strong>[[alertContent]]</strong>
-    </div>
-
+    </div> 
+    <div class="sidenav" id="side-panel">
+        <div class="panel-group">
+            <div class="panel panel-default">
+                <img class="img-responsive"  src="http://floodlist.com/wp-content/uploads/2016/07/floods-2-myanmar-july-2016.jpg">
+                <div class="panel-body">
+                    <p class="usecase">Usecase</p>
+                    <h6 class="usecase-title">Cyclone Komen</h6>
+                    <p class="usecase-date">2015-01-01</p>
+                    <br>
+                    <button type="button" class="btn btn-usecase-viewdetails" data-toggle="modal" data-target="#myModal">View Details</button>
+                    <button type="button" class="btn btn-usecase-viewonmap" id="usecase1">View on Map</button>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <img class="img-responsive"  src="http://floodlist.com/wp-content/uploads/2016/07/floods-2-myanmar-july-2016.jpg">
+                <div class="panel-body">
+                    <p class="usecase">Usecase</p>
+                    <h6 class="usecase-title">Cyclone Komen</h6>
+                    <p class="usecase-date">2015-01-01</p>
+                    <br>
+                    <button type="button" class="btn btn-usecase-viewdetails">View Details</button>
+                    <button type="button" class="btn btn-usecase-viewonmap" id="usecase2">View on Map</button>
+                </div>
+            </div>
+        </div>
+    </div> 
     <!-- Map Container -->
-    <div class="map" id="map" style="width:100%;" ng-init="initMap('{{ event_date }}', '#9999ff', '{{ sensor }}'); getpermanentwater('2010', '2015', '01', '12', 'discrete', '#00008b'); "></div>
+    <div class="map pull-margin" id="map"  ng-init="initMap();"></div><!--  '{{ event_date }}', '#9999ff', '{{ sensor }}'); getpermanentwater('2010', '2015', '01', '12', 'discrete', '#00008b' -->
 
-    <div id="layers" name="layers" data-precip-url="{{precip_layer}}" data-historical-url="{{historical_layer}}" data-admin-url="{{admin_layer}}" data-flood-url="{{flood_layer}}" style="display:none;"></div>
-
-    <div class="message">
-        <div class="event-title">
-            <span>Example event {{ event_date }}</span>
-            <input type="hidden" id="event_date" value="{{ event_date }}">
-            <input type="hidden" id="sensor" value="{{ sensor }}">
-            <button class="event-info-button btn btn-danger btn-xs" id="event-collapse">
-                <i class="glyphicon glyphicon-chevron-up"></i>
-            </button>
-            <button class="event-info-button btn btn-success btn-xs" id="event-expand" style="display:none;">
-                <i class="glyphicon glyphicon-chevron-down"></i>
-            </button>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog" style="margin-top: 100px;">
+        <div class="modal-dialog"> 
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header" style="border: 0; margin-bottom: 0; padding-bottom: 0;">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Cyclone Komen</h4>
+                    <p class="text-muted" style="margin-bottom: 0;">2015-01-01</p>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-body-content">
+                        <img class="modal-img img-responsive"  src="http://floodlist.com/wp-content/uploads/2016/07/floods-2-myanmar-july-2016.jpg">
+                        <br>
+                        <p>Cyclone Komen August 2015 - During the 2015 monsoon season, Cyclone Komen has occured in late July, bringing additional unusual torrential rains into Myanmar, Bangladesh and India. These rains has lead to a significant increase in monsoonal flood water, leading to severe flooding and landslides in Myanmar.</p>
+                    </div>
+                   
+                </div>
+                <!-- <div class="modal-footer" style="border: 0;">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div> -->
+            </div>   
         </div>
-        <div id='event-content'>
-            {{ event_content }}
-        </div>
-    </div>
-    {% include "panels/legendbox.html" %}
-
+    </div> 
 </div>
 {% endblock main_container %}
 

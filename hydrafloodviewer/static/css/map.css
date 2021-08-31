@@ -261,3 +261,21 @@ input:checked + .slider_toggle:before {
 	border-radius: 50%;
 	background: white;
 }
+.sidenav {
+  width: 25%;
+  height: 100%;
+  position: fixed;
+  overflow: auto;
+  left: 0;
+  background-color: #efefef;
+  padding: 10px;
+  z-index: 999;
+  padding-bottom: 150px;
+}
+
+.sidenav a {
+  text-decoration: none;
+  font-size: 12px;
+  color: #002244;
+  display: block;
+}

@@ -27,7 +27,8 @@ urlpatterns += i18n_patterns(
     url(r'^$', TemplateView.as_view(template_name="home.html")),
     url(r'^home/', TemplateView.as_view(template_name="home.html")),
     url(r'^mapviewer/', TemplateView.as_view(template_name="map.html")),
-    url(r'^usecase/', TemplateView.as_view(template_name="usecase.html")),
+    url(r'^usecase-viewer/', TemplateView.as_view(template_name="usecase-viewer.html")),
     url(r'^api/mapclient/$', mapclient_api.api),
-    url(r'^usecase-viewer/', controllers.mapviewer, name='usecase-viewer')
+    """  url(r'^usecase/', TemplateView.as_view(template_name="usecase.html")) """
+    """  url(r'^usecase-viewer/', controllers.mapviewer, name='usecase-viewer') """
 )

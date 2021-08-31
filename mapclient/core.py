@@ -18,16 +18,16 @@ from ee.ee_exception import EEException
 class GEEApi():
     """ Google Earth Engine API """
 
-    def __init__(self, date, shape, geom, fcolor, sensor):
+    def __init__(self, date, shape, geom, fcolor):#sensor
 
         ee.Initialize()
         self.geom = geom
-        WEST, SOUTH, EAST, NORTH = 92.0, 9.5, 101.5, 29
+        """ 92.0, 9.5, 101.5, 29 """
+        WEST, SOUTH, EAST, NORTH = 92.0, 5, 109.5, 29
         BOUNDING_BOX = (WEST,SOUTH,EAST,NORTH)
         self.REGION = ee.Geometry.Rectangle(BOUNDING_BOX)
-        self.floodExtentCollection = ee.ImageCollection('projects/servir-mekong/hydrafloods/use_cases/hydra_extents')
-
-
+        """ self.floodExtentCollection = ee.ImageCollection('projects/servir-mekong/hydrafloods/use_cases/hydra_extents') """
+        self.floodExtentCollection = ee.ImageCollection("projects/servir-mekong/hydrafloodsS1Daily")
     # -------------------------------------------------------------------------
     def _get_geometry(self, shape):
 
@@ -105,7 +105,8 @@ class GEEApi():
         return precipMap
 
     # -------------------------------------------------------------------------
-    def get_map_id(self, date, fcolor, sensor, shape):
+    #sensor,
+    def get_map_id(self, date, fcolor, shape):
         if shape:
             shape = shape.replace('["', '[');
             shape = shape.replace('"]', ']');
@@ -113,7 +114,7 @@ class GEEApi():
             shape = ee.FeatureCollection(eval(shape));
         else:
             shape = self.REGION
-        fc = self.floodExtentCollection.filterDate(date).filter(ee.Filter.eq('sensor',sensor))
+        fc = self.floodExtentCollection.filterDate(date)  #.filter(ee.Filter.eq('sensor', sensor))
         image = ee.Image(fc.first()).select(0).clip(shape)
         image = image.updateMask(image)
 
@@ -366,11 +367,11 @@ class GEEApi():
 
     # -------------------------------------------------------------------------
 
-    def dateList(self, snsr):
+    def dateList(self):#, snsr
         pickup_dict = {}
         def imgDate(d):
             return ee.Date(d).format("YYYY-MM-dd")
-        ImageCollection = self.floodExtentCollection.filter(ee.Filter.eq('sensor',snsr))
+        ImageCollection = self.floodExtentCollection  #.filter(ee.Filter.eq('sensor',snsr))
         dates = ee.List(ImageCollection.aggregate_array("system:time_start")).map(imgDate).getInfo()
 
         return dates
@@ -408,12 +409,12 @@ class GEEApi():
             shape = ee.FeatureCollection(eval(shape));
             t1 = ee.Date(sdate)
             t2 = t1.advance(1,'day')
-            fc = self.floodExtentCollection.filterDate(t1,t2).filter(ee.Filter.eq('sensor',snsr))
+            fc = self.floodExtentCollection.filterDate(t1,t2) #.filter(ee.Filter.eq('sensor',snsr))
             image = ee.Image(fc.first()).select(0)
             clip_image = image.clip(shape.geometry().dissolve())
 
             dnldURL = clip_image.getDownloadURL({
-                'name': 'floodmap-'+snsr+'-'+sdate,
+                'name': 'floodmap-'+sdate, #+snsr+'-'
         		'scale': 90,
         		'crs': 'EPSG:4326'
             })

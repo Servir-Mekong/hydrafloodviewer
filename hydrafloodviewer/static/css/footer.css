@@ -70,12 +70,13 @@ footer > div img {
     font-size: 1.1em;
     /* text-transform: uppercase; */
     margin-top: 25px;
-    margin-left: px;
+    margin-left: 0px;
 }
 
 .footer-link {
     padding-left: 10px;
 	padding-bottom: 10px; 
+    list-style-type: none;
 }
 
 .footer-link a{

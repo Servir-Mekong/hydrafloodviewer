@@ -7,7 +7,10 @@ module.exports = {
         ],
         js: [
             'hydrafloodviewer/static/app/*.js',
-            'hydrafloodviewer/static/app/**/*.js'
+            'hydrafloodviewer/static/app/**/*.js',
+        ],
+        geojson: [
+            'hydrafloodviewer/static/app/**/*.geojson'
         ],
         views: [
             'hydrafloodviewer/templates/*.html',

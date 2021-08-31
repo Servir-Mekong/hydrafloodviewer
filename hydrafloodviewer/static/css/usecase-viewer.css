@@ -1,31 +1,321 @@
-
-#toggle-nav {
-    opacity: 0.0;
-    pointer-events: none;
-  }
-
-.message {
-    display: block;
-    position: absolute;
-    left: 55px;
-    top: 128px;
-    width: 300px;
-    padding: 6px;
-    border-radius: 2px;
-    box-shadow: 0 0 5px grey;
-    background-color: white;
-    z-index: 1000;
-    font-size: 14px;
+/* Custom Scrollbar */
+* {
+  scrollbar-width: thin;
 }
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 10px;
+} 
+*::-webkit-scrollbar-track {
+  background: #DCDCDC;
+} 
+*::-webkit-scrollbar-thumb {
+  background-color:  #aaa;
+  border-radius: 8px;
+} 
+*::-webkit-scrollbar-thumb:hover {
+  background-color: #505050;
+  border-radius: 8px;
+}  
 
-.event-info-button {
-  position: absolute;
-  right: 10px;
+.switch {
+  position: relative;
   display: inline-block;
+  width: 30px;
+  height: 20px;
+}
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.sidenav {
+  width: 25%;
+  height: 100%;
+  position: fixed;
+  left: 0;
+  background-color: #efefef;
+  padding: 10px;
+  z-index: 999;
+  padding-bottom: 150px;
+}
+.sidenav .panel-group{
+  margin: 20px;
+  height: calc(100vh - 150px);
+  overflow-y: scroll !important;
+}
+.sidenav .panel-default{
+  margin-bottom: 15px;
+  border-radius: 8px;
+  margin-right: 10px;
+}
+.sidenav .img-responsive{
+  max-height: 150px;
+  width: 100%;
+  border-radius: 8px 8px 0 0;
+}
+.sidenav .usecase{
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 10px;
+  line-height: 150%;
+  text-transform: uppercase;
+  color: #343A40;
+  margin-bottom: 2px;
 }
 
-.event-title {
-  font-weight: bold;
-  margin-left: 3px;
-  margin-bottom: 5px;
+.sidenav .usecase-title{
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 100%;
+  margin-top: 0;
+  margin-bottom: 2px;
+  padding-top: 0;
+  color: #212529;
+}
+.sidenav .usecase-date{
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 150%;
+  color: #6C757D;
+  margin-top: 0;
+  padding-top: 0;
+  margin-bottom: 20px;
+}
+.sidenav .btn-usecase-viewdetails{
+  background-color: #9999FF;
+  border-radius: 24px;
+  color: #FFFFFF;
+  font-family: Roboto;
+}
+.sidenav .btn-usecase-viewdetails:hover {
+  background-color: #FFFFFF;
+  border-radius: 24px;
+  color: #5252D1;
+  border: 1px solid #9999FF;
+  font-weight: 500;
+}
+.sidenav .btn-usecase-viewonmap{
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 150%;
+  background: none;
+  color: #5252D1;
+}
+
+/* Modal */
+.modal-content {
+  margin-bottom: 10px;
+}
+.modal-body-content{
+  max-height: 60vh;
+  overflow: auto;
+}
+.modal-img {
+  margin-top: 0;
+  padding-top: 0;
+  padding-right: 10px;
+}
+.modal-body-content p{
+  font-family: Roboto;
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: 0px;
+  margin-bottom: 10px;
+  padding-right: 10px;
+}
+/* leaflet popup  */
+.panel-custom{
+  margin-top: 25px;
+  max-height: 400px;
+  width: auto;
+}
+.panel-popup{
+  overflow-y: scroll !important;
+  max-height: 350px;
+  margin-top: 10px;
+} 
+.panel-image{
+  padding-right: 10px;
+}
+.panel-popup p{
+  padding-right: 10px;
+} 
+.adm2-popup {
+	margin-top: 25px;
+	max-height: 350px;
+	overflow-y: scroll !important;
+}
+.adm2-popup .table{
+	width: auto;
+	margin-right: 10px;
+}
+.leaflet-popup {
+	position: absolute;
+	text-align: center;
+	margin-bottom: 20px;
+    border-radius: 0 !important;
+    border: 1px solid whitesmoke;
+}
+
+.leaflet-popup-content-wrapper {
+	padding: 5px;
+	text-align: left;
+	border-radius: 0 !important;
+}
+.leaflet-container a.leaflet-popup-close-button {
+	top: 5px;
+	right: 5px;
+} 
+.leaflet-container a.leaflet-popup-close-button:hover {
+	color: red;
+}
+
+.leaflet-touch .leaflet-control-layers-toggle {
+  width: 35px;
+  height: 35px;
+}
+.leaflet-control-layers-overlays hr{
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-top: 2px solid #eee;
+}
+
+.leaflet-control-layers-overlays label{
+  font-weight: 500;
+  color: #000;
+}
+.leaflet-control-layers-expanded {
+  padding: 6px 10px 6px 6px;
+  color: #333;
+  background: #fff;
+  width: 150px;
+}
+ul, ol {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.toggles-list .toggle {
+  display: flex;
+  align-items: center;
+}
+
+.toggles-list .toggle label {
+  margin-left: 11px;
+}
+.switch_layer {
+position: relative;
+display: inline-block;
+width: 25px;
+height: 12px;
+}
+.switch_layer input {
+opacity: 0;
+width: 0;
+height: 0;
+}
+.slider_toggle {
+position: absolute;
+cursor: pointer;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+background-color: #bbb;
+-webkit-transition: .4s;
+transition: .4s;
+}
+.slider_toggle:before {
+position: absolute;
+content: "";
+height: 9px;
+width: 9px;
+left: 2px;
+bottom: 2px;
+background-color: white;
+-webkit-transition: .4s;
+transition: .4s;
+}
+input:checked + .slider_toggle {
+background-color: #9999ff;
+}
+input:focus + .slider_toggle {
+box-shadow: 0 0 1px #9999ff;
+}
+input:checked + .slider_toggle:before {
+-webkit-transform: translateX(12px);
+-ms-transform: translateX(12px);
+transform: translateX(12px);
+}
+/* Rounded sliders */
+.slider_toggle.round {
+border-radius: 34px;
+}
+.slider_toggle.round:before {
+border-radius: 50%;
+}
+/* The container_radio */
+.container_radio {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+/* Hide the browser's default radio button */
+.container_radio input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* Create a custom radio button */
+.checkmark_radio {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 15px;
+  width: 15px;
+  background-color: #eee;
+  border-radius: 50%;
+  margin-left: 11px;
+}
+/* On mouse-over, add a grey background color */
+.container_radio:hover input ~ .checkmark_radio {
+  background-color: #ccc;
+}
+/* When the radio button is checked, add a blue background */
+.container_radio input:checked ~ .checkmark_radio {
+  background-color: #9999ff;
+}
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.checkmark_radio:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+/* Show the indicator (dot/circle) when checked */
+.container_radio input:checked ~ .checkmark_radio:after {
+  display: block;
+}
+/* Style the indicator (dot/circle) */
+.container_radio .checkmark_radio:after {
+ 	top: 4px;
+	left: 4px;
+	width: 7px;
+	height: 7px;
+	border-radius: 50%;
+	background: white;
 }

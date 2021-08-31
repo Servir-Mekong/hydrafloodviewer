@@ -1,17 +1,22 @@
 {% extends "layout.html" %}
 {% load cms_tags staticfiles %}
-{% block extra_script %}
-<script src="{% static 'data/mmr_adm0.js' %}"></script>
-<script src="{% static 'data/mmr_adm2.js' %}"></script>
-<script src="{% static 'data/mmr_adm3.js' %}"></script>
+
+{% block extra_css %}
+    <link href="{% static 'css/map.css' %}" rel="stylesheet">
+    <link href="{% static 'css/usecase-viewer.css' %}" rel="stylesheet">
 {% endblock %}
 
-{% block navigation_container %}
-        {% include "map_navigation.html" %}
-{% endblock navigation_container %}
-
-{% block main_container %}
-
+{% block extra_script %}
+<!-- script src="{% static 'data/mmr_adm0.js' %}"></script>
+<script src="{% static 'data/mmr_adm2.js' %}"></script>
+<script src="{% static 'data/mmr_adm3.js' %}"></script> -->
+<script src="{% static 'data/mekong.geojson' %}"></script> 
+<script src="{% static 'data/adm0.geojson' %}"></script> 
+<script src="{% static 'data/adm1.geojson' %}"></script>
+<script src="{% static 'data/adm2.geojson' %}"></script> 
+<script src="{% static 'app/controllers/map.js' %}"></script>
+{% endblock %}
+{% main_container %}
 <!-- Main Container -->
 <div class="row" ng-controller="hydrafloodviewer">
     <!-- Loader Container -->
@@ -39,7 +44,7 @@
                     name="date_selection"
                     type="text"
                     data-provide="datepicker"
-                    value="2015-08-11"
+                    value="2021-01-05"
                     data-date-autoclose="true"
                     data-date-format="yyyy-mm-dd"
                     data-date-min-view-mode="days"
@@ -158,7 +163,7 @@
                                 name="end_year_selection_historical"
                                 type="text"
                                 data-provide="datepicker"
-                                value="2015"
+                                value="2020"
                                 data-date-autoclose="true"
                                 data-date-clear-btn="true"
                                 data-date-format="yyyy"
@@ -211,7 +216,7 @@
             </div>
         </div>
     </div>
-    <div class="map pull-margin" id="map" ng-init="initMap('2015-08-11', '#9999ff', 'sentinel1'); getpermanentwater('2010', '2015', '01', '12', 'discrete', '#00008b'); getPrecipMap(); getAvailabelDate();"></div>
+    <div class="map pull-margin" id="map" ng-init="initMap('2021-01-05', '#9999ff', 'sentinel1'); getpermanentwater('2010', '2020', '01', '12', 'discrete', '#00008b'); getPrecipMap(); getAvailabelDate();"></div>
     <div id="layers" name="layers" 
         data-precip-url="{{precip_layer}}"
         data-historical-url="{{historical_layer}}"

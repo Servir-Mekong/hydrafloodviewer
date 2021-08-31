@@ -14,3 +14,5 @@ def index(request):
         oauth.get_authorize_redirect()
 
     return render(request, 'map.html', {})
+
+

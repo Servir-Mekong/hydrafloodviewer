@@ -50,9 +50,10 @@
 
 .banner-container {
     background: url("https://servir.adpc.net/themes/svmk/images/optimized/satellite-inside.png");
-    background-position: 110% 70%;
+    background-position: 100% 70%;
     background-repeat: no-repeat;
     background-size: 800px auto;
+	 
 }
 
 .menu-container {
@@ -122,7 +123,7 @@
 .navmenu {
 	color: rgb(255,255,255) !important;
     color: rgba(255,255,255,0.87) !important;
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
 }
 
 #toggle-nav:hover, .nav > li > a:hover {

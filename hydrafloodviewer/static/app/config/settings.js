@@ -12,7 +12,7 @@ angular.module('baseApp').constant('appSettings', {
 		},
 		{
 			'name': 'Use Cases',
-			'url': '/usecase/',
+			'url': '/usecase-viewer/',
 			'show': true
 		},
 	],

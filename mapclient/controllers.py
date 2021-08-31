@@ -4,11 +4,12 @@ import ee
 from ee.ee_exception import EEException
 import datetime
 
+""" Controller for the app home page. """
 
-def mapviewer(request):
-    """
-    Controller for the app home page.
-    """
+""" def mapviewer(request):
+    
+    
+   
     if request.method == 'GET':
         info = request.GET
     else:
@@ -23,7 +24,6 @@ def mapviewer(request):
         'event_content': event_content,
         'sensor': sensor,
         'event_date': start_date
-
     }
 
-    return render(request, 'usecase-viewer.html', context)
+    return render(request, 'usecase-viewer.html', context) """

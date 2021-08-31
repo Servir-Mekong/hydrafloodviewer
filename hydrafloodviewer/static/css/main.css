@@ -1,9 +1,29 @@
 /* Global Styles */
-
+@import url('https://fonts.googleapis.com/css2?family=Lato&family=Open+Sans&family=Roboto:wght@300;400;500;700;900&display=swap');
+body {
+    /*margin-top: 50px;*/
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0px;
+    text-align: left;
+    margin-top: 100px;
+    color: #6B7176;
+}
 @media(min-width:768px) {
     body {
         /*margin-top: 50px;*/
+        font-family: 'Roboto', sans-serif;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 24px;
+        letter-spacing: 0px;
+        text-align: left;
         margin-top: 100px;
+        color: #6B7176;
     }
 }
 h1, h2, h3, h4, h5, h6 {
@@ -465,7 +485,7 @@ p {
     transform: scale(1.05); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
 }
 
-.sidenav {
+/* .sidenav {
     width: 25%;
     height: 100%;
     position: fixed;
@@ -482,7 +502,7 @@ p {
     font-size: 12px;
     color: #002244;
     display: block;
-}
+} */
 /* Customize the label (the container) */
 .container {
     display: inline-block;

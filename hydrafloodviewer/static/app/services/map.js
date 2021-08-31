@@ -25,7 +25,7 @@
 			var config = {
 				params: {
 					action: 'get-date-list',
-					snsr: options.sensor,
+					//snsr: options.sensor,
 				}
 			};
 			var promise = $http.get('/api/mapclient/', config)
@@ -41,7 +41,7 @@
 					action: 'get-map-id',
 					date: options.date,
 					fcolor: options.fcolor,
-					sensor: options.sensor,
+					//sensor: options.sensor,
 					geom: options.geom
 				}
 			};
@@ -57,7 +57,7 @@
 				params: {
 					action: 'download-flood-map',
 					download_date: options.date,
-					download_snsr: options.sensor,
+					//download_snsr: options.sensor,
 					download_shape: options.geom
 				}
 			};

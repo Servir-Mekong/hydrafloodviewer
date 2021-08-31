@@ -20,7 +20,7 @@ def api(request):
             shape = get('shape', '')
             geom = get('geom', '')
             fcolor = get('fcolor', '')
-            sensor = get('sensor', '')
+            #sensor = get('sensor', '')
             startYear = get('startYear', '')
             endYear = get('endYear', '')
             startMonth = get('startMonth', '')
@@ -30,21 +30,25 @@ def api(request):
             accum = get('accum', '')
             cmap = get('cmap', '')
             precipdate = get('precipdate', '')
-            core = GEEApi(date, shape, geom, fcolor, sensor )
+            core = GEEApi(date, shape, geom, fcolor ) #sensor
             if action == 'get-map-id':
-                data = core.get_map_id(date=date, fcolor=fcolor, sensor=sensor, shape=geom)
+                data = core.get_map_id(date=date, fcolor=fcolor, shape=geom) #sensor=sensor,
             elif action == 'get-permanent-water':
                 data = core.getHistoricalMap(startYear=startYear, endYear=endYear, startMonth=startMonth, endMonth=endMonth, method=method, wcolor=wcolor, climatology=False, algorithm='JRC', shape=geom)
             elif action == 'get-precipmap':
-                data = core.getPrecipMap(date=precipdate, accumulation=1, cmap_name=cmap)
+                data = core.getPrecipMap(date=precipdate, accumulation=1, cmap_name=cmap)     
             elif action == 'get-date-list':
-                sensor_date_list = get('snsr', '')
-                data = core.dateList(snsr=sensor_date_list)
+                data = core.dateList()
             elif action == 'get-feeds-data':
                 data = core.getFeeds()
             elif action == 'download-flood-map':
                 download_date = get('download_date', '')
-                download_snsr = get('download_snsr', '')
+                #download_snsr = get('download_snsr', '')
                 download_shape = get('download_shape', '')
-                data = core.getDownloadURL(download_date, download_snsr, download_shape)
+                data = core.getDownloadURL(download_date, download_shape)#download_snsr,
             return JsonResponse(data, safe=False)
+
+
+""" elif action == 'get-date-list':
+        sensor_date_list = get('snsr', '')
+        data = core.dateList(snsr=sensor_date_list) """

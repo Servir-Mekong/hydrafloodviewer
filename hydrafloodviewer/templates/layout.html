@@ -39,9 +39,7 @@
 	<!-- Load CSS -->
 	<!-- Custom CSS -->
 	<link href="{% static 'css/main.css' %}" rel="stylesheet">
-	<link href="{% static 'css/map.css' %}" rel="stylesheet">
 	<link href="{% static 'css/navigation.css' %}" rel="stylesheet">
-	<link href="{% static 'css/footer.css' %}" rel="stylesheet">
 	<!-- Normalize CSS -->
 	<link href="{% static 'vendor/normalize-css/normalize.css' %}" rel="stylesheet">
 	<!-- ng-Dialog -->
@@ -57,22 +55,17 @@
 <body>
 
 	<div ng-cloak class="container-fluid">
-		
 		<!-- CMS Menu -->
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav navbar-right">
 				{% show_menu 0 100 100 100 %}
-			</ul>
+			</ul>	
 		</div>
-		{% block navigation_container %}
-		
-		{% endblock navigation_container %}
+		{% include "map_navigation.html" %}
 		<div class="container-fluid container-wrapper">
 			{% block main_container %} {% endblock main_container %}
 		</div>	
-	</div>
-	
-
+	</div>	
 
 	{% addtoblock "js" %}
 
@@ -126,7 +119,6 @@
 	<script src="{% static 'app/services/map.js' %}"></script>
 	<!-- Controllers -->
 	<script src="{% static 'app/controllers/settings.js' %}"></script>
-	<script src="{% static 'app/controllers/map.js' %}"></script>
 	{% else %}
 	<script src="{% static 'dist/application.min.js' %}"></script>
 	{% endif %}
