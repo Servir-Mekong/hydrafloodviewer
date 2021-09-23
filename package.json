@@ -13,6 +13,7 @@
 		"lodash": "^4.17.21"
 	},
 	"devDependencies": {
+		"cypress": "^8.4.1",
 		"gulp": "^4.0.2",
 		"gulp-angular-templatecache": "^1.7.0",
 		"gulp-concat": "^2.6.0",
