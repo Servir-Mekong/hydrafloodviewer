@@ -28,5 +28,9 @@
 		"gulp-uglify": "^1.2.0",
 		"run-sequence": "^1.1.1"
 	},
-	"license": "MIT"
+	"license": "MIT",
+	"scripts": {
+		"cy:open": "cypress open",
+		"cy:run": "cypress run"
+	}
 }
