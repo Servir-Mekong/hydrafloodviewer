@@ -59,11 +59,11 @@
 			_addElement: function () {
 				var elements = this._container.getElementsByClassName('leaflet-control-layers-list');
 				var div = L.DomUtil.create('div', 'leaflet-control-layers-overlays', elements[0]);
-				div.innerHTML ='<label><b>Basemap</b></label>'+				
-				'<label class="container_radio">Streets<input name="basemap_selection" id="street" checked="checked" value="street" type="radio"></input><span class="checkmark_radio"></span></label>'+
+				div.innerHTML ='<label><b>Basemap</b></label>'+	
+				'<label class="container_radio">Open Street Map<input name="basemap_selection" id="osm" checked="checked" value="osm" type="radio"></input><span class="checkmark_radio"></span></label>'+			
+				'<label class="container_radio">Streets<input name="basemap_selection" id="street" value="street" type="radio"></input><span class="checkmark_radio"></span></label>'+
 				'<label class="container_radio">Satellite<input name="basemap_selection" id="satellite" value="satellite" type="radio"></input><span class="checkmark_radio"></span></label>'+
 				'<label class="container_radio">Terrain<input name="basemap_selection" id="terrain" value="terrain" type="radio"></input><span class="checkmark_radio"></span></label>'+
-				/* '<label class="container_radio">Open Street Map<input name="basemap_selection" id="osm" value="osm" type="radio"></input><span class="checkmark_radio"></span></label>'+ */
 				'<hr>'+
 				'<label><b>Administrative Boundaries</b></label>'+
 				'<ul class="toggles-list">'+
@@ -415,7 +415,7 @@
 			$("#color-picker-wrapper-water").css("background-color", $(this).val());
 			updatePermanentWater();
 		});
-		$("#color-picker-wrapper-water").css("background-color", $("#color-picker-water").val());
+		$("#color-picker-wrapper-water").css("background-color", $("color-picker-water").val());
 
 		/**
 		* Change flood color

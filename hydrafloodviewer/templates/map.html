@@ -7,9 +7,6 @@
 {% endblock %}
 
 {% block extra_script %}
-<!-- script src="{% static 'data/mmr_adm0.js' %}"></script>
-<script src="{% static 'data/mmr_adm2.js' %}"></script>
-<script src="{% static 'data/mmr_adm3.js' %}"></script> -->
 <script src="{% static 'data/mekong.geojson' %}"></script> 
 <script src="{% static 'data/adm0.geojson' %}"></script> 
 <script src="{% static 'data/adm1.geojson' %}"></script>
@@ -134,7 +131,7 @@
                 <p><b>&emsp;&emsp;&emsp;[[ 'PERMANENT WATER LAYER' | translate]]&emsp;&emsp;&emsp;</b></p>
                 <div class="slider-width">
                     <p> [[ 'Opacity' | translate]]:&emsp;&emsp; </p>
-                    <input id="historical-opacity" data-slider-id='historical-opacity' type="text" data-slider-min="0" data-slider-max="1" data-slider-step="0.1" data-slider-value="1" data-slider-enabled="true"
+                    <input id="historical-opacity" data-slider-id='historical-opacity' type="text" data-slider-min="0" data-slider-max="1" data-slider-step="0.1" data-slider-value="0.5" data-slider-enabled="true"
                     style="width: 160px;left: 30px;"/>
                 </div>
 
@@ -216,7 +213,7 @@
             </div>
         </div>
     </div>
-    <div class="map pull-margin" id="map" ng-init="initMap('2021-01-05', '#9999ff', 'sentinel1'); getpermanentwater('2010', '2020', '01', '12', 'discrete', '#00008b'); getPrecipMap(); getAvailabelDate();"></div>
+    <div class="map pull-margin" id="map" ng-init="initMap('2021-01-05', '#9999ff', 'sentinel1'); getpermanentwater('2010', '2020', '01', '12', 'discrete', '#aeaee8'); getPrecipMap(); getAvailabelDate();"></div>
     <div id="layers" name="layers" 
         data-precip-url="{{precip_layer}}"
         data-historical-url="{{historical_layer}}"

@@ -27,6 +27,7 @@ class GEEApi():
         BOUNDING_BOX = (WEST,SOUTH,EAST,NORTH)
         self.REGION = ee.Geometry.Rectangle(BOUNDING_BOX)
         """ self.floodExtentCollection = ee.ImageCollection('projects/servir-mekong/hydrafloods/use_cases/hydra_extents') """
+        #self.floodExtentCollection = ee.ImageCollection("projects/cemis-camp/assets/dailyWaterV2")
         self.floodExtentCollection = ee.ImageCollection("projects/servir-mekong/hydrafloodsS1Daily")
     # -------------------------------------------------------------------------
     def _get_geometry(self, shape):
@@ -115,6 +116,7 @@ class GEEApi():
         else:
             shape = self.REGION
         fc = self.floodExtentCollection.filterDate(date)  #.filter(ee.Filter.eq('sensor', sensor))
+        #fc = self.floodExtentCollection.filter(ee.Filter.eq('system:index', date))
         image = ee.Image(fc.first()).select(0).clip(shape)
         image = image.updateMask(image)
 
@@ -370,6 +372,7 @@ class GEEApi():
     def dateList(self):#, snsr
         pickup_dict = {}
         def imgDate(d):
+            #return ee.Date(d).format("YYYY-MM-dd")
             return ee.Date(d).format("YYYY-MM-dd")
         ImageCollection = self.floodExtentCollection  #.filter(ee.Filter.eq('sensor',snsr))
         dates = ee.List(ImageCollection.aggregate_array("system:time_start")).map(imgDate).getInfo()

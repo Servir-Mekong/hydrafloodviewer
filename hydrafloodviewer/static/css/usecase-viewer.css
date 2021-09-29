@@ -1,23 +1,16 @@
-/* Custom Scrollbar */
-* {
-  scrollbar-width: thin;
+.map {
+  height: 100%;
+  width: 75%;
+  display: block;
+  height: calc(100vh - 115px);
+  margin-top: 0;
+  /*background-color: rgb(241, 241, 241);
+  background-color: rgba(241, 241, 241, 1);
+  margin-top: 2em;*/
+} 
+.pull-margin {
+  left: 25%;
 }
-*::-webkit-scrollbar {
-  width: 8px;
-  height: 10px;
-} 
-*::-webkit-scrollbar-track {
-  background: #DCDCDC;
-} 
-*::-webkit-scrollbar-thumb {
-  background-color:  #aaa;
-  border-radius: 8px;
-} 
-*::-webkit-scrollbar-thumb:hover {
-  background-color: #505050;
-  border-radius: 8px;
-}  
-
 .switch {
   position: relative;
   display: inline-block;
@@ -137,8 +130,11 @@
   max-height: 400px;
   width: auto;
 }
+.panel-custom .panel-title{
+  font-weight: bold;
+}
 .panel-popup{
-  overflow-y: scroll !important;
+  overflow-y: auto !important;
   max-height: 350px;
   margin-top: 10px;
 } 
@@ -148,10 +144,14 @@
 .panel-popup p{
   padding-right: 10px;
 } 
+.panel-desc{
+  font-family: Roboto;
+  font-size: 14px;
+}
 .adm2-popup {
 	margin-top: 25px;
 	max-height: 350px;
-	overflow-y: scroll !important;
+	overflow-y: auto !important;
 }
 .adm2-popup .table{
 	width: auto;
@@ -161,8 +161,8 @@
 	position: absolute;
 	text-align: center;
 	margin-bottom: 20px;
-    border-radius: 0 !important;
-    border: 1px solid whitesmoke;
+  border-radius: 0 !important;
+  border: 1px solid whitesmoke;
 }
 
 .leaflet-popup-content-wrapper {

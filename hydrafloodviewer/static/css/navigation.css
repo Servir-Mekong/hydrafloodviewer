@@ -125,7 +125,15 @@
     color: rgba(255,255,255,0.87) !important;
     /* text-transform: uppercase; */
 }
-
+.toggle-nav{
+    opacity:1.0;
+}
+.toggle-nav:hover {
+    background: #78e08f;
+}
+.toggle-nav:hover div {
+    background: #34495e;
+}
 #toggle-nav:hover, .nav > li > a:hover {
     background-color: #78e08f !important;
     font-weight: 700;

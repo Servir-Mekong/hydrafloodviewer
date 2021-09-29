@@ -93,35 +93,60 @@
 			}
 		});
 		
-		var usecase_layer = L.geoJson(usecaseData, {
+		var usecase_layer = L.geoJson(usecases, {
 			onEachFeature: function(feature, layer) {
 				layer.bindPopup( 
 					'<div class="panel panel-custom">' +
-						'<h2 class="panel-title">'+feature.properties.location+'</h2>'+
-						'<small>' + feature.properties.date + '</small>'+'<br>'+
+						'<h2 class="panel-title">'+feature.properties.Location+'</h2>'+
+						'<small style="font-size: 12px;">' + feature.properties.Date + '</small>'+'<br>'+
 						'<div class="panel-popup"  id="panel-popup">'+
-							'<img class="panel-image img-responsive" src="'+ feature.properties.image +'" alt="">'+ 
-							'<p class="panel-desc">Cyclone Komen August 2015 - During the 2015 monsoon season, Cyclone Komen has occured in late July, bringing additional unusual torrential rains into Myanmar, Bangladesh and India. These rains has lead to a significant increase in monsoonal flood water, leading to severe flooding and landslides in Myanmar.</p>'+
+							'<img class="panel-image img-responsive" src="'+ feature.properties.Image +'" alt="">'+ 
+							'<p class="panel-desc">'+feature.properties.Description+'</p>'+
+							'<p class="panel-desc">'+'<a href="'+feature.properties.Website+'" target="_blank">View Sources</a>'+'</p>'+
 						'</div>'+
 					'</div>'        
 				);
-				layer.bindTooltip(feature.properties.location);
+				layer.bindTooltip(feature.properties.Location);
 			}
 		}).addTo(map); 
 
 		//fly map to usecase location
 		var uc1 = document.querySelector('#usecase1');
 		var uc2 = document.querySelector('#usecase2');
+		var uc3 = document.querySelector('#usecase3');
+		var uc4 = document.querySelector('#usecase4');
+		var uc5 = document.querySelector('#usecase5');
+		var uc6 = document.querySelector('#usecase6');
 
-		var coord1 = usecaseData.features[0].geometry.coordinates;
+		var coord1 = usecases.features[0].geometry.coordinates;
 		var usecase1 = L.GeoJSON.coordsToLatLng(coord1);
 		uc1.addEventListener("click", function()  {
 			map.flyTo(usecase1, 10);
 		}); 
-		var coord2 = usecaseData.features[1].geometry.coordinates;
+		var coord2 = usecases.features[1].geometry.coordinates;
 		var usecase2 = L.GeoJSON.coordsToLatLng(coord2);
 		uc2.addEventListener("click", function()  {
 			map.flyTo(usecase2, 10);
+		}); 
+		var coord3 = usecases.features[2].geometry.coordinates;
+		var usecase3 = L.GeoJSON.coordsToLatLng(coord3);
+		uc3.addEventListener("click", function()  {
+			map.flyTo(usecase3, 10);
+		}); 
+		var coord4 = usecases.features[3].geometry.coordinates;
+		var usecase4 = L.GeoJSON.coordsToLatLng(coord4);
+		uc4.addEventListener("click", function()  {
+			map.flyTo(usecase4, 10);
+		}); 
+		var coord5 = usecases.features[4].geometry.coordinates;
+		var usecase5 = L.GeoJSON.coordsToLatLng(coord5);
+		uc5.addEventListener("click", function()  {
+			map.flyTo(usecase5, 10);
+		}); 
+		var coord6 = usecases.features[5].geometry.coordinates;
+		var usecase6 = L.GeoJSON.coordsToLatLng(coord6);
+		uc6.addEventListener("click", function()  {
+			map.flyTo(usecase6, 10);
 		}); 
 
 		//define admin boundary style
