@@ -1,0 +1,6 @@
+{
+  "baseUrl": "http://hydrafloods-servir.adpc.net/",
+  "viewportWidth": 1400,
+  "viewportHeight": 960,
+  "defaultCommandTimeout": 15000
+}
