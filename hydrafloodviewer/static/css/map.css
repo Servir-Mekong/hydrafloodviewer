@@ -3,10 +3,7 @@
   width: 75%;
   display: block;
   height: calc(100vh - 115px);
-  margin-top: 0;
-  /*background-color: rgb(241, 241, 241);
-  background-color: rgba(241, 241, 241, 1);
-  margin-top: 2em;*/
+  margin-top: 0px;
 }
 .pull-margin {
   left: 25%;
@@ -22,7 +19,6 @@
   width: 0;
   height: 0;
 }
-
 .toggle-slider {
   position: absolute;
   cursor: pointer;
@@ -34,7 +30,6 @@
   -webkit-transition: .4s;
   transition: .4s;
 }
-
 .toggle-slider:before {
   position: absolute;
   content: "";
@@ -46,21 +41,17 @@
   -webkit-transition: .4s;
   transition: .4s;
 }
-
 input:checked + .toggle-slider {
   background-color: #34495e ;
 }
-
 input:focus + .toggle-slider {
   box-shadow: 0 0 1px #34495e ;
 }
-
 input:checked + .toggle-slider:before {
   -webkit-transform: translateX(10px);
   -ms-transform: translateX(10px);
   transform: translateX(10px);
 }
-
 /* Rounded toggle-sliders */
 .toggle-slider.round {
   border-radius: 34px;
@@ -89,65 +80,54 @@ input[type="color"]::-webkit-color-swatch {
 	border: none; /*change color of the swatch border here*/
 	border-radius: 0;
 }
-
 p {
     font-size: 12px;
     color: #666;
     font-weight: 400;
     letter-spacing: .5px;
 }
-
 .leaflet-touch .leaflet-control-layers-toggle {
     width: 35px;
     height: 35px;
 }
-
 .leaflet-control-layers-overlays hr{
     margin-top: 10px;
     margin-bottom: 10px;
     border-top: 2px solid #eee;
 }
-
 .leaflet-control-layers-overlays label{
     font-weight: 500;
     color: #000;
 }
-
 .leaflet-control-layers-expanded {
     padding: 6px 10px 6px 6px;
     color: #333;
     background: #fff;
     width: 150px;
 }
-
 ul, ol {
     list-style-type: none;
     margin: 0;
     padding: 0;
 }
-
 .toggles-list .toggle {
     display: flex;
     align-items: center;
 }
-
 .toggles-list .toggle label {
     margin-left: 11px;
 }
-
 .switch_layer {
   position: relative;
   display: inline-block;
   width: 25px;
   height: 12px;
 }
-
 .switch_layer input {
   opacity: 0;
   width: 0;
   height: 0;
 }
-
 .slider_toggle {
   position: absolute;
   cursor: pointer;
@@ -159,7 +139,6 @@ ul, ol {
   -webkit-transition: .4s;
   transition: .4s;
 }
-
 .slider_toggle:before {
   position: absolute;
   content: "";
@@ -171,30 +150,24 @@ ul, ol {
   -webkit-transition: .4s;
   transition: .4s;
 }
-
 input:checked + .slider_toggle {
   background-color: #9999ff;
 }
-
 input:focus + .slider_toggle {
   box-shadow: 0 0 1px #9999ff;
 }
-
 input:checked + .slider_toggle:before {
   -webkit-transform: translateX(12px);
   -ms-transform: translateX(12px);
   transform: translateX(12px);
 }
-
 /* Rounded sliders */
 .slider_toggle.round {
   border-radius: 34px;
 }
-
 .slider_toggle.round:before {
   border-radius: 50%;
 }
-
 /* The container_radio */
 .container_radio {
   display: block;
@@ -207,14 +180,12 @@ input:checked + .slider_toggle:before {
   -ms-user-select: none;
   user-select: none;
 }
-
 /* Hide the browser's default radio button */
 .container_radio input {
   position: absolute;
   opacity: 0;
   cursor: pointer;
 }
-
 /* Create a custom radio button */
 .checkmark_radio {
   position: absolute;
@@ -226,29 +197,24 @@ input:checked + .slider_toggle:before {
   border-radius: 50%;
   margin-left: 11px;
 }
-
 /* On mouse-over, add a grey background color */
 .container_radio:hover input ~ .checkmark_radio {
   background-color: #ccc;
 }
-
 /* When the radio button is checked, add a blue background */
 .container_radio input:checked ~ .checkmark_radio {
   background-color: #9999ff;
 }
-
 /* Create the indicator (the dot/circle - hidden when not checked) */
 .checkmark_radio:after {
   content: "";
   position: absolute;
   display: none;
 }
-
 /* Show the indicator (dot/circle) when checked */
 .container_radio input:checked ~ .checkmark_radio:after {
   display: block;
 }
-
 /* Style the indicator (dot/circle) */
 .container_radio .checkmark_radio:after {
  	top: 4px;
@@ -269,7 +235,6 @@ input:checked + .slider_toggle:before {
   z-index: 999;
   padding-bottom: 150px;
 }
-
 .sidenav a {
   text-decoration: none;
   font-size: 12px;

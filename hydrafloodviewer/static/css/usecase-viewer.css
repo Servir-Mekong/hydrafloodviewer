@@ -4,9 +4,6 @@
   display: block;
   height: calc(100vh - 115px);
   margin-top: 0;
-  /*background-color: rgb(241, 241, 241);
-  background-color: rgba(241, 241, 241, 1);
-  margin-top: 2em;*/
 } 
 .pull-margin {
   left: 25%;
@@ -57,7 +54,6 @@
   color: #343A40;
   margin-bottom: 2px;
 }
-
 .sidenav .usecase-title{
   font-family: Roboto;
   font-style: normal;
@@ -102,7 +98,6 @@
   background: none;
   color: #5252D1;
 }
-
 /* Modal */
 .modal-content {
   margin-bottom: 10px;
@@ -149,13 +144,23 @@
   font-size: 14px;
 }
 .adm2-popup {
-	margin-top: 25px;
+	margin-top: 15px;
 	max-height: 350px;
-	overflow-y: auto !important;
+	overflow-y: scroll !important;
 }
 .adm2-popup .table{
-	width: auto;
-	margin-right: 10px;
+  margin-right: 10px;
+  padding-right: 10px;
+  border-top: 1px solid #000;
+  border-bottom: 1px solid #000;
+}
+.adm2-popup .table th{
+  border-top: 1px solid #000;
+  border-bottom: 1px solid #000;
+}
+.adm2-popup .table td{
+  border-top: none;
+  border-bottom: none;
 }
 .leaflet-popup {
 	position: absolute;

@@ -163,9 +163,6 @@ h1, h2, h3, h4, h5, h6 {
     margin-left: -15px;
     overflow: hidden;
 }
-
-
-
 /* Loader */
 .loading-img {
     margin-left: 50%;
@@ -183,7 +180,6 @@ h1, h2, h3, h4, h5, h6 {
     left: 0;
     background-color: rgba(0,0,0,0.4);
 }
-
 /* Alert */
 .custom-alert {
     margin-left: 30%;
@@ -194,7 +190,6 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 12px;
     margin-top: 10px;
 }
-
 .custom-alert-full {
     margin-left: 4%; /* See sidebar.css .toggle-sidebar-button.is-open */
     width: calc(100vw - 5%);
@@ -202,11 +197,9 @@ h1, h2, h3, h4, h5, h6 {
     z-index: 2;
     margin-top: 103px;
 }
-
 .display-none {
     display: none;
 }
-
 .margin-top-maintain {
     /* padding-right: 160px; */
     /* padding-left: 160px; */
@@ -214,7 +207,6 @@ h1, h2, h3, h4, h5, h6 {
     /* padding-top: 50px; */
     margin-top: 10%;
 }
-
 @media (max-width: 1024px) {
     .margin-top-maintain {
         /* padding-right: 160px; */
@@ -224,23 +216,18 @@ h1, h2, h3, h4, h5, h6 {
         margin-top: 13%;
     }
 }
-
 .maintain-padding {
     padding-bottom: 10px;
 }
-
 .border-bottom {
     border-bottom: 1px solid #ddd;
 }
-
 .main-padding {
     /*padding-right: 150px;
     padding-left: 150px;*/
     padding-right: 5% !important;
     padding-left: 5% !important;
 }
-
-
 .tooltpanel {
     display: block;
     position: absolute;

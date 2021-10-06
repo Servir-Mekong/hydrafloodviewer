@@ -253,84 +253,97 @@
 		var adm2_layer = L.geoJson(adm2, {
 			style: adm2Style,
 			onEachFeature: function(feature, admin2Layer) {
+				var district = feature.properties.NAME_2;
+				var province = feature.properties.NAME_1;
+				var country = feature.properties.NAME_0;
+				var f_0_15 = feature.properties.F_0_15;
+				var f_15_65 = feature.properties.F_15_65;
+				var f_above_65 = feature.properties.F__65;
+				var f_total = f_0_15 + f_15_65 + f_above_65;
+				var m_0_15 = feature.properties.M_0_15;
+				var m_15_65 = feature.properties.M_15_65;
+				var m_above_65 = feature.properties.M__65;    
+				var m_total = m_0_15+m_15_65+m_above_65;
+				var hospitals = feature.properties.Hospitals;
+				var primary = feature.properties.Primary;
+				var secondary = feature.properties.Secondary;
+				var trunks = feature.properties.Trunks;
+	
 				admin2Layer.on('mouseover', function (e) {
 					this.setStyle(highlightStyle);
 					this.bindPopup( 
-						'<h6 style="margin-top: 20px; font-weight: bold;">Feature Details</h6>'+
+						'<h4 style="margin-top: 20px; font-weight: bold; margin-bottom: 0px;">'+district+': '+province+', '+country+'</h4>'+
 						'<div class="table-responsive adm2-popup">'+
 							'<table class="table">'+
+								'<thead>'+
+									'<tr>'+
+										'<th>'+"Population"+'</th>'+
+										'<th>'+"Female"+'</th>'+
+										'<th>'+"Male"+'</th>'+
+									'</tr>'+
+								'</thead>'+
 								'<tbody>' +
 									'<tr>'+
-										'<td>'+ "ISO Code" +'</td>'+
-										'<td>'+ feature.properties.ISO +'</td>'+
+										'<td>'+"Age 0-15"+'</td>'+
+										'<td>'+f_0_15+'</td>'+
+										'<td>'+m_0_15+'</td>'+
 									'</tr>'+
 									'<tr>'+
-										'<td>'+ "Country" +'</td>'+
-										'<td>'+ feature.properties.NAME_0 +'</td>'+
+										'<td>'+"Age 15-65"+'</td>'+
+										'<td>'+f_15_65+'</td>'+
+										'<td>'+m_15_65+'</td>'+
 									'</tr>'+
 									'<tr>'+
-										'<td>'+ "Province" +'</td>'+
-										'<td>'+ feature.properties.NAME_1 +'</td>'+
+										'<td>'+"Age >65"+'</td>'+
+										'<td>'+f_above_65+'</td>'+
+										'<td>'+m_above_65+'</td>'+
 									'</tr>'+
 									'<tr>'+
-										'<td>'+ "District" +'</td>'+
-										'<td>'+ feature.properties.NAME_2 +'</td>'+
+										'<td>'+"Total"+'</td>'+
+										'<td>'+f_total+'</td>'+
+										'<td>'+m_total+'</td>'+
+									'</tr>'+
+								'</tbody>'+
+								'<thead>'+
+									'<tr>'+
+										'<th>'+"Health Facilities"+'</th>'+
+										'<th>'+"No."+'</th>'+
+										'<th>'+""+'</th>'+
+									'</tr>'+
+								'</thead>'+
+								'<tbody>'+
+									'<tr>'+
+										'<td>'+ "Hospitals" +'</td>'+
+										'<td>'+ hospitals +'</td>'+
+										'<td>'+""+'</td>'+
+									'</tr>'+
+								'</tbody>'+
+								'<thead>'+
+									'<tr>'+
+										'<th>'+"Roads"+'</th>'+
+										'<th>'+"No."+'</th>'+
+										'<th>'+""+'</th>'+
+									'</tr>'+
+								'</thead>'+
+								'<tbody>'+
+									'<tr>'+
+										'<td>'+ "Primary" +'</td>'+
+										'<td>'+ primary +'</td>'+
+										'<td>'+""+'</td>'+
 									'</tr>'+
 									'<tr>'+
-										'<td>'+ "Total Population" +'</td>'+
-										'<td>'+ feature.properties.total_pop +'</td>'+
+										'<td>'+ "Secondary" +'</td>'+
+										'<td>'+ secondary +'</td>'+
+										'<td>'+""+'</td>'+
 									'</tr>'+
 									'<tr>'+
-										'<td>'+ "Total Female Population" +'</td>'+
-										'<td>'+ feature.properties.Female +'</td>'+
-									'</tr>'+
-									'<tr>'+
-										'<td>'+ "Total Male Population" +'</td>'+
-										'<td>'+ feature.properties.Male +'</td>'+
-									'</tr>'+
-									'<tr>'+
-										'<td>'+ "No. of Female Population less than 15 Age" +'</td>'+
-										'<td>'+ feature.properties.F_0_15 +'</td>'+
-									'</tr>'+
-									'<tr>'+
-										'<td>'+ "No. of Female Population between 15-65 Age" +'</td>'+
-										'<td>'+ feature.properties.F_15_65 +'</td>'+
-									'</tr>'+
-									'<tr>'+
-										'<td>'+ "No. of Female Population above 65 Age" +'</td>'+
-										'<td>'+ feature.properties.F__65 +'</td>'+
-									'</tr>'+
-									'<tr>'+
-										'<td>'+ "No. of Male Population less than 15 Age" +'</td>'+
-										'<td>'+ feature.properties.M_0_15 +'</td>'+
-									'</tr>'+
-									'<tr>'+
-										'<td>'+ "No. of Male Population between 15-65 Age" +'</td>'+
-										'<td>'+ feature.properties.M_15_65 +'</td>'+
-									'</tr>'+
-									'<tr>'+
-										'<td>'+ "No. of Male Population above 65 Age" +'</td>'+
-										'<td>'+ feature.properties.M__65 +'</td>'+
-									'</tr>'+
-									'<tr>'+
-										'<td>'+ "No. of Hospitals" +'</td>'+
-										'<td>'+ feature.properties.Hospitals +'</td>'+
-									'</tr>'+
-									'<tr>'+
-										'<td>'+ "No. of Primary Roads" +'</td>'+
-										'<td>'+ feature.properties.Primary +'</td>'+
-									'</tr>'+
-									'<tr>'+
-										'<td>'+ "No. of Secondary Roads" +'</td>'+
-										'<td>'+ feature.properties.Secondary +'</td>'+
-									'</tr>'+
-									'<tr>'+
-										'<td>'+ "No. of Trunks Roads" +'</td>'+
-										'<td>'+ feature.properties.Trunks +'</td>'+
+										'<td>'+ "Trunks" +'</td>'+
+										'<td>'+ trunks +'</td>'+
+										'<td>'+""+'</td>'+
 									'</tr>'+
 								'</tbody>'+
 							'</table>'+
-						'</div>'       
+						'</div>'
 					);
 					this.bindTooltip(feature.properties.NAME_2);
 				}); 
@@ -338,7 +351,7 @@
 					this.setStyle(adm2Style);
 				});         
 			}
-		});  
+		}).addTo(map); 
 
 		/**
 		* Toggle layer visualizing

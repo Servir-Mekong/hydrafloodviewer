@@ -20,8 +20,8 @@
 			};
 			return new google.maps.ImageMapType(eeMapOptions);
 		};
-
-		service.getDateList= function (options) {
+		//options
+		service.getDateList= function () {
 			var config = {
 				params: {
 					action: 'get-date-list',
