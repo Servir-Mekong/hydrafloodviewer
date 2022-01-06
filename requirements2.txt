@@ -4,7 +4,7 @@ asn1crypto==0.22.0
 backports.functools-lru-cache==1.5
 beautifulsoup4==4.6.0
 billiard==3.3.0.23
-celery==3.1.23
+celery==5.2.2
 cffi==1.10.0
 click==6.7
 click-plugins==1.0.3
