@@ -59,7 +59,7 @@ numpy==1.14.5
 oauth2client==4.1.2
 olefile==0.44
 pandas==0.23.1
-Pillow==4.2.1
+Pillow==9.0.0
 #post==1.0.2
 psycopg2==2.7.3.1
 public==1.0.3
