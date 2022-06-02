@@ -45,7 +45,7 @@ geopandas==0.3.0
 #get==1.0.3
 google-api-python-client==1.6.3
 gunicorn==19.7.1
-html5lib==0.9999999
+html5lib==0.99999999
 httplib2==0.10.3
 idna==2.6
 ipaddress==1.0.18
